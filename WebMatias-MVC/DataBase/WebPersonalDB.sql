@@ -17,7 +17,7 @@ CREATE TABLE Viajes
     Descripcion VARCHAR(MAX) NOT NULL,
     Requisitos VARCHAR(MAX) NOT NULL,
     DuracionAproximada VARCHAR(100) NULL,
-    UrlImagen VARCHAR(500) NULL,
+    ImagenUrl VARCHAR(500) NULL,
     FechaActualizacion DATE NOT NULL DEFAULT GETDATE(),
     Activo BIT NOT NULL DEFAULT 1
 );
@@ -33,7 +33,7 @@ INSERT INTO Viajes
     Descripcion,
     Requisitos,
     DuracionAproximada,
-    UrlImagen,
+    ImagenUrl,
     FechaActualizacion,
     Activo
 )
@@ -44,11 +44,10 @@ VALUES
     'Servicio de larga distancia desde El Talar hasta Posadas.',
     'Presentarse 30 minutos antes con DNI y pasaje.',
     '14 horas',
-    NULL,
+    NULL, -- No tiene imagen
     GETDATE(),
     1
 );
-
 GO
 
 

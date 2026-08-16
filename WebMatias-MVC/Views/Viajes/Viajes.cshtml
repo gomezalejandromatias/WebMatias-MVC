@@ -4,41 +4,55 @@
 @{
 }
 
-@model Viajes 
-
-<form>
-    <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Partida</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-    </div>
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Destino</label>
-        <input type="password" class="form-control" id="exampleInputPassword1">
-    </div>
-    <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-    </div>
-    <button type="submit" class="btn btn-primary">Aceptar</button>
-</form>
+@model Viajes
 
 
 
-    <br />
-    <br />
-
-    <<label>Hola</label>
-
-@if(Model != null)
-{
     
-<form>
-      
-    <label>Empresa:</label>
-    <span>@Model.Destino</span>
+
+@{
+    //aca  se puede escribir el comentario
+}
+
+
+<br />
+<br />
+
+<form asp-action="Viajes" method="get">
+
+    <label asp-for="Origen"></label>
+    <input type="text" class="form-control" name="Origen" placeholder="Aca Escriba Su Partida" />
+
+      <br />
+       <br />
+
+        <label asp-for="Destino"></label>
+        <input type="text" class="form-control" name="Destino" placeholder="Aca Escriba Su Destino" />
+
+      <br />
+
+    <div>
+
+        <button type="submit" class="btn btn-primary">Aceptar</button>
+
+    </div>
 
 </form>
 
 
-}
+
+
+    
+
+            @if (Model != null)
+            {
+
+                <form>
+
+                    <label>Empresa:</label>
+                    <span>@Model.Destino</span>
+
+                </form>
+
+
+            }

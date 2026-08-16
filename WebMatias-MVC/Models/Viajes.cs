@@ -34,6 +34,9 @@ namespace WebMatias_MVC.Models
 
         public bool Activo { get; set; } = true;
 
+        string ImagenUrl { get; set; }
+
+
 
     }
 }

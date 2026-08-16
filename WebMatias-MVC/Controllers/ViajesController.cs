@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebMatias_MVC.Dao.ViajesDao;
+using WebMatias_MVC.Models;
 
 namespace WebMatias_MVC.Controllers
 {
@@ -15,6 +17,35 @@ namespace WebMatias_MVC.Controllers
 
             return View("Viajes");
          
+        }
+
+
+        public IActionResult Viajes(string Origen,string Destino)
+        {
+             
+            ViajeDao viajeDao = new ViajeDao();
+
+             var viaje = viajeDao.ListaViaje();
+
+                if (!string.IsNullOrEmpty(Origen)) 
+                {
+                    viaje = viaje.FindAll(v => v.Origen.Contains(Origen));
+
+
+                }
+                if (!string.IsNullOrEmpty(Destino)) 
+                {
+                    viaje = viaje.FindAll(v => v.Origen.Contains(Destino));
+
+
+                }
+
+            
+
+            return View(viaje);
+
+
+
         }
     }
 }
