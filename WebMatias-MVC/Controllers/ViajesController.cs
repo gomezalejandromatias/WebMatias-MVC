@@ -25,22 +25,23 @@ namespace WebMatias_MVC.Controllers
              
             ViajeDao viajeDao = new ViajeDao();
 
-             var viaje = viajeDao.ListaViaje();
-
-                if (!string.IsNullOrEmpty(Origen)) 
-                {
-                    viaje = viaje.FindAll(v => v.Origen.Contains(Origen));
+            var viaje = viajeDao.ListaViaje();
 
 
-                }
-                if (!string.IsNullOrEmpty(Destino)) 
-                {
-                    viaje = viaje.FindAll(v => v.Origen.Contains(Destino));
+
+            if (!string.IsNullOrEmpty(Origen))
+            {
+                viaje = viaje.FindAll(v =>
+                    v.Origen.ToLower().Contains(Origen.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(Destino))
+            {
+                viaje = viaje.FindAll(v =>
+                    v.Destino.ToLower().Contains(Destino.ToLower()));
+            }
 
 
-                }
-
-            
 
             return View(viaje);
 

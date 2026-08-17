@@ -4,7 +4,7 @@
 @{
 }
 
-@model Viajes
+@model List<Viajes>
 
 
 
@@ -15,44 +15,77 @@
 }
 
 
-<br />
-<br />
+<div class="viajes-container">
 
-<form asp-action="Viajes" method="get">
+    <div class="viajes-titulo">
+        <h1>Buscá tu próximo viaje</h1>
+        <p>Ingresá tu origen y destino para consultar los servicios disponibles.</p>
+    </div>
 
-    <label asp-for="Origen"></label>
-    <input type="text" class="form-control" name="Origen" placeholder="Aca Escriba Su Partida" />
+    <div class="buscador-viajes">
 
-      <br />
-       <br />
+        <form asp-action="Viajes" method="get">
 
-        <label asp-for="Destino"></label>
-        <input type="text" class="form-control" name="Destino" placeholder="Aca Escriba Su Destino" />
+            <div class="campo-viaje">
+                <label>Origen</label>
+                <input type="text"
+                       class="form-control"
+                       name="Origen"
+                       placeholder="¿Desde dónde viajás?" />
+            </div>
 
-      <br />
+            <div class="campo-viaje">
+                <label>Destino</label>
+                <input type="text"
+                       class="form-control"
+                       name="Destino"
+                       placeholder="¿A dónde querés ir?" />
+            </div>
 
-    <div>
+            <button type="submit" class="btn-buscar">
+                Buscar viaje
+            </button>
 
-        <button type="submit" class="btn btn-primary">Aceptar</button>
+        </form>
 
     </div>
 
-</form>
 
+    @if (Model != null && Model.Count > 0)
+    {
+        <div class="resultados-viajes">
 
+            <h2>Viajes disponibles</h2>
 
-
-    
-
-            @if (Model != null)
+            @foreach (var item in Model)
             {
+                <div class="viaje-card">
 
-                <form>
+                    <div class="viaje-dato">
+                        <span class="viaje-label">ORIGEN</span>
+                        <span class="viaje-valor">@item.Origen</span>
+                    </div>
 
-                    <label>Empresa:</label>
-                    <span>@Model.Destino</span>
+                    <div class="flecha">
+                        →
+                    </div>
 
-                </form>
+                    <div class="viaje-dato">
+                        <span class="viaje-label">DESTINO</span>
+                        <span class="viaje-valor">@item.Destino</span>
+                    </div>
 
+                    <div class="viaje-horario">
+                        <span class="viaje-label">HORARIO</span>
+                        <span class="horario">
+                            @item.HorarioSalida
+                        </span>
+                    </div>
 
+                </div>
             }
+
+        </div>
+    }
+
+</div>

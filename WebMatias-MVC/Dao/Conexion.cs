@@ -25,9 +25,9 @@ namespace WebMatias_MVC.Dao
         {
 
 
-            string cadenconexion = "";
+            string cadenaConexion = "Server=localhost;Database=WebPersonalDB;Trusted_Connection=True;TrustServerCertificate=True;";
 
-            conexion = new SqlConnection (cadenconexion);
+            conexion = new SqlConnection (cadenaConexion);
 
             comando = new SqlCommand();
 

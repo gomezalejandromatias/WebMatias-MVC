@@ -16,8 +16,9 @@ namespace WebMatias_MVC.Dao.ViajesDao
             {
 
 
-                conexion.SetearConsulta("");
+                conexion.SetearConsulta(@"SELECT Id,Origen,Destino,Descripcion,Requisitos,DuracionAproximada,UrlImagen,FechaActualizacion,Activo,HorarioSalida FROM Viajes");
 
+                conexion.EjecutarLectura();
 
                 while (conexion.Lector().Read())
                 {
@@ -35,15 +36,20 @@ namespace WebMatias_MVC.Dao.ViajesDao
                             (string)conexion.Lector()["DuracionAproximada"];
                     }
 
-                    if (conexion.Lector()["ImagenUrl"] != DBNull.Value)
+                    if (conexion.Lector()["UrlImagen"] != DBNull.Value)
                     {
-                        aux.UrlImagen = (string)conexion.Lector()["ImagenUrl"];
+                        aux.UrlImagen = (string)conexion.Lector()["UrlImagen"];
                     }
 
                     aux.FechaActualizacion =
                         (DateTime)conexion.Lector()["FechaActualizacion"];
 
                     aux.Activo = (bool)conexion.Lector()["Activo"];
+
+                    if (conexion.Lector()["HorarioSalida"] != DBNull.Value)
+                    {
+                        aux.HorarioSalida = (TimeSpan)conexion.Lector()["HorarioSalida"];
+                    }
 
                     listaviaje.Add(aux);
 
