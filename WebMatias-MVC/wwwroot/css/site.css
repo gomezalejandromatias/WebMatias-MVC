@@ -186,4 +186,41 @@ body {
     .viajes-titulo h1 {
         font-size: 32px;
     }
+
+
+    
+
+
+    .navbar {
+    background-color: #111827 !important;
+    border-bottom: 1px solid #1f2937;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.35);
+    padding: 14px 20px;
+}
+
+.navbar-brand {
+    color: #60a5fa !important;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+.navbar-nav .nav-link {
+    color: #e5e7eb !important;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 6px;
+    padding: 10px 14px !important;
+    border-radius: 8px;
+    transition: 0.25s;
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: #1e3a5f;
+    color: #ffffff !important;
+}
+
+.navbar-nav .nav-link:focus {
+    color: #ffffff !important;
+}
 }
