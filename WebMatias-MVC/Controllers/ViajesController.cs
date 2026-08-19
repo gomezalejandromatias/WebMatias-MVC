@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AspNetCoreGeneratedDocument;
+using Microsoft.AspNetCore.Mvc;
 using WebMatias_MVC.Dao.ViajesDao;
 using WebMatias_MVC.Models;
 
@@ -6,6 +7,14 @@ namespace WebMatias_MVC.Controllers
 {
     public class ViajesController : Controller
     {
+        private ViajeDao _viajedao;
+
+        public ViajesController(ViajeDao viajeDao)
+        {
+                _viajedao = viajeDao;
+        }
+
+
         public IActionResult Index()
         {
             return View();
@@ -23,9 +32,9 @@ namespace WebMatias_MVC.Controllers
         public IActionResult Viajes(string Origen,string Destino)
         {
              
-            ViajeDao viajeDao = new ViajeDao();
+            
 
-            var viaje = viajeDao.ListaViaje();
+            var viaje = _viajedao.ListaViaje();
 
 
 

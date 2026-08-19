@@ -1,7 +1,11 @@
+using WebMatias_MVC.Dao.ViajesDao;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<ViajeDao>();
 
 var app = builder.Build();
 
