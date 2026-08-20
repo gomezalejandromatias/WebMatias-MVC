@@ -16,7 +16,7 @@ namespace WebMatias_MVC.Dao.ViajesDao
             {
 
 
-                conexion.SetearConsulta(@"SELECT Id,Origen,Destino,Descripcion,Requisitos,DuracionAproximada,ImagenUrl,FechaActualizacion,Activo,HorarioSalida FROM Viajes");
+                conexion.SetearConsulta(@"SELECT Id,Origen,Destino,Descripcion,Requisitos,DuracionAproximada,UrlImagen,FechaActualizacion,Activo,HorarioSalida,Servicio,Precio FROM Viajes");
 
                 conexion.EjecutarLectura();
 
@@ -36,9 +36,9 @@ namespace WebMatias_MVC.Dao.ViajesDao
                             (string)conexion.Lector()["DuracionAproximada"];
                     }
 
-                    if (conexion.Lector()["ImagenUrl"] != DBNull.Value)
+                    if (conexion.Lector()["UrlImagen"] != DBNull.Value)
                     {
-                        aux.UrlImagen = (string)conexion.Lector()["ImagenUrl"];
+                        aux.UrlImagen = (string)conexion.Lector()["UrlImagen"];
                     }
 
                     aux.FechaActualizacion =
@@ -50,6 +50,10 @@ namespace WebMatias_MVC.Dao.ViajesDao
                     {
                         aux.HorarioSalida = (TimeSpan)conexion.Lector()["HorarioSalida"];
                     }
+
+                    aux.Servicio = (string)conexion.Lector()["Servicio"];
+
+                    aux.Precio = Convert.ToDouble(conexion.Lector()["Precio"]);
 
                     listaviaje.Add(aux);
 

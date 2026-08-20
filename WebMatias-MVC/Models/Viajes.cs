@@ -37,6 +37,10 @@ namespace WebMatias_MVC.Models
         
         public TimeSpan? HorarioSalida { get; set; }
 
+       public   double Precio {  get; set; }
+
+       public  string? Servicio { get; set; }
+
 
     }
 }

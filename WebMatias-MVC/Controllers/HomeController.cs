@@ -23,6 +23,14 @@ namespace WebMatias_MVC.Controllers
 
         }
 
+        public IActionResult MostrarRequisitos()
+        {
+
+            return View("RequisitosViajes");
+
+
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
