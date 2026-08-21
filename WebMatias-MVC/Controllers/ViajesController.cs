@@ -31,8 +31,12 @@ namespace WebMatias_MVC.Controllers
 
         public IActionResult Viajes(string Origen,string Destino)
         {
-             
-            
+
+
+            if (string.IsNullOrEmpty(Origen) && string.IsNullOrEmpty(Destino))
+            {
+                return View(new List<Viajes>());
+            }
 
             var viaje = _viajedao.ListaViaje();
 

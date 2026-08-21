@@ -116,6 +116,8 @@ INSERT INTO Viajes
 (Origen, Destino, Descripcion, Requisitos, DuracionAproximada, UrlImagen, FechaActualizacion, Activo, HorarioSalida, Precio, Servicio)
 VALUES
 
+('El Talar', 'Asuncion', 'Servicio a Asuncion', 'Documentacion al dia', '18 hs',
+'/imagenes/imagenesEmpresas/LaSantaniana.jpg', GETDATE(), 1, '17:45:00', 160000, 'Cama');
 -- =========================================
 -- GUAIREÑA TOUR - VILLARRICA
 -- =========================================
@@ -128,8 +130,6 @@ VALUES
 ('El Talar', 'Villarrica', 'Servicio a Villarrica', 'Documentacion al dia', '18 hs',
 '/imagenes/imagenesEmpresas/LaSantaniana.jpg', GETDATE(), 1, '17:45:00', 150000, 'Semicama'),
 
-('El Talar', 'Asuncion', 'Servicio a Villarrica', 'Documentacion al dia', '18 hs',
-'/imagenes/imagenesEmpresas/LaSantaniana.jpg', GETDATE(), 1, '17:45:00', 150000, 'Semicama'),
 -- =========================================
 -- SOL BUS - ASUNCION
 -- =========================================

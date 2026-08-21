@@ -29,18 +29,59 @@
             <div class="campo-viaje">
                 <label>Origen</label>
                 <input type="text"
+                       id="origen"
                        class="form-control"
                        name="Origen"
+                       list="listaOrigen"
                        placeholder="¿Desde dónde viajás?" />
             </div>
+
+            <datalist id="listaOrigen">
+
+                @if (Model != null)
+                {
+                    foreach (var item in Model.Select(o=>o.Origen).Distinct())
+                    {
+                        <option value="@item"></option>
+                    }
+                }
+
+                      
+
+
+
+                
+
+
+            </datalist>
 
             <div class="campo-viaje">
                 <label>Destino</label>
                 <input type="text"
+                       id="destino"
                        class="form-control"
                        name="Destino"
-                       placeholder="¿A dónde querés ir?" />
+                       list="listaDestino"
+                       placeholder="¿Hacia dónde viajás?" />
             </div>
+
+            <datalist id="listaDestino">
+
+                    @if(Model != null)
+                    {
+                        @foreach (var item in Model.Select(d => d.Destino).Distinct())
+                        {
+                            <option value="@item"></option>
+                        }
+
+
+
+                    }
+
+
+
+
+            </datalist>
 
             <button type="submit" class="btn-buscar">
                 Buscar viaje
@@ -50,15 +91,28 @@
 
     </div>
 
+                @if(Model!=null && Model.Count == 0)
+                {
+                  <label>No se encontraron viajes</label>
+
+
+                }
+             
 
     @if (Model != null && Model.Count > 0)
     {
+
+         
         <div id="resultados" class="resultados-viajes">
 
             <h2>Viajes disponibles</h2>
 
+         
+
+
             @foreach (var item in Model)
             {
+
                 <div class="viaje-card">
 
                     <div class="viaje-empresa">
@@ -109,17 +163,44 @@
 
                  
 
-            </div>
-        }
+                </div>
 
-    </div>
-}
-<br />
-<br />
+              
+               
 
-<p style="color: lightpink">
-    Para Enterarte Sobre Nuestras Promociones,Dale Click Al enlace(Interaccion personalizada):<a href="https://wa.me/5491133153864?text=Hola%20quiero%20consultar%20por%20clases" class=" text-light" target="_blank">
-    1133153864
-</a>
+            }
+
+            <button type="button" class="btn btn-primary" onclick="limpiar()">
+
+                Limpiar
+
+            </button>
+        </div>
+
+
+
+    }
+
+  
+
+    <br />
+    <br />
+
+    <p style="color: lightpink">
+        Para Enterarte Sobre Nuestras Promociones,Dale Click Al enlace(Interaccion personalizada):<a href="https://wa.me/5491133153864?text=Hola%20quiero%20consultar%20por%20clases" class=" text-light" target="_blank">
+        1133153864
+    </a>
 </p>
 </div>
+
+
+<script>
+    function limpiar() {
+        document.getElementById("resultados").innerHTML = "";
+
+        document.getElementById("origen").value = "";
+        document.getElementById("destino").value = "";
+    }
+</script>
+
+
