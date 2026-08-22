@@ -1,0 +1,281 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Giro
+
+<h1>  Pagina Giro  </h1>
+
+<br />
+<br />
+<br />
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8 col-md-10">
+
+            <div class="card bg-dark text-light shadow-lg border-secondary rounded-4">
+
+                <div class="card-body p-4 p-md-5">
+
+                    <div class="text-center mb-4">
+
+                        <h2 class="fw-bold">
+                            Realizar Giro
+                        </h2>
+
+                        <p class="text-secondary mb-0">
+                            Complete los datos para calcular y generar su giro.
+                        </p>
+
+                    </div>
+
+                    <form asp-action="CrearGiro" method="post">
+
+                        <div class="row g-4">
+
+                            <!-- REMITENTE -->
+
+                            <div class="col-12">
+                                <h5 class="border-bottom border-secondary pb-2">
+                                    Datos del Remitente
+                                </h5>
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label asp-for="NombreRemitente"
+                                       class="form-label fw-semibold">
+                                    Nombre y Apellido
+                                </label>
+
+                                <input asp-for="NombreRemitente"
+                                       class="form-control form-control-lg bg-black text-light border-secondary"
+                                       placeholder="Nombre y apellido" />
+
+                                <span asp-validation-for="NombreRemitente"
+                                      class="text-danger small"></span>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label asp-for="TelefonoRemitente"
+                                       class="form-label fw-semibold">
+                                    Teléfono
+                                </label>
+
+                                <input asp-for="TelefonoRemitente"
+                                       class="form-control form-control-lg bg-black text-light border-secondary"
+                                       placeholder="Número de teléfono" />
+
+                                <span asp-validation-for="TelefonoRemitente"
+                                      class="text-danger small"></span>
+
+                            </div>
+
+
+                            <!-- DESTINATARIO -->
+
+                            <div class="col-12 mt-5">
+                                <h5 class="border-bottom border-secondary pb-2">
+                                    Datos del Destinatario
+                                </h5>
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label asp-for="NombreRecibe"
+                                       class="form-label fw-semibold">
+                                    Nombre y Apellido
+                                </label>
+
+                                <input asp-for="NombreRecibe"
+                                       class="form-control form-control-lg bg-black text-light border-secondary"
+                                       placeholder="Nombre del destinatario" />
+
+                                <span asp-validation-for="NombreRecibe"
+                                      class="text-danger small"></span>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label asp-for="TelefonoRecibe"
+                                       class="form-label fw-semibold">
+                                    Teléfono
+                                </label>
+
+                                <input asp-for="TelefonoRecibe"
+                                       class="form-control form-control-lg bg-black text-light border-secondary"
+                                       placeholder="Número del destinatario" />
+
+                                <span asp-validation-for="TelefonoRecibe"
+                                      class="text-danger small"></span>
+
+                            </div>
+
+
+                            <!-- GIRO -->
+
+                            <div class="col-12 mt-5">
+
+                                <h5 class="border-bottom border-secondary pb-2">
+                                    Datos del Giro
+                                </h5>
+
+                            </div>
+
+                            <div class="col-12">
+
+                                <label asp-for="TipoGiroId"
+                                       class="form-label fw-semibold">
+                                    Tipo de Giro
+                                </label>
+
+                                <select asp-for="TipoGiroId"
+                                        class="form-select form-select-lg bg-black text-light border-secondary">
+
+                                    <option value="">
+                                        Seleccione el tipo de giro
+                                    </option>
+
+                                    @foreach (var item in ViewBag.TipoGiro)
+                                    {
+                                        <option value="@item.TipoGiroId">
+                                            @item.TipoGiroNombre
+                                        </option>
+                                    }
+
+                                </select>
+
+                                <div class="form-text text-secondary">
+                                    Verifique cuidadosamente la moneda de origen y destino.
+                                </div>
+
+                                <span asp-validation-for="TipoGiroId"
+                                      class="text-danger small"></span>
+
+                            </div>
+
+
+                            <!-- MONTOS -->
+
+                            <div class="col-md-6">
+
+                                <label asp-for="MontoEnvio"
+                                       class="form-label fw-semibold">
+                                    Monto a Enviar
+                                </label>
+
+                                <div class="input-group input-group-lg">
+
+                                    <span class="input-group-text bg-secondary text-light border-secondary">
+                                        $
+                                    </span>
+
+                                    <input asp-for="MontoEnvio"
+                                           class="form-control bg-black text-light border-secondary"
+                                           placeholder="0,00" />
+
+                                </div>
+
+                                <span asp-validation-for="MontoEnvio"
+                                      class="text-danger small"></span>
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label asp-for="MontoMonedaExtranjera"
+                                       class="form-label fw-semibold">
+                                    Recibe el Destinatario
+                                </label>
+
+                                <input asp-for="MontoMonedaExtranjera"
+                                       class="form-control form-control-lg bg-black text-light border-secondary"
+                                       placeholder="0,00"
+                                       readonly />
+
+                                <span asp-validation-for="MontoMonedaExtranjera"
+                                      class="text-danger small"></span>
+
+                            </div>
+
+
+                            <!-- TOTAL -->
+
+                            <div class="col-12">
+
+                                <div class="p-4 rounded-3 border border-secondary bg-black">
+
+                                    <label asp-for="MontoTotal"
+                                           class="form-label fw-bold fs-5">
+                                        Monto Final a Pagar
+                                    </label>
+
+                                    <div class="input-group input-group-lg">
+
+                                        <span class="input-group-text bg-secondary text-light border-secondary">
+                                            $
+                                        </span>
+
+                                        <input asp-for="MontoTotal"
+                                               class="form-control bg-dark text-light border-secondary fw-bold"
+                                               placeholder="0,00"
+                                               readonly />
+
+                                    </div>
+
+                                    <span asp-validation-for="MontoTotal"
+                                          class="text-danger small"></span>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- BOTÓN -->
+
+                            <div class="col-12 mt-4">
+
+                                <button type="submit"
+                                        class="btn btn-danger btn-lg w-100 fw-bold rounded-3">
+
+                                    Hacer el Giro
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+</div>
+
+
+

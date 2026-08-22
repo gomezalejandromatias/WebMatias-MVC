@@ -161,4 +161,46 @@ VALUES
 '/imagenes/imagenesEmpresas/Yuteña.webp', GETDATE(), 1, '17:30:00', 140000, 'Semicama');
 
 
-select *from Viajes
+select *from 
+
+--TABALA GIROS
+
+CREATE TABLE Giros
+(
+    GiroId INT IDENTITY(1,1) PRIMARY KEY,
+
+    FechaGiro DATETIME NOT NULL DEFAULT GETDATE(),
+
+    NombreRemitente VARCHAR(150) NOT NULL,
+    TelefonoRemitente VARCHAR(50) NOT NULL,
+
+    NombreRecibe VARCHAR(150) NOT NULL,
+    TelefonoRecibe VARCHAR(50) NOT NULL,
+
+    MontoEnvio DECIMAL(18,2) NOT NULL,
+    MontoMonedaExtranjera DECIMAL(18,2) NOT NULL,
+
+    ComisionAgencia DECIMAL(18,2) NOT NULL,
+    ComisionSistema DECIMAL(18,2) NOT NULL,
+
+    MontoTotal DECIMAL(18,2) NOT NULL,
+
+    TipoGiro VARCHAR(100) NOT NULL,
+
+    CambioExtranjero DECIMAL(18,4) NOT NULL
+);
+GO
+
+-- TABLA TIPOGIRI
+
+CREATE TABLE TiposGiro
+(
+    TiposGiroId INT IDENTITY(1,1) PRIMARY KEY,
+    TiposGiro VARCHAR(100) NOT NULL
+);
+
+INSERT INTO TiposGiro (TiposGiro)
+VALUES
+('Tigo'),
+('Personal'),
+('Billetera');

@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="WebMatias-API/WebMatias-API.csproj" Id="f49be2ba-7397-42ae-89f7-6e05c86ac874" />
   <Project Path="WebMatias-MVC/WebMatias-MVC.csproj" />
 </Solution>
