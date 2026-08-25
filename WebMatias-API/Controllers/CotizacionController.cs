@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebMatias_API.Models;
+using WebMatias_API.Service;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,11 +10,20 @@ namespace WebMatias_API.Controllers
     [ApiController]
     public class CotizacionController : ControllerBase
     {
-        // GET: api/<CotizacionController>
+  
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<decimal> Get()
         {
-            return new string[] { "value1", "value2" };
+
+           CotizacionService cotizacionService = new CotizacionService();
+
+              decimal valor = await cotizacionService.ObtenerCotizacion();
+
+            return valor;
+
+
+
         }
 
         // GET api/<CotizacionController>/5
