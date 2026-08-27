@@ -1,31 +1,58 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebMatias_MVC.Dao.TipoGiroDao;
+using WebMatias_MVC.Models;
+using WebMatias_MVC.Service;
 
 namespace WebMatias_MVC.Controllers
 {
     public class GiroController : Controller
     {
+
+        public readonly CotizacionApiService _cotizacionApiService;
+
+        public GiroController(CotizacionApiService cotizacionApiService)
+        {
+            _cotizacionApiService = cotizacionApiService;
+        }
+
+
         // GET: GiroController
         public ActionResult Index()
         {
             return View();
         }
 
-        public IActionResult MostrarVistaGiro()
+
+
+        [HttpGet]
+
+
+        public async Task<IActionResult> CrearGiro() 
         {
+
+
 
             TipoGiroDao tipoGiroDao = new TipoGiroDao();
 
             ViewBag.TipoGiro = tipoGiroDao.listaTipoGiro();
 
+           
+
+
+            decimal valor = await _cotizacionApiService.ObtenerCotizacion();
+
+            ViewBag.Cotizacion = valor; 
+
             return View("Giro");
-
-
+        
+        
+        
         }
 
+        [HttpPost]
 
-        public IActionResult CrearGiro () 
+        public IActionResult CrearGiro (Giro giro) 
         { 
            
 

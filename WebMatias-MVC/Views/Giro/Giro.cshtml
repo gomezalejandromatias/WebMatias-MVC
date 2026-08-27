@@ -187,6 +187,8 @@
                                 <span asp-validation-for="MontoEnvio"
                                       class="text-danger small"></span>
 
+                         
+
                             </div>
 
 
@@ -266,16 +268,44 @@
     </div>
 
 </div>
+<br />
+<br />
 
+<div class="mb-3">
+    <label class="form-label">
+        Cotización actual
+    </label>
 
-
-
-
-
-
-
-
+    <input id="cambio" class="form-control"
+           value="@ViewBag.Cotizacion"
+           readonly />
 </div>
+
+<script>
+    const montoEnvio = document.getElementById("MontoEnvio");
+    const montoTotal = document.getElementById("MontoTotal");
+    const montoCambio = document.getElementById("cambio");
+    const montoMonedaExtranjera =
+        document.getElementById("MontoMonedaExtranjera");
+
+    montoEnvio.addEventListener("input", function() {
+        const monto = parseFloat(montoEnvio.value) || 0;
+        const cambio = parseFloat(montoCambio.value) || 0;
+
+        const total = monto * 1.10;
+        const totalCambio = monto * cambio;
+
+        montoTotal.value = total.toFixed(2);
+        montoMonedaExtranjera.value = totalCambio.toFixed(2);
+    });
+</script>
+
+
+
+
+
+
+
 
 
 
