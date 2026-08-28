@@ -1,4 +1,6 @@
-﻿namespace WebMatias_MVC.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WebMatias_MVC.Models
 {
     public class Giro
     {
@@ -7,18 +9,22 @@
         public DateTime FechaGiro { get; set; }
 
         // EL STRING.EMPTY DICE QUE ARRANQUE VACIO,ES DECIR," " EN VEZ DE NULL
+        [Required]
         public string NombreRemitente { get; set; } = string.Empty;
 
         // EL STRING.EMPTY DICE QUE ARRANQUE VACIO,ES DECIR," " EN VEZ DE NULL
+        [Required ]
         public string TelefonoRemitente { get; set; } = string.Empty;
 
         // EL STRING.EMPTY DICE QUE ARRANQUE VACIO,ES DECIR," " EN VEZ DE NULL
+        [Required ]
         public string NombreRecibe { get; set; } = string.Empty;
 
-
+        [Required]
         // EL STRING.EMPTY DICE QUE ARRANQUE VACIO,ES DECIR," " EN VEZ DE NULL
         public string TelefonoRecibe { get; set; } = string.Empty;
 
+        [Required]
         public decimal MontoEnvio { get; set; }
 
         public decimal MontoMonedaExtranjera { get; set; }

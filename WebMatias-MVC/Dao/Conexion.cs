@@ -71,8 +71,22 @@ namespace WebMatias_MVC.Dao
 
         }
 
+        public void EjecutarAccion()
+        {
+            comando.Connection = conexion;
+            conexion.Open();
+            comando.ExecuteNonQuery();
+        }
+
+        public void SetearParametro(string nombre, object valor)
+        {
+            comando.Parameters.AddWithValue(nombre, valor);
+        }
 
        
+
+
+
 
 
 

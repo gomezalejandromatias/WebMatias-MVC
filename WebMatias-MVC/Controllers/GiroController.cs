@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebMatias_MVC.Dao.GiroDao;
 using WebMatias_MVC.Dao.TipoGiroDao;
 using WebMatias_MVC.Models;
 using WebMatias_MVC.Service;
@@ -51,17 +52,67 @@ namespace WebMatias_MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CrearGiro(Giro giro)
+        {
 
-        public IActionResult CrearGiro (Giro giro) 
-        { 
-           
+            //muestra nuevamente el formulario con los datos ingresados y sus errores.
+
+            if (!ModelState.IsValid)
+            {
+                //Además, volvés a cargar ViewBag.TipoGiro porque la vista necesita esa lista para construir el <select>
+
+                TipoGiroDao tipoGiroDao = new TipoGiroDao();
+                ViewBag.TipoGiro = tipoGiroDao.listaTipoGiro();
+
+                decimal cotiza =
+               await _cotizacionApiService.ObtenerCotizacion();
+
+                ViewBag.Cotizacion = cotiza;
 
 
-            return View();
+                return View("Giro", giro);
+            }
 
-        
-        
-        
+            decimal cotizacion =
+                await _cotizacionApiService.ObtenerCotizacion();
+
+            giro.FechaGiro = DateTime.Now;
+            giro.CambioExtranjero = cotizacion;
+
+            giro.ComisionAgencia = giro.MontoEnvio * 0.10m;
+            giro.ComisionSistema = 0;
+
+            giro.MontoMonedaExtranjera =
+                giro.MontoEnvio * giro.CambioExtranjero;
+
+            giro.MontoTotal =
+                giro.MontoEnvio +
+                giro.ComisionAgencia +
+                giro.ComisionSistema;
+
+            GiroDao giroDao = new GiroDao();
+
+            try
+            {
+                giroDao.GuardarGiro(giro);
+
+                TempData["Mensaje"] = "El giro se guardó correctamente.";
+            }
+            catch (Exception)
+            {
+                TempData["Error"] = "Ocurrió un error y el giro no pudo guardarse.";
+            }
+
+
+
+            //Eso le indica al navegador:“El giro ya fue guardado.Ahora hacé una petición nueva a la acción CrearGiro”.
+
+            return RedirectToAction("CrearGiro");
+
+
+
+
         }
 
         // GET: GiroController/Details/5
