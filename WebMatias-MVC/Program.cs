@@ -11,9 +11,14 @@ builder.Services.AddHttpClient<CotizacionApiService>(client =>
     client.BaseAddress = new Uri("https://localhost:44316/");
 });
 
+builder.Services.AddScoped<EmailService>();
+
 builder.Services.AddScoped<ViajeDao>();
 
 var app = builder.Build();
+
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

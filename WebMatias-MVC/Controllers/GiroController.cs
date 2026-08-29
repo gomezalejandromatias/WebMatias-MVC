@@ -11,10 +11,12 @@ namespace WebMatias_MVC.Controllers
     {
 
         public readonly CotizacionApiService _cotizacionApiService;
+        public readonly EmailService _emailService;
 
-        public GiroController(CotizacionApiService cotizacionApiService)
+        public GiroController(CotizacionApiService cotizacionApiService,EmailService emailService)
         {
             _cotizacionApiService = cotizacionApiService;
+            _emailService = emailService;
         }
 
 
@@ -91,11 +93,17 @@ namespace WebMatias_MVC.Controllers
                 giro.ComisionAgencia +
                 giro.ComisionSistema;
 
+            string email = giro.EmailRemitente;
+
             GiroDao giroDao = new GiroDao();
 
             try
             {
                 giroDao.GuardarGiro(giro);
+
+                _emailService.ArmarCorreo(email, giro);
+                _emailService.GuardaEmail();
+
 
                 TempData["Mensaje"] = "El giro se guardó correctamente.";
             }

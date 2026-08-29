@@ -28,7 +28,10 @@ namespace WebMatias_MVC.Dao.GiroDao
                 TipoGiro,
                 CambioExtranjero,
                 ComisionAgencia,
-                ComisionSistema
+                ComisionSistema,
+                DniRemitente,
+                EmailRemitente,
+                CedulaRecibe
             )
             VALUES
             (
@@ -43,7 +46,10 @@ namespace WebMatias_MVC.Dao.GiroDao
                 @TipoGiro,
                 @CambioExtranjero,
                 @ComisionAgencia,
-                @ComisionSistema
+                @ComisionSistema,
+                @DniRemitente,
+                @EmailRemitente,
+                @CedulaRecibe
             )"
      );
 
@@ -60,8 +66,12 @@ namespace WebMatias_MVC.Dao.GiroDao
                 conexion.SetearParametro("@MontoTotal", giro.MontoTotal);
                 conexion.SetearParametro("@TipoGiro", giro.TipoGiroId);
                 conexion.SetearParametro("@CambioExtranjero", giro.CambioExtranjero);
+                
                 conexion.SetearParametro("@ComisionAgencia", giro.ComisionAgencia);
                 conexion.SetearParametro("@ComisionSistema", giro.ComisionSistema);
+                conexion.SetearParametro("@DniRemitente", giro.DniRemitente);
+                conexion.SetearParametro("@EmailRemitente", giro.EmailRemitente);
+                conexion.SetearParametro("@CedulaRecibe", giro.CedulaRecibe);
 
                 conexion.EjecutarAccion();
 

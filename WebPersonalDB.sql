@@ -57,6 +57,13 @@ ADD
     Servicio VARCHAR(100) NOT NULL DEFAULT '';
 Go
 
+alter table Giros
+add
+ DniRemitente varchar (100) not null default '';
+ EmailRemitente varchar(100) not null default '';
+ CedulaRecibe varchar (100) not null default '';
+ go
+
 --esto borra todo arranca con id desde 1
 TRUNCATE TABLE Viajes;
 

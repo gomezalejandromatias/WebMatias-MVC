@@ -59,9 +59,11 @@
                             <!-- REMITENTE -->
 
                             <div class="col-12">
+
                                 <h5 class="border-bottom border-secondary pb-2">
                                     Datos del Remitente
                                 </h5>
+
                             </div>
 
                             <div class="col-md-6">
@@ -82,12 +84,29 @@
 
                             <div class="col-md-6">
 
+                                <label asp-for="DniRemitente"
+                                       class="form-label fw-semibold">
+                                    DNI
+                                </label>
+
+                                <input asp-for="DniRemitente"
+                                       class="form-control form-control-lg bg-black text-light border-secondary"
+                                       placeholder="Número de DNI" />
+
+                                <span asp-validation-for="DniRemitente"
+                                      class="text-danger small"></span>
+
+                            </div>
+
+                            <div class="col-md-6">
+
                                 <label asp-for="TelefonoRemitente"
                                        class="form-label fw-semibold">
                                     Teléfono
                                 </label>
 
                                 <input asp-for="TelefonoRemitente"
+                                       type="tel"
                                        class="form-control form-control-lg bg-black text-light border-secondary"
                                        placeholder="Número de teléfono" />
 
@@ -96,13 +115,36 @@
 
                             </div>
 
+                            <div class="col-md-6">
+
+                                <label asp-for="EmailRemitente"
+                                       class="form-label fw-semibold">
+                                    Correo electrónico
+                                </label>
+
+                                <input asp-for="EmailRemitente"
+                                       type="email"
+                                       class="form-control form-control-lg bg-black text-light border-secondary"
+                                       placeholder="ejemplo@gmail.com" />
+
+                                <div class="form-text text-secondary">
+                                    Enviaremos la confirmación del giro a este correo.
+                                </div>
+
+                                <span asp-validation-for="EmailRemitente"
+                                      class="text-danger small"></span>
+
+                            </div>
+
 
                             <!-- DESTINATARIO -->
 
                             <div class="col-12 mt-5">
+
                                 <h5 class="border-bottom border-secondary pb-2">
                                     Datos del Destinatario
                                 </h5>
+
                             </div>
 
                             <div class="col-md-6">
@@ -123,12 +165,29 @@
 
                             <div class="col-md-6">
 
+                                <label asp-for="CedulaRecibe"
+                                       class="form-label fw-semibold">
+                                    Cédula
+                                </label>
+
+                                <input asp-for="CedulaRecibe"
+                                       class="form-control form-control-lg bg-black text-light border-secondary"
+                                       placeholder="Número de cédula" />
+
+                                <span asp-validation-for="CedulaRecibe"
+                                      class="text-danger small"></span>
+
+                            </div>
+
+                            <div class="col-md-6">
+
                                 <label asp-for="TelefonoRecibe"
                                        class="form-label fw-semibold">
                                     Teléfono
                                 </label>
 
                                 <input asp-for="TelefonoRecibe"
+                                       type="tel"
                                        class="form-control form-control-lg bg-black text-light border-secondary"
                                        placeholder="Número del destinatario" />
 
@@ -205,10 +264,7 @@
                                 <span asp-validation-for="MontoEnvio"
                                       class="text-danger small"></span>
 
-                         
-
                             </div>
-
 
                             <div class="col-md-6">
 
