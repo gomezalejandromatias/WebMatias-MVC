@@ -52,7 +52,11 @@
 
                     </div>
 
-                    <form asp-action="CrearGiro" method="post">
+                    <form asp-action="CrearGiro" method="post" id="formGiro">
+
+                        <input type="hidden"
+                               name="cotizacionMostrada"
+                               value="@ViewBag.Cotizacion" />
 
                         <div class="row g-4">
 
@@ -214,6 +218,8 @@
                                     Tipo de Giro
                                 </label>
 
+                                
+
                                 <select asp-for="TipoGiroId"
                                         class="form-select form-select-lg bg-black text-light border-secondary">
 
@@ -228,7 +234,19 @@
                                         </option>
                                     }
 
+                                            
+                                         
                                 </select>
+                                <br />
+
+                                <div id="campoAlias" hidden>
+                                    <label asp-for="AliasRecibe">Ingrese el alias</label>
+                                    <input asp-for="AliasRecibe" class="form-control" />
+                                    <span asp-validation-for="AliasRecibe" class="text-danger"></span>
+                                </div>
+                                <br />
+                                <br />
+
 
                                 <div class="form-text text-secondary">
                                     Verifique cuidadosamente la moneda de origen y destino.
@@ -320,7 +338,7 @@
 
                             <div class="col-12 mt-4">
 
-                                <button type="submit"
+                                <button type="submit" id="btnGuardar"
                                         class="btn btn-danger btn-lg w-100 fw-bold rounded-3">
 
                                     Hacer el Giro
@@ -371,6 +389,59 @@
 
         montoTotal.value = total.toFixed(2);
         montoMonedaExtranjera.value = totalCambio.toFixed(2);
+    });
+</script>
+
+<script>
+    const tipoGiro = document.getElementById("TipoGiroId");
+    const campoAlias = document.getElementById("campoAlias");
+
+    function mostrarAlias() {
+        const opcion = tipoGiro.options[tipoGiro.selectedIndex];
+        const nombre = opcion ? opcion.text.trim() : "";
+
+        campoAlias.hidden = nombre !== "UENO BANK";
+    }
+
+    tipoGiro.addEventListener("change", mostrarAlias);
+
+    mostrarAlias();
+</script>
+
+<script>
+    const formulario = document.getElementById("formGiro");
+    const boton = document.getElementById("btnGuardar");
+
+    formulario.addEventListener("submit", function(evento) {
+
+        // Si ya se está enviando, frena otro envío.
+        if (boton.disabled) {
+            evento.preventDefault();
+            return;
+        }
+
+        // Comprueba las validaciones HTML.
+        if (!formulario.checkValidity()) {
+            evento.preventDefault();
+            formulario.reportValidity();
+            return;
+        }
+
+        // Comprueba las validaciones de jQuery, si están cargadas.
+        if (window.jQuery && window.jQuery.validator &&
+            !window.jQuery(formulario).valid()) {
+            evento.preventDefault();
+            return;
+        }
+
+        boton.disabled = true;
+        boton.textContent = "Enviando...";
+    });
+
+    // Restablece el botón al volver con la navegación del navegador.
+    window.addEventListener("pageshow", function() {
+        boton.disabled = false;
+        boton.textContent = "Registrar giro";
     });
 </script>
 

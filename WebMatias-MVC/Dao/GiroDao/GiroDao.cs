@@ -31,7 +31,8 @@ namespace WebMatias_MVC.Dao.GiroDao
                 ComisionSistema,
                 DniRemitente,
                 EmailRemitente,
-                CedulaRecibe
+                CedulaRecibe,
+                Alias
             )
             VALUES
             (
@@ -49,7 +50,8 @@ namespace WebMatias_MVC.Dao.GiroDao
                 @ComisionSistema,
                 @DniRemitente,
                 @EmailRemitente,
-                @CedulaRecibe
+                @CedulaRecibe,
+                @Alias
             )"
      );
 
@@ -72,6 +74,7 @@ namespace WebMatias_MVC.Dao.GiroDao
                 conexion.SetearParametro("@DniRemitente", giro.DniRemitente);
                 conexion.SetearParametro("@EmailRemitente", giro.EmailRemitente);
                 conexion.SetearParametro("@CedulaRecibe", giro.CedulaRecibe);
+                conexion.SetearParametro("@Alias", giro.AliasRecibe);
 
                 conexion.EjecutarAccion();
 

@@ -206,8 +206,34 @@ CREATE TABLE TiposGiro
     TiposGiro VARCHAR(100) NOT NULL
 );
 
+alter table TiposGiro
+add
+  Alias varchar(200) null  default  '';
+ go
+
+
+
+---La N indica que el texto es Unicode, para conservar caracteres como tildes, la ñ o letras de otros idiomas.
+
 INSERT INTO TiposGiro (TiposGiro)
 VALUES
-('Tigo'),
-('Personal'),
-('Billetera');
+(N'AGENCIA 3J'),
+(N'BANCO CONTINENTAL'),
+(N'BANCO FAMILIAR'),
+(N'Banco Atlas'),
+(N'Banco BASA'),
+(N'Banco GNB - Paraguay'),
+(N'Banco Itaú Paraguay'),
+(N'Banco Nacional de Fomento (BNF)'),
+(N'Banco Rio'),
+(N'Banco de la Nación Argentina'),
+(N'GIROS CLARO'),
+(N'GIROS PERSONAL PAY'),
+(N'GIROS TIGO MONEY'),
+(N'Interfisa Banco'),
+(N'Mango - Tu Financiera'),
+(N'RB ENTREGAS'),
+(N'Solar Banco'),
+(N'Sudameris Bank'),
+(N'UENO BANK'),
+(N'ZETA Banco');

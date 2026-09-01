@@ -76,8 +76,25 @@ namespace WebMatias_MVC.Controllers
                 return View("Giro", giro);
             }
 
+
+           
+
             decimal cotizacion =
                 await _cotizacionApiService.ObtenerCotizacion();
+
+            if (cotizacion <=0)
+            {
+                ModelState.AddModelError("",
+        "No se pudo obtener una cotización válida. Intentá nuevamente más tarde.");
+
+                TipoGiroDao tipoGiroDao = new TipoGiroDao();
+                ViewBag.Tipogiro = tipoGiroDao.listaTipoGiro();
+
+                ViewBag.Cotizacion = cotizacion;
+                return View("Giro", giro);
+
+
+            }
 
             giro.FechaGiro = DateTime.Now;
             giro.CambioExtranjero = cotizacion;

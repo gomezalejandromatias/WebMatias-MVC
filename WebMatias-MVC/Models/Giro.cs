@@ -47,6 +47,7 @@ namespace WebMatias_MVC.Models
 
         public decimal CambioExtranjero { get; set; }
         public string EmailService { get; set; } = string.Empty;
+        public string AliasRecibe { get; set; } = string.Empty;
 
 
 
