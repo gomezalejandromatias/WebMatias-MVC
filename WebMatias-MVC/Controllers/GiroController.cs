@@ -55,7 +55,7 @@ namespace WebMatias_MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CrearGiro(Giro giro)
+        public async Task<IActionResult> CrearGiro(Giro giro,decimal cotizacionMostrada)
         {
 
             //muestra nuevamente el formulario con los datos ingresados y sus errores.
@@ -63,6 +63,9 @@ namespace WebMatias_MVC.Controllers
             if (!ModelState.IsValid)
             {
                 //Además, volvés a cargar ViewBag.TipoGiro porque la vista necesita esa lista para construir el <select>
+
+                try
+                {
 
                 TipoGiroDao tipoGiroDao = new TipoGiroDao();
                 ViewBag.TipoGiro = tipoGiroDao.listaTipoGiro();
@@ -73,19 +76,48 @@ namespace WebMatias_MVC.Controllers
                 ViewBag.Cotizacion = cotiza;
 
 
+                   return View("Giro", giro);
+
+
+                }
+                catch (Exception)
+                {
+
+                    TempData["Error"] = "No se pudo obtener la cotización en este momento. Intentá nuevamente en unos minutos.";
+
+                }
+
+            }
+
+            decimal cotizacion;
+
+            try
+            {
+
+              cotizacion =  await _cotizacionApiService.ObtenerCotizacion();
+
+
+            }
+            catch (HttpRequestException)
+            {
+
+                TempData["Error"] = "No se pudo obtener la cotización en este momento. Intentá nuevamente en unos minutos.";
+
+                TipoGiroDao tipoGiroDao = new TipoGiroDao();
+                ViewBag.TipoGiro = tipoGiroDao.listaTipoGiro();
+
+
+
+
+
                 return View("Giro", giro);
             }
 
 
-           
-
-            decimal cotizacion =
-                await _cotizacionApiService.ObtenerCotizacion();
-
             if (cotizacion <=0)
             {
                 ModelState.AddModelError("",
-        "No se pudo obtener una cotización válida. Intentá nuevamente más tarde.");
+                    "No se pudo obtener una cotización válida. Intentá nuevamente más tarde.");
 
                 TipoGiroDao tipoGiroDao = new TipoGiroDao();
                 ViewBag.Tipogiro = tipoGiroDao.listaTipoGiro();
@@ -95,6 +127,16 @@ namespace WebMatias_MVC.Controllers
 
 
             }
+
+            if (cotizacion != cotizacionMostrada) 
+            {
+                TempData["Error"] = "La cotización cambió desde que abriste el formulario. Revisá el nuevo valor y volvé a confirmar el giro.";
+                TipoGiroDao tipoGiroDao = new TipoGiroDao(); 
+                ViewBag.TipoGiro = tipoGiroDao.listaTipoGiro();
+                ViewBag.Cotizacion = cotizacion;
+                return View("Giro", giro); }
+
+
 
             giro.FechaGiro = DateTime.Now;
             giro.CambioExtranjero = cotizacion;
@@ -118,8 +160,6 @@ namespace WebMatias_MVC.Controllers
             {
                 giroDao.GuardarGiro(giro);
 
-                _emailService.ArmarCorreo(email, giro);
-                _emailService.GuardaEmail();
 
 
                 TempData["Mensaje"] = "El giro se guardó correctamente.";
@@ -127,8 +167,23 @@ namespace WebMatias_MVC.Controllers
             catch (Exception)
             {
                 TempData["Error"] = "Ocurrió un error y el giro no pudo guardarse.";
+                return RedirectToAction("CrearGiro");
             }
 
+            try
+            {
+
+                _emailService.ArmarCorreo(email, giro);
+                _emailService.GuardaEmail();
+
+
+            }
+            catch (Exception)
+            {
+
+                TempData["Error"] = "El giro se registró correctamente, pero no se pudo enviar el correo de confirmación.";
+
+            }
 
 
             //Eso le indica al navegador:“El giro ya fue guardado.Ahora hacé una petición nueva a la acción CrearGiro”.

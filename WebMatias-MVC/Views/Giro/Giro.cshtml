@@ -227,11 +227,14 @@
                                         Seleccione el tipo de giro
                                     </option>
 
-                                    @foreach (var item in ViewBag.TipoGiro)
+                                    @if (ViewBag.TipoGiro != null)
                                     {
-                                        <option value="@item.TipoGiroId">
-                                            @item.TipoGiroNombre
-                                        </option>
+                                        foreach (var item in ViewBag.TipoGiro)
+                                        {
+                                            <option value="@item.TipoGiroId">
+                                                @item.TipoGiroNombre
+                                            </option>
+                                        }
                                     }
 
                                             
@@ -373,6 +376,7 @@
            readonly />
 </div>
 
+<!---->
 <script>
     const montoEnvio = document.getElementById("MontoEnvio");
     const montoTotal = document.getElementById("MontoTotal");
@@ -392,6 +396,8 @@
     });
 </script>
 
+<!---->
+
 <script>
     const tipoGiro = document.getElementById("TipoGiroId");
     const campoAlias = document.getElementById("campoAlias");
@@ -408,6 +414,8 @@
     mostrarAlias();
 </script>
 
+
+  <!---->
 <script>
     const formulario = document.getElementById("formGiro");
     const boton = document.getElementById("btnGuardar");

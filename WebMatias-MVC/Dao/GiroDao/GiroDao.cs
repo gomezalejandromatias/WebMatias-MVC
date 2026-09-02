@@ -74,9 +74,13 @@ namespace WebMatias_MVC.Dao.GiroDao
                 conexion.SetearParametro("@DniRemitente", giro.DniRemitente);
                 conexion.SetearParametro("@EmailRemitente", giro.EmailRemitente);
                 conexion.SetearParametro("@CedulaRecibe", giro.CedulaRecibe);
-                conexion.SetearParametro("@Alias", giro.AliasRecibe);
+                // Si no hay alias, enviamos NULL a SQL.
+                conexion.SetearParametro(
+                    "@Alias",
+                    (object?)giro.AliasRecibe ?? DBNull.Value);
+    
 
-                conexion.EjecutarAccion();
+                    conexion.EjecutarAccion();
 
             }
             catch (Exception )
