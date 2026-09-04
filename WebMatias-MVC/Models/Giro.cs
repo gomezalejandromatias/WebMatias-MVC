@@ -20,7 +20,8 @@ namespace WebMatias_MVC.Models
 
 
         // EL STRING.EMPTY DICE QUE ARRANQUE VACIO,ES DECIR," " EN VEZ DE NULL
-        [Required]
+        [Required(ErrorMessage = "El email es obligatorio")]
+        [EmailAddress(ErrorMessage = "Ingresá un email válido")]
         public string EmailRemitente { get; set; }  = string.Empty;
 
         [Required ]
@@ -46,7 +47,8 @@ namespace WebMatias_MVC.Models
         public TipoGiro? TipoGiro { get; set; } 
 
         public decimal CambioExtranjero { get; set; }
-        public string EmailService { get; set; } = string.Empty;
+     
+       
         public string? AliasRecibe { get; set; } 
 
 

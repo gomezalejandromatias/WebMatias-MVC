@@ -80,6 +80,11 @@ namespace WebMatias_MVC.Service
             <strong>Teléfono:</strong>
             {giro.TelefonoRecibe}
         </p>
+      
+        <p>
+            <strong>tipo de Giro:</strong>
+            {giro.TipoGiro!.TipoGiroNombre}
+        </p>
 
 
         <hr>

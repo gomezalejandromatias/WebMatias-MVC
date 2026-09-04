@@ -54,6 +54,10 @@
 
                     <form asp-action="CrearGiro" method="post" id="formGiro">
 
+                        <div asp-validation-summary="All"
+                             class="alert alert-danger">
+                        </div>
+
                         <input type="hidden"
                                name="cotizacionMostrada"
                                value="@ViewBag.Cotizacion" />

@@ -50,5 +50,57 @@ namespace WebMatias_MVC.Dao.TipoGiroDao
           }
 
 
+          public TipoGiro? BuscarTipoGiroId(int id)
+          {
+
+            Conexion conexion = new  Conexion();
+
+            try
+            {
+                conexion.SetearConsulta(@"SELECT TiposGiroId, TiposGiro FROM TiposGiro WHERE TiposGiroId = @TiposGiroId");
+
+                conexion.SetearParametro("@TiposGiroId", id);
+
+                conexion.EjecutarLectura();
+
+
+
+                if (conexion.Lector().Read())
+                {
+                    TipoGiro tipoGiroEncontrado = new TipoGiro();
+
+                    tipoGiroEncontrado.TipoGiroId =
+                        (int)conexion.Lector()["TiposGiroId"];
+
+                    tipoGiroEncontrado.TipoGiroNombre =
+                        conexion.Lector()["TiposGiro"].ToString()!;
+
+                    return tipoGiroEncontrado;
+                }
+
+
+                return null;
+
+
+
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            finally {conexion.CerrarConexion();  }
+
+              
+
+
+
+
+ 
+          }
+
     }
 }

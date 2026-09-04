@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebMatias_MVC.Dao.EmailEnviadoDao;
 using WebMatias_MVC.Dao.GiroDao;
 using WebMatias_MVC.Dao.TipoGiroDao;
 using WebMatias_MVC.Models;
@@ -152,14 +153,20 @@ namespace WebMatias_MVC.Controllers
                 giro.ComisionAgencia +
                 giro.ComisionSistema;
 
+        
+
+
             string email = giro.EmailRemitente;
 
             GiroDao giroDao = new GiroDao();
 
+            int IdGiro;
+
             try
             {
-                giroDao.GuardarGiro(giro);
+               giroDao.GuardarGiro(giro);
 
+                  IdGiro = giro.GiroId;
 
 
                 TempData["Mensaje"] = "El giro se guardó correctamente.";
@@ -172,6 +179,27 @@ namespace WebMatias_MVC.Controllers
 
             try
             {
+                TipoGiroDao tipogiroencontado = new TipoGiroDao();
+
+                giro.TipoGiro = tipogiroencontado.BuscarTipoGiroId(giro.TipoGiroId);
+
+                
+                ///OBJ DE EMAILENVIADO
+               EmailEnviado emailEnviado = new EmailEnviado();
+
+               emailEnviado.GiroId = giro.GiroId;
+                emailEnviado.EmailDestino = giro.EmailRemitente;
+                emailEnviado.FechaIntento = DateTime.Now;
+                emailEnviado.FechaEntrega = null;
+                emailEnviado.Estado = "PENDIENTE";
+                emailEnviado.DetalleError = null;
+                emailEnviado.CantidadIntentos = 1;
+                emailEnviado.IdMensajeProveedor = null;
+
+                ///OBJEMAIL SENVIADO DAO
+                EmailEnviadoDao emailEnviadoDao = new EmailEnviadoDao();
+               emailEnviadoDao.EmailEstado(emailEnviado);
+                
 
                 _emailService.ArmarCorreo(email, giro);
                 _emailService.GuardaEmail();

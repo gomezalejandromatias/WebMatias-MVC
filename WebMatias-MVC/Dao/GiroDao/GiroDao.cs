@@ -34,6 +34,8 @@ namespace WebMatias_MVC.Dao.GiroDao
                 CedulaRecibe,
                 Alias
             )
+                  
+                     OUTPUT INSERTED.GiroId
             VALUES
             (
                 @FechaGiro,
@@ -78,9 +80,21 @@ namespace WebMatias_MVC.Dao.GiroDao
                 conexion.SetearParametro(
                     "@Alias",
                     (object?)giro.AliasRecibe ?? DBNull.Value);
-    
 
-                    conexion.EjecutarAccion();
+
+                conexion.EjecutarLectura();
+
+                if (conexion.Lector().Read())
+                {
+                    giro.GiroId =
+                        (int)conexion.Lector()["GiroId"];
+                }
+                else
+                {
+                    throw new Exception(
+                        "El giro se guardó, pero no se pudo recuperar su ID."
+                    );
+                }
 
             }
             catch (Exception )
@@ -89,11 +103,11 @@ namespace WebMatias_MVC.Dao.GiroDao
                 throw ;
             }
             finally { conexion.CerrarConexion();  }
-             
-                 
 
 
 
+            ///ME DEVUELVE EL ID GENERADO DESDE LA BASE
+          ///  OUTPUT INSERTED.GiroId
 
 
            }
