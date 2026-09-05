@@ -237,3 +237,39 @@ VALUES
 (N'Sudameris Bank'),
 (N'UENO BANK'),
 (N'ZETA Banco');
+
+select *from Giros
+
+CREATE TABLE EmailsEnviados
+(
+    EmailEnviadoId INT IDENTITY(1,1) NOT NULL,
+    GiroId INT NOT NULL,
+
+    EmailDestino VARCHAR(150) NOT NULL,
+    FechaIntento DATETIME NOT NULL,
+    FechaEntrega DATETIME NULL,
+
+    Estado VARCHAR(20) NOT NULL,
+    DetalleError VARCHAR(500) NULL,
+
+    CantidadIntentos INT NOT NULL,
+    IdMensajeProveedor VARCHAR(200) NULL,
+
+    CONSTRAINT PK_EmailsEnviados
+        PRIMARY KEY (EmailEnviadoId),
+
+    CONSTRAINT FK_EmailsEnviados_Giros
+        FOREIGN KEY (GiroId)
+        REFERENCES Giros(GiroId),
+
+    CONSTRAINT CK_EmailsEnviados_Estado
+        CHECK (
+            Estado IN (
+                'PENDIENTE',
+                'ENVIADO',
+                'ENTREGADO',
+                'REBOTADO',
+                'ERROR'
+            )
+        )
+);

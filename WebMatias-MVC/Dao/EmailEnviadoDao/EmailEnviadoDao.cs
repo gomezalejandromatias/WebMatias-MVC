@@ -6,10 +6,10 @@ namespace WebMatias_MVC.Dao.EmailEnviadoDao
     {
 
 
-           public void EmailEstado(EmailEnviado emailEnviado)
-           {
+        public void EmailEstado(EmailEnviado emailEnviado)
+        {
 
-              Conexion conexion = new Conexion();
+            Conexion conexion = new Conexion();
 
 
             try
@@ -96,9 +96,60 @@ namespace WebMatias_MVC.Dao.EmailEnviadoDao
 
 
 
-           }
+        }
 
 
+        public void CambiarEstadoEmail(EmailEnviado emailEnviado)
+        {
+            Conexion conexion = new Conexion();
+
+
+            try
+            {
+
+                conexion.SetearConsulta(@"UPDATE EmailsEnviados
+      SET Estado = @Estado,
+          FechaEntrega = @FechaEntrega,
+          DetalleError = @DetalleError,
+          CantidadIntentos = @CantidadIntentos,
+          IdMensajeProveedor = @IdMensajeProveedor
+      WHERE EmailEnviadoId = @EmailEnviadoId");
+
+                conexion.SetearParametro("@Estado", emailEnviado.Estado);
+                conexion.SetearParametro("@FechaEntrega",
+                    emailEnviado.FechaEntrega ?? (object)DBNull.Value);
+                conexion.SetearParametro("@DetalleError",
+                    emailEnviado.DetalleError ?? (object)DBNull.Value);
+                conexion.SetearParametro("@CantidadIntentos", emailEnviado.CantidadIntentos);
+                conexion.SetearParametro("@IdMensajeProveedor",
+                    emailEnviado.IdMensajeProveedor ?? (object)DBNull.Value);
+
+                conexion.SetearParametro("@EmailEnviadoId", emailEnviado.EmailEnviadoId);
+
+
+                conexion.EjecutarAccion();
+
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            finally { conexion.CerrarConexion(); }
+        
+        
+        
+        
+             
+        
+        
+        
+        }
 
     }
+
+
 }
