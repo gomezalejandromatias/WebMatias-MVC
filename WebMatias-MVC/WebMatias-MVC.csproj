@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Imagenes\ImagenesEmpresas\" />
     <Folder Include="wwwroot\Imagenes\ImagenesSobremi\" />
   </ItemGroup>
 
