@@ -85,6 +85,13 @@ namespace WebMatias_MVC.Service
             <strong>tipo de Giro:</strong>
             {giro.TipoGiro!.TipoGiroNombre}
         </p>
+        
+        {(string.IsNullOrWhiteSpace(giro.AliasRecibe) ? "" : $@"
+        <p>
+            <strong>Número de cuenta:</strong>
+            {giro.AliasRecibe}
+        </p>
+    ")}
 
 
         <hr>

@@ -264,7 +264,9 @@ namespace WebMatias_MVC.Controllers
                 // y lo deja dentro de giro.GiroId.
 
                 TempData["Mensaje"] =
-                    "El giro se registró correctamente.";
+        "El giro se registró correctamente. " +
+        "Para actualizar la página, hacé clic en 'Tipos de Cambios (Dinero)' en el menú superior. " +
+        "Si no encontrás el correo, revisá Spam o Promociones en Gmail, y Correo no deseado en Outlook/Hotmail.";
             }
             catch (Exception)
             {

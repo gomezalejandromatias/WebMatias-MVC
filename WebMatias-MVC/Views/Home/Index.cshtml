@@ -22,15 +22,107 @@
     <br />
 
   
-    <div class="contenedor-imagenes">
-        <img src="~/imagenes/ChicaViajando.png"
-             alt="Chica viajando"
-             class="imagen1" />
+<div class="contenedor-imagenes">
 
-        <img src="~/imagenes/MatiasCpu.png"
-             alt="Matías trabajando"
-             class="imagen" />
+    <!-- CAROUSEL VIAJES / TERMINAL -->
+    <div id="carouselViajes"
+         class="carousel slide carousel-matias"
+         data-bs-ride="carousel"
+         data-bs-interval="4000">
+
+        <div class="carousel-inner">
+
+            <!-- CHICA VIAJANDO -->
+            <div class="carousel-item active">
+                <img src="~/Imagenes/ChicaViajando.png"
+                     class="imagen"
+                     alt="Chica viajando" />
+            </div>
+
+            <!-- TERMINAL IA -->
+            <div class="carousel-item">
+                <img src="~/Imagenes/TerminalIA.png"
+                     class="imagen"
+                     alt="Terminal de ómnibus El Talar" />
+            </div>
+
+            <!-- TERMINAL IA 1 -->
+            <div class="carousel-item">
+                <img src="~/Imagenes/TerminalIA1.png"
+                     class="imagen"
+                     alt="Micros en Terminal de El Talar" />
+            </div>
+
+        </div>
+
+        <button class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselViajes"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+
+        <button class="carousel-control-next"
+                type="button"
+                data-bs-target="#carouselViajes"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+
     </div>
+
+
+    <!-- CAROUSEL MATIAS -->
+    <div id="carouselMatias"
+         class="carousel slide carousel-matias"
+         data-bs-ride="carousel"
+         data-bs-interval="4000">
+
+        <div class="carousel-inner">
+
+            <div class="carousel-item active">
+                <img src="~/Imagenes/MatiasCpu.png"
+                     class="imagen"
+                     alt="Matías trabajando" />
+            </div>
+
+            <div class="carousel-item">
+                <img src="~/Imagenes/Matias.png"
+                     class="imagen"
+                     alt="Matías" />
+            </div>
+
+            <div class="carousel-item">
+                <img src="~/Imagenes/Matias1.png"
+                     class="imagen"
+                     alt="Matías" />
+            </div>
+
+            <div class="carousel-item">
+                <img src="~/Imagenes/Matias2.png"
+                     class="imagen"
+                     alt="Matías" />
+            </div>
+
+        </div>
+
+        <button class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselMatias"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+
+        <button class="carousel-control-next"
+                type="button"
+                data-bs-target="#carouselMatias"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+
+    </div>
+
+</div>
 
 <footer style="
     margin-top: 80px;

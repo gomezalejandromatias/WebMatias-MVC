@@ -54,9 +54,7 @@
 
                     <form asp-action="CrearGiro" method="post" id="formGiro">
 
-                        <div asp-validation-summary="All"
-                             class="alert alert-danger">
-                        </div>
+                  
 
                         <input type="hidden"
                                name="cotizacionMostrada"
@@ -246,10 +244,20 @@
                                 </select>
                                 <br />
 
-                                <div id="campoAlias" hidden>
-                                    <label asp-for="AliasRecibe">Ingrese el alias</label>
-                                    <input asp-for="AliasRecibe" class="form-control" />
-                                    <span asp-validation-for="AliasRecibe" class="text-danger"></span>
+                                <div id="campoAlias" hidden class="mb-3">
+
+                                    <label asp-for="AliasRecibe"
+                                           class="form-label text-light mb-2">
+                                        Ingrese la cuenta
+                                    </label>
+
+                                    <input asp-for="AliasRecibe"
+                                           class="form-control form-control-lg bg-black text-light border-secondary"
+                                           placeholder="Ingrese el número de cuenta y verifique los datos" />
+
+                                    <span asp-validation-for="AliasRecibe"
+                                          class="text-danger small"></span>
+
                                 </div>
                                 <br />
                                 <br />
@@ -410,7 +418,22 @@
         const opcion = tipoGiro.options[tipoGiro.selectedIndex];
         const nombre = opcion ? opcion.text.trim() : "";
 
-        campoAlias.hidden = nombre !== "UENO BANK";
+        const tiposSinCuenta = [
+            "GIROS TIGO MONEY",
+            "GIROS PERSONAL PAY",
+            "GIROS CLARO",
+            "Mango - Tu Financiera"
+        ];
+
+        // Si todavía no seleccionó nada, ocultar
+        if (tipoGiro.value === "") {
+            campoAlias.hidden = true;
+            return;
+        }
+
+        // Tigo, Personal, Claro y Mango: ocultar.
+        // El resto: mostrar.
+        campoAlias.hidden = tiposSinCuenta.includes(nombre);
     }
 
     tipoGiro.addEventListener("change", mostrarAlias);
