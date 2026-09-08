@@ -14,9 +14,21 @@ namespace WebMatias_MVC.Dao.ViajesDao
 
             try
             {
-
-
-                conexion.SetearConsulta(@"SELECT Id,Origen,Destino,Descripcion,Requisitos,DuracionAproximada,UrlImagen,FechaActualizacion,Activo,HorarioSalida,Servicio,Precio FROM Viajes");
+                conexion.SetearConsulta(@"
+            SELECT 
+                Id,
+                Origen,
+                Destino,
+                Descripcion,
+                Requisitos,
+                DuracionAproximada,
+                ImagenUrl AS UrlImagen,
+                FechaActualizacion,
+                Activo,
+                HorarioSalida,
+                Servicio,
+                Precio
+            FROM Viajes");
 
                 conexion.EjecutarLectura();
 
@@ -25,51 +37,67 @@ namespace WebMatias_MVC.Dao.ViajesDao
                     Viajes aux = new Viajes();
 
                     aux.Id = (int)conexion.Lector()["Id"];
+
                     aux.Origen = (string)conexion.Lector()["Origen"];
+
                     aux.Destino = (string)conexion.Lector()["Destino"];
+
                     aux.Descripcion = (string)conexion.Lector()["Descripcion"];
+
                     aux.Requisitos = (string)conexion.Lector()["Requisitos"];
 
                     if (conexion.Lector()["DuracionAproximada"] != DBNull.Value)
                     {
                         aux.DuracionAproximada =
-                            (string)conexion.Lector()["DuracionAproximada"];
+                            conexion.Lector()["DuracionAproximada"].ToString();
                     }
 
                     if (conexion.Lector()["UrlImagen"] != DBNull.Value)
                     {
-                        aux.UrlImagen = (string)conexion.Lector()["UrlImagen"];
+                        aux.UrlImagen =
+                            conexion.Lector()["UrlImagen"].ToString();
+                    }
+                    else
+                    {
+                        aux.UrlImagen = "";
                     }
 
                     aux.FechaActualizacion =
                         (DateTime)conexion.Lector()["FechaActualizacion"];
 
-                    aux.Activo = (bool)conexion.Lector()["Activo"];
+                    aux.Activo =
+                        (bool)conexion.Lector()["Activo"];
 
                     if (conexion.Lector()["HorarioSalida"] != DBNull.Value)
                     {
-                        aux.HorarioSalida = (TimeSpan)conexion.Lector()["HorarioSalida"];
+                        aux.HorarioSalida =
+                            (TimeSpan)conexion.Lector()["HorarioSalida"];
                     }
 
-                    aux.Servicio = (string)conexion.Lector()["Servicio"];
+                    if (conexion.Lector()["Servicio"] != DBNull.Value)
+                    {
+                        aux.Servicio =
+                            conexion.Lector()["Servicio"].ToString();
+                    }
+                    else
+                    {
+                        aux.Servicio = "";
+                    }
 
-                    aux.Precio = Convert.ToDouble(conexion.Lector()["Precio"]);
+                    if (conexion.Lector()["Precio"] != DBNull.Value)
+                    {
+                        aux.Precio =
+                            Convert.ToDouble(conexion.Lector()["Precio"]);
+                    }
+                    else
+                    {
+                        aux.Precio = 0;
+                    }
 
                     listaviaje.Add(aux);
-
-
-
-
                 }
 
                 return listaviaje;
-
-
-
-
-
-
-
             }
             catch (Exception)
             {
