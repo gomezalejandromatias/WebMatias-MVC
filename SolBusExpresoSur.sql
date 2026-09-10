@@ -352,3 +352,147 @@ VALUES
  'Documentacion al dia','Consultar',
  '/imagenes/imagenesEmpresas/ExpresoSur.jpg',
  GETDATE(),1,'13:30:00',126000,'Cama');
+
+
+ --- REGRESO SOL Y EXPRESO  
+
+ INSERT INTO Viajes
+(Origen, Destino, Descripcion, Requisitos, DuracionAproximada,
+ UrlImagen, FechaActualizacion, Activo, HorarioSalida, Precio, Servicio)
+VALUES
+
+('Villarrica', 'El Talar',
+ 'Servicio de Sol Bus con destino a El Talar',
+ 'Documentacion al dia', 'Consultar',
+ '/imagenes/imagenesEmpresas/SolBus.png',
+ GETDATE(), 1, '10:20:00', 126000, 'Semicama'),
+
+('Mbocayaty', 'El Talar',
+ 'Servicio de Sol Bus con destino a El Talar',
+ 'Documentacion al dia', 'Consultar',
+ '/imagenes/imagenesEmpresas/SolBus.png',
+ GETDATE(), 1, '10:35:00', 126000, 'Semicama'),
+
+('Coronel Oviedo', 'El Talar',
+ 'Servicio de Sol Bus con destino a El Talar',
+ 'Documentacion al dia', 'Consultar',
+ '/imagenes/imagenesEmpresas/SolBus.png',
+ GETDATE(), 1, '11:05:00', 126000, 'Semicama'),
+
+('San Jose de los Arroyos', 'El Talar',
+ 'Servicio de Sol Bus con destino a El Talar',
+ 'Documentacion al dia', 'Consultar',
+ '/imagenes/imagenesEmpresas/SolBus.png',
+ GETDATE(), 1, '11:30:00', 126000, 'Semicama'),
+
+('Itacurubi de la Cordillera', 'El Talar',
+ 'Servicio de Sol Bus con destino a El Talar',
+ 'Documentacion al dia', 'Consultar',
+ '/imagenes/imagenesEmpresas/SolBus.png',
+ GETDATE(), 1, '11:45:00', 126000, 'Semicama'),
+
+('Eusebio Ayala', 'El Talar',
+ 'Servicio de Sol Bus con destino a El Talar',
+ 'Documentacion al dia', 'Consultar',
+ '/imagenes/imagenesEmpresas/SolBus.png',
+ GETDATE(), 1, '12:00:00', 126000, 'Semicama'),
+
+('Caacupe', 'El Talar',
+ 'Servicio de Sol Bus con destino a El Talar',
+ 'Documentacion al dia', 'Consultar',
+ '/imagenes/imagenesEmpresas/SolBus.png',
+ GETDATE(), 1, '12:20:00', 126000, 'Semicama'),
+
+('Ypacarai', 'El Talar',
+ 'Servicio de Sol Bus con destino a El Talar',
+ 'Documentacion al dia', 'Consultar',
+ '/imagenes/imagenesEmpresas/SolBus.png',
+ GETDATE(), 1, '12:35:00', 126000, 'Semicama'),
+
+('Itaugua', 'El Talar',
+ 'Servicio de Sol Bus con destino a El Talar',
+ 'Documentacion al dia', 'Consultar',
+ '/imagenes/imagenesEmpresas/SolBus.png',
+ GETDATE(), 1, '12:45:00', 126000, 'Semicama'),
+
+('Capiata', 'El Talar',
+ 'Servicio de Sol Bus con destino a El Talar',
+ 'Documentacion al dia', 'Consultar',
+ '/imagenes/imagenesEmpresas/SolBus.png',
+ GETDATE(), 1, '13:00:00', 126000, 'Semicama'),
+
+('San Lorenzo', 'El Talar',
+ 'Servicio de Sol Bus con destino a El Talar',
+ 'Documentacion al dia', 'Consultar',
+ '/imagenes/imagenesEmpresas/SolBus.png',
+ GETDATE(), 1, '13:10:00', 126000, 'Semicama'),
+
+('Asuncion', 'El Talar',
+ 'Servicio de Sol Bus con destino a El Talar',
+ 'Documentacion al dia', 'Consultar',
+ '/imagenes/imagenesEmpresas/SolBus.png',
+ GETDATE(), 1, '14:20:00', 126000, 'Semicama'),
+
+('Desvio de Luque', 'El Talar',
+ 'Servicio de Sol Bus con destino a El Talar',
+ 'Documentacion al dia', 'Consultar',
+ '/imagenes/imagenesEmpresas/SolBus.png',
+ GETDATE(), 1, '14:40:00', 126000, 'Semicama'),
+
+('Loma Pyta', 'El Talar',
+ 'Servicio de Sol Bus con destino a El Talar',
+ 'Documentacion al dia', 'Consultar',
+ '/imagenes/imagenesEmpresas/SolBus.png',
+ GETDATE(), 1, '14:50:00', 126000, 'Semicama'),
+
+('Mariano Roque Alonso', 'El Talar',
+ 'Servicio de Sol Bus con destino a El Talar',
+ 'Documentacion al dia', 'Consultar',
+ '/imagenes/imagenesEmpresas/SolBus.png',
+ GETDATE(), 1, '15:00:00', 126000, 'Semicama');
+
+INSERT INTO Viajes
+(Origen, Destino, Descripcion, Requisitos, DuracionAproximada,
+ UrlImagen, FechaActualizacion, Activo, HorarioSalida, Precio, Servicio)
+VALUES
+
+('Asuncion','El Talar',
+ 'Servicio de Expreso Sur desde Asuncion con destino a El Talar',
+ 'Documentacion al dia','Consultar',
+ '/imagenes/imagenesEmpresas/ExpresoSur.jpg',
+ GETDATE(),1,'13:30:00',126000,'Semicama'),
+
+('Luque','El Talar',
+ 'Servicio de Expreso Sur desde Luque con destino a El Talar',
+ 'Documentacion al dia','Consultar',
+ '/imagenes/imagenesEmpresas/ExpresoSur.jpg',
+ GETDATE(),1,'13:30:00',126000,'Semicama'),
+
+('Asuncion Terminal','El Talar',
+ 'Servicio de Expreso Sur desde Asuncion Terminal con destino a El Talar',
+ 'Documentacion al dia','Consultar',
+ '/imagenes/imagenesEmpresas/ExpresoSur.jpg',
+ GETDATE(),1,'13:30:00',126000,'Semicama'),
+
+('Mariano Roque Alonso','El Talar',
+ 'Servicio de Expreso Sur desde Mariano Roque Alonso con destino a El Talar',
+ 'Documentacion al dia','Consultar',
+ '/imagenes/imagenesEmpresas/ExpresoSur.jpg',
+ GETDATE(),1,'13:30:00',126000,'Semicama'),
+
+('Campana','El Talar',
+ 'Servicio de Expreso Sur desde Campana con destino a El Talar',
+ 'Documentacion al dia','Consultar',
+ '/imagenes/imagenesEmpresas/ExpresoSur.jpg',
+ GETDATE(),1,'13:30:00',126000,'Semicama'),
+
+('Pacheco Terminal','El Talar',
+ 'Servicio de Expreso Sur desde Pacheco Terminal con destino a El Talar',
+ 'Documentacion al dia','Consultar',
+ '/imagenes/imagenesEmpresas/ExpresoSur.jpg',
+ GETDATE(),1,'13:30:00',126000,'Semicama');
+
+ UPDATE Viajes
+SET Precio = 150000,
+    FechaActualizacion = GETDATE()
+WHERE Descripcion LIKE '%Expreso Sur%';

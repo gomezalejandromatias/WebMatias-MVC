@@ -71,52 +71,10 @@ TRUNCATE TABLE Viajes;
 
 ----ACA INGRESO INFO DE LOS SERVICIOS
 
-INSERT INTO Viajes
-(Origen, Destino, Descripcion, Requisitos, DuracionAproximada, UrlImagen, FechaActualizacion, Activo, HorarioSalida, Precio, Servicio)
-VALUES
--- SEMICAMA
-('El Talar', 'Posadas', 'Directo a Misiones', 'Documentacion al dia', '11 hs',
-'/imagenes/imagenesEmpresas/RioUruguay.png', GETDATE(), 1, '14:30:00', 86400, 'Semicama'),
-
-('El Talar', 'Posadas', 'Directo a Misiones', 'Documentacion al dia', '11 hs',
-'/imagenes/imagenesEmpresas/RioUruguay.png', GETDATE(), 1, '18:35:00', 86400, 'Semicama'),
-
-('El Talar', 'Posadas', 'Directo a Misiones', 'Documentacion al dia', '11 hs',
-'/imagenes/imagenesEmpresas/RioUruguay.png', GETDATE(), 1, '21:05:00', 86400, 'Semicama'),
-
--- CAMA
-('El Talar', 'Posadas', 'Directo a Misiones', 'Documentacion al dia', '11 hs',
-'/imagenes/imagenesEmpresas/RioUruguay.png', GETDATE(), 1, '14:30:00', 104000, 'Cama'),
-
-('El Talar', 'Posadas', 'Directo a Misiones', 'Documentacion al dia', '11 hs',
-'/imagenes/imagenesEmpresas/RioUruguay.png', GETDATE(), 1, '18:35:00', 104000, 'Cama'),
-
-('El Talar', 'Posadas', 'Directo a Misiones', 'Documentacion al dia', '11 hs',
-'/imagenes/imagenesEmpresas/RioUruguay.png', GETDATE(), 1, '21:05:00', 104000, 'Cama');
 
 
-INSERT INTO Viajes
-(Origen, Destino, Descripcion, Requisitos, DuracionAproximada, UrlImagen, FechaActualizacion, Activo, HorarioSalida, Precio, Servicio)
-VALUES
--- SEMICAMA
-('El Talar', 'Puerto Iguazu', 'Directo a Misiones', 'Documentacion al dia', '11 hs',
-'/imagenes/imagenesEmpresas/RioUruguay.png', GETDATE(), 1, '14:30:00', 110000, 'Semicama'),
 
-('El Talar', 'Puerto Iguazu', 'Directo a Misiones', 'Documentacion al dia', '11 hs',
-'/imagenes/imagenesEmpresas/RioUruguay.png', GETDATE(), 1, '18:35:00', 110000, 'Semicama'),
 
-('El Talar', 'Puerto Iguazu', 'Directo a Misiones', 'Documentacion al dia', '11 hs',
-'/imagenes/imagenesEmpresas/RioUruguay.png', GETDATE(), 1, '21:05:00', 110000, 'Semicama'),
-
--- CAMA
-('El Talar', 'Puerto Iguazu', 'Directo a Misiones', 'Documentacion al dia', '11 hs',
-'/imagenes/imagenesEmpresas/RioUruguay.png', GETDATE(), 1, '14:30:00', 132000, 'Cama'),
-
-('El Talar', 'Puerto Iguazu', 'Directo a Misiones', 'Documentacion al dia', '11 hs',
-'/imagenes/imagenesEmpresas/RioUruguay.png', GETDATE(), 1, '18:35:00', 132000, 'Cama'),
-
-('El Talar', 'Puerto Iguazu', 'Directo a Misiones', 'Documentacion al dia', '11 hs',
-'/imagenes/imagenesEmpresas/RioUruguay.png', GETDATE(), 1, '21:05:00', 132000, 'Cama');
 
 
 INSERT INTO Viajes
@@ -168,7 +126,6 @@ VALUES
 '/imagenes/imagenesEmpresas/Yuteña.webp', GETDATE(), 1, '17:30:00', 140000, 'Semicama');
 
 
-select *from 
 
 --TABALA GIROS
 
@@ -215,6 +172,8 @@ add
 
 ---La N indica que el texto es Unicode, para conservar caracteres como tildes, la ñ o letras de otros idiomas.
 
+
+
 INSERT INTO TiposGiro (TiposGiro)
 VALUES
 (N'AGENCIA 3J'),
@@ -238,7 +197,7 @@ VALUES
 (N'UENO BANK'),
 (N'ZETA Banco');
 
-select *from Giros
+
 
 CREATE TABLE EmailsEnviados
 (
@@ -273,3 +232,5 @@ CREATE TABLE EmailsEnviados
             )
         )
 );
+
+
