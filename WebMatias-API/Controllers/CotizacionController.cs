@@ -10,15 +10,20 @@ namespace WebMatias_API.Controllers
     [ApiController]
     public class CotizacionController : ControllerBase
     {
-  
+          private readonly CotizacionService _citizacionService;
+
+        public CotizacionController(CotizacionService cotizacionService)
+        {
+             _citizacionService = cotizacionService;
+        }
 
         [HttpGet]
         public async Task<decimal> Get()
         {
 
-           CotizacionService cotizacionService = new CotizacionService();
+          
 
-              decimal valor = await cotizacionService.ObtenerCotizacion();
+              decimal valor = await _citizacionService.ObtenerCotizacion();
 
             return valor;
 

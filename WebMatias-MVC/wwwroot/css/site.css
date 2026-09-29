@@ -172,25 +172,7 @@ body {
     font-weight: 700;
 }
 
-@media (max-width: 700px) {
 
-    .viaje-card {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .flecha {
-        transform: rotate(90deg);
-    }
-
-    .viajes-titulo h1 {
-        font-size: 32px;
-    }
-
-    .viaje-empresa {
-        align-self: center;
-    }
-}
 
 
 
@@ -392,5 +374,341 @@ h1 {
         object-fit: cover;
         flex-shrink: 0;
     }
+
+
+/* ==========================
+   CELULARES
+   ========================== */
+@media (max-width: 768px) {
+
+    .contenedor-imagenes {
+        width: 100%;
+        padding: 10px;
+        gap: 20px;
+    }
+
+    .carousel-matias {
+        width: 100%;
+        max-width: 100%;
+    }
+
+        .carousel-matias .imagen {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+}
+
+/* =========================
+   SOBRE MI - CELULAR
+   ========================= */
+@media (max-width: 768px) {
+
+    .contenedor-oficinas {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 15px;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+
+    .imagen-oficina {
+        width: 100%;
+        max-width: 420px;
+        height: auto;
+        object-fit: contain;
+    }
+
+    .titulo-sobremi {
+        font-size: 28px;
+        line-height: 1.2;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+
+    .texto-sobremi {
+        font-size: 16px;
+        line-height: 1.6;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+}
+
+/* =========================
+   MENU - CELULAR Y TABLET
+   ========================= */
+@media (max-width: 991.98px) {
+
+    .navbar-collapse {
+        width: 100%;
+    }
+
+    .navbar-nav {
+        width: 100%;
+        align-items: flex-start;
+        margin-left: 0 !important;
+        padding-left: 0;
+    }
+
+        .navbar-nav .nav-item {
+            width: 100%;
+        }
+
+        .navbar-nav .nav-link {
+            width: 100%;
+            margin: 0;
+            padding: 10px 0 !important;
+            text-align: left;
+        }
+}
+
+/* ===== SECCIÓN REQUISITOS ===== */
+
+.requisitos-fondo {
+    background-image: url('/Imagenes/ImagenesRequisitos/Requistos.png');
+    background-size: cover;
+    background-position: center;
+    padding: 150px;
+    color: white;
+    text-align: center;
+}
+
+.requisitos-contenido {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+}
+
+
+/* ===== CELULAR VERTICAL ===== */
+
+@media (max-width: 768px) {
+
+    .requisitos-fondo {
+        padding: 60px 20px;
+    }
+
+    .requisitos-contenido {
+        width: 90%;
+        margin: 0 auto;
+    }
+}
+
+
+/* ===== CELULAR HORIZONTAL ===== */
+
+@media (max-width: 950px) and (orientation: landscape) {
+
+    .requisitos-fondo {
+        padding: 50px 80px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .requisitos-contenido {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+/* =====================================================
+   CELULAR
+   Organiza la tarjeta para pantallas chicas
+   ===================================================== */
+@media (max-width: 700px) {
+
+    /* Tarjeta completa */
+    .viaje-card {
+        display: grid;
+        /* 4 columnas:
+           logo | información | flecha | información */
+        grid-template-columns: 110px 1fr 35px 1fr;
+        /* Distribución de cada elemento */
+        grid-template-areas:
+            "logo origen flecha destino"
+            "logo horario servicio precio";
+        gap: 18px 12px;
+        padding: 20px;
+        align-items: center;
+        /* Evita que algo salga del rectángulo */
+        overflow: hidden;
+    }
+
+
+    /* =========================
+       LOGO DE LA EMPRESA
+       ========================= */
+    .viaje-empresa {
+        grid-area: logo;
+        justify-self: start;
+    }
+
+    .logo-empresa {
+        width: 100px;
+        max-width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
+
+
+    /* =========================
+       ORIGEN
+       ========================= */
+    .origen {
+        grid-area: origen;
+        min-width: 0;
+    }
+
+
+    /* =========================
+       FLECHA
+       ========================= */
+    .flecha {
+        grid-area: flecha;
+        transform: none;
+        justify-self: center;
+        font-size: 24px;
+    }
+
+
+    /* =========================
+       DESTINO
+       ========================= */
+    .destino {
+        grid-area: destino;
+        min-width: 0;
+    }
+
+
+    /* =========================
+       HORARIO
+       ========================= */
+    .viaje-horario {
+        grid-area: horario;
+        min-width: 0;
+    }
+
+
+    /* =====================================================
+   SERVICIO
+   ===================================================== */
+    .bloque-servicio {
+        grid-area: servicio;
+        min-width: 0;
+        justify-self: start;
+    }
+
+
+    /* =====================================================
+   PRECIO
+   ===================================================== */
+    .bloque-precio {
+        grid-area: precio;
+        min-width: 0;
+        justify-self: end;
+        /* Separa el precio del nombre del servicio */
+        margin-left: 20px;
+    }
+
+
+    /* Títulos: ORIGEN, DESTINO, etc. */
+    .viaje-label {
+        font-size: 10px;
+    }
+
+
+    /* El Talar, Puerto Rico, etc. */
+    .viaje-valor {
+        font-size: 16px;
+    }
+
+
+    /* Horario */
+    .horario {
+        font-size: 17px;
+        white-space: nowrap;
+    }
+
+
+    /* Semicama / Cama */
+    .servicio {
+        font-size: 15px;
+        white-space: nowrap;
+    }
+
+
+    /* Precio */
+    .precio {
+        font-size: 16px;
+        white-space: nowrap;
+    }
+}
+
+
+/*CSS PARA VISTA DICIEMBRE*/
+
+.navidad-hero {
+    min-height: 600px;
+    background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.55) ), url('/imagenes/ImagenNavidad.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 40px;
+}
+
+
+.navidad-contenido {
+    text-align: center;
+    color: white;
+    background: rgba(0, 0, 0, 0.45);
+    padding: 40px;
+    border-radius: 20px;
+    max-width: 750px;
+}
+
+
+    .navidad-contenido h1 {
+        font-size: 45px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+
+    .navidad-contenido h2 {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+
+    .navidad-contenido p {
+        font-size: 20px;
+        margin-bottom: 30px;
+    }
+
+
+.btn-telefono {
+    display: inline-block;
+    background-color: #198754;
+    color: white;
+    padding: 15px 35px;
+    font-size: 22px;
+    font-weight: bold;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+
+    .btn-telefono:hover {
+        transform: scale(1.07);
+        color: white;
+        background-color: #157347;
+    }
+
 
 

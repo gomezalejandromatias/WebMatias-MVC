@@ -19,7 +19,11 @@
 
     <div class="viajes-titulo">
         <h1>Buscá tu próximo viaje</h1>
-        <p>Ingresá tu origen y destino para consultar los servicios disponibles.</p>
+
+        <p>
+            Ingresá tu origen y destino para consultar los servicios disponibles.
+            Podés escribir solo las primeras letras, por ejemplo: <strong>“Asu”</strong> para buscar Asunción.
+        </p>
     </div>
 
     <div class="buscador-viajes">
@@ -40,7 +44,7 @@
 
                 @if (Model != null)
                 {
-                    foreach (var item in Model.Select(o=>o.Origen).Distinct())
+                    foreach (var item in Model.Select(o => o.Origen).Distinct())
                     {
                         <option value="@item"></option>
                     }
@@ -67,16 +71,16 @@
 
             <datalist id="listaDestino">
 
-                    @if(Model != null)
+                @if (Model != null)
+                {
+                    @foreach (var item in Model.Select(d => d.Destino).Distinct())
                     {
-                        @foreach (var item in Model.Select(d => d.Destino).Distinct())
-                        {
-                            <option value="@item"></option>
-                        }
-
-
-
+                        <option value="@item"></option>
                     }
+
+
+
+                }
 
 
 
@@ -91,14 +95,14 @@
 
     </div>
 
-                @if(Model!=null && Model.Count == 0)
-                {
-                  <label>No se encontraron viajes</label>
+    @if (Model != null && Model.Count == 0)
+    {
+        <label>No se encontraron viajes</label>
 
 
-                }
+    }
+
              
-
     @if (Model != null && Model.Count > 0)
     {
 
@@ -121,7 +125,7 @@
                              class="logo-empresa" />
                     </div>
 
-                    <div class="viaje-dato">
+                    <div class="viaje-dato origen">
                         <span class="viaje-label">ORIGEN</span>
                         <span class="viaje-valor">@item.Origen</span>
                     </div>
@@ -130,7 +134,7 @@
                         →
                     </div>
 
-                    <div class="viaje-dato">
+                    <div class="viaje-dato destino">
                         <span class="viaje-label">DESTINO</span>
                         <span class="viaje-valor">@item.Destino</span>
                     </div>
@@ -142,61 +146,62 @@
                         </span>
                     </div>
 
-                    <div class="viaje-servicio">
-
-                        <span class="viaje-label">Sericio</span>
+                    <div class="viaje-servicio bloque-servicio">
+                        <span class="viaje-label">Servicio</span>
                         <span class="servicio">@item.Servicio</span>
-
                     </div>
 
-                    <div class="viaje-servicio">
+                    <div class="viaje-servicio bloque-precio">
                         <span class="viaje-label">Precio</span>
                         <span class="precio">@item.Precio</span>
-
                     </div>
 
-                    <br />
-                    <br />
+                </div>
+
+            }
+
+            <br />
+            <br />
 
               
 
 
                  
 
-                </div>
+        </div>
 
               
                
 
-            }
-
-            <button type="button" class="btn btn-primary" onclick="limpiar()">
-
-                Limpiar
-
-            </button>
-        </div>
-
-
-
     }
+
+    <button type="button" class="btn btn-primary" onclick="limpiar()">
+
+        Limpiar
+
+    </button>
+</div>
+
+
+
+    
 
   
 
-    <br />
-    <br />
+<br />
+<br />
 
-    <p style="color: lightpink">
-        ¿Querés conocer nuestras promociones o comprar un pasaje?
-        Comunicate con nosotros por WhatsApp para recibir atención personalizada:
+<p style="color: lightpink">
+    ¿Querés conocer nuestras promociones o comprar un pasaje?
+    Comunicate con nosotros por WhatsApp para recibir atención personalizada:
 
-        <a href="https://wa.me/5491133153864?text=Hola%2C%20quiero%20consultar%20por%20promociones%20o%20compra%20de%20pasajes"
-           class="text-light"
-           target="_blank">
-            11 3315-3864
-        </a>
-    </p>
-</div>
+    <a href="https://wa.me/5491133153864?text=Hola%2C%20quiero%20consultar%20por%20promociones%20o%20compra%20de%20pasajes"
+       class="text-light"
+       target="_blank">
+        11 3315-3864
+    </a>
+</p>
+
 
 
 <script>

@@ -1,15 +1,23 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using Newtonsoft.Json;
+using System.Net.Http.Headers;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Json.Serialization;
 using WebMatias_API.Models;
-using Newtonsoft.Json;
 
 namespace WebMatias_API.Service
 {
     public class CotizacionService
     {
+        private readonly string? _ApiKey;
 
+        public CotizacionService(IConfiguration configuration)
+        {
 
-           public async Task <decimal>  ObtenerCotizacion()
+             _ApiKey = configuration["GmApi:ApiKey"];
+
+        }
+
+        public async Task <decimal>  ObtenerCotizacion()
            {
 
 
@@ -19,7 +27,11 @@ namespace WebMatias_API.Service
 
             // Endpoint: solicita la cotización de pesos argentinos a guaraníes
             string url =
-                "https://api.frankfurter.dev/v2/rate/ARS/PYG";
+                   "https://rb.girosmovil.com/api/v1/cotizaciones?monedaOrigen=ARS&monedaDestino=PYG";
+
+
+            cliente.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("Bearer", _ApiKey);
 
 
             // Realiza una petición GET y espera la respuesta de Frankfurter
@@ -37,12 +49,12 @@ namespace WebMatias_API.Service
 
 
             // Convierte el JSON en un objeto de C# usando la clase como molde
-            RespuestaCotizacion cotizacion =
-                JsonConvert.DeserializeObject<RespuestaCotizacion>(json);
+            RespuestaGM cotizacion =
+                JsonConvert.DeserializeObject<RespuestaGM>(json);
 
 
             // Devuelve solamente el valor decimal de la cotización
-            return cotizacion.Valor;
+            return cotizacion.Data[0].CotizacionValor;
 
 
            }

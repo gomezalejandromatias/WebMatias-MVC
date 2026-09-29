@@ -28,6 +28,13 @@ namespace WebMatias_MVC.Controllers
          
         }
 
+        public IActionResult MostrarVistaDiciembre()
+        {
+
+            return View("ViajesDiciembre");
+
+        }
+
 
         public IActionResult Viajes(string Origen,string Destino)
         {
