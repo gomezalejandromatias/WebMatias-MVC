@@ -11,7 +11,7 @@ namespace WebMatias_API.Service
         public MercadoPagoService(IConfiguration configuration)
         {
                 
-            _accestoken = configuration ["GmApi:AccessToken"];
+            _accestoken = configuration ["MercadoPago:AccessToken"];
 
 
         }

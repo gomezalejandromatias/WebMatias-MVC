@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics.CodeAnalysis;
 using WebMatias_API.Models;
 using WebMatias_API.Service;
 
@@ -11,10 +12,13 @@ namespace WebMatias_API.Controllers
     public class CotizacionController : ControllerBase
     {
           private readonly CotizacionService _citizacionService;
+        
 
         public CotizacionController(CotizacionService cotizacionService)
         {
              _citizacionService = cotizacionService;
+
+            
         }
 
         [HttpGet]
@@ -31,6 +35,7 @@ namespace WebMatias_API.Controllers
 
         }
 
+
         // GET api/<CotizacionController>/5
         [HttpGet("{id}")]
         public string Get(int id)
@@ -42,6 +47,8 @@ namespace WebMatias_API.Controllers
         [HttpPost]
         public void Post([FromBody] string value)
         {
+
+
         }
 
         // PUT api/<CotizacionController>/5
