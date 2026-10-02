@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebMatias_API.Models;
 using WebMatias_API.Service;
 
 namespace WebMatias_API.Controllers
 {
+        [Route("api/[controller]")]
+        [ApiController]
     public class MercadoPagoController : Controller
     {
         private readonly MercadoPagoService _mercadoPagoService;
@@ -11,6 +14,18 @@ namespace WebMatias_API.Controllers
         public MercadoPagoController(MercadoPagoService mercadoPagoService)
         {
             _mercadoPagoService = mercadoPagoService;
+        }
+
+
+        [HttpPost]
+
+        public async Task<MercadoPagoResponse> post (int id,decimal monto)
+        {
+
+            MercadoPagoResponse mercadoPagoResponse = await _mercadoPagoService.CrearPreferencia(id, monto);
+
+            return mercadoPagoResponse;
+
         }
 
         // GET: MercadoPagoController

@@ -29,34 +29,63 @@ namespace WebMatias_API.Service
 
 
             // Creamos un objeto anónimo llamado "preferencia".
-            // Este objeto contendrá los datos que después enviaremos a Mercado Pago.
+            // Este objeto representa toda la información que vamos a enviar
+            // a Mercado Pago para crear la preferencia de pago.
             var preferencia = new
             {
-                // "items" es una propiedad de preferencia.
-                // Mercado Pago espera un array porque puede haber uno o varios productos/servicios.
+                // "items" contiene lo que le estamos cobrando al cliente.
+                // Mercado Pago espera un array porque una preferencia
+                // puede contener uno o varios productos o servicios.
                 items = new[]
                 {
-        // Creamos un objeto anónimo dentro del array.
-        // Este objeto representa lo que le estamos cobrando al cliente.
+        // Creamos un objeto que representa nuestro giro.
         new
         {
-            // Descripción del servicio que estamos cobrando.
-            // Usamos giroId para identificar a qué giro pertenece el pago.
+            // Descripción que verá el cliente en Mercado Pago.
+            // Agregamos el ID para saber a qué giro corresponde el pago.
             title = $"Giro #{giroId}",
 
-            // Cantidad de servicios/productos que estamos cobrando.
-            // En nuestro caso es un solo giro.
+            // Cantidad de productos o servicios.
+            // Como estamos cobrando un solo giro, utilizamos 1.
             quantity = 1,
 
-            // Moneda en la que vamos a cobrar.
-            // ARS = pesos argentinos.
+            // Moneda utilizada para realizar el cobro.
+            // ARS significa pesos argentinos.
             currency_id = "ARS",
 
-            // Precio que debe pagar el cliente.
-            // Este valor viene del MontoTotal calculado por nuestro sistema.
+            // Precio del giro.
+            // Recibimos este valor mediante el parámetro montoTotal
+            // del método CrearPreferencia().
             unit_price = montoTotal
         }
-    }
+    },
+
+
+                // "back_urls" indica a Mercado Pago a qué URL de nuestro sistema
+                // debe regresar el cliente después de realizar el pago.
+                //
+                // Tenemos una URL diferente dependiendo del resultado
+                // que haya tenido el pago.
+                back_urls = new
+                {
+                    // Si el pago fue aprobado, vuelve a la pantalla CrearGiro
+                    success = "https://mural-nullify-lethargic.ngrok-free.dev/Giro/CrearGiro",
+
+                    // Por ahora también podemos volver a CrearGiro
+                    failure = "https://mural-nullify-lethargic.ngrok-free.dev/Giro/CrearGiro",
+
+                    // Si queda pendiente, también vuelve a CrearGiro
+                    pending = "https://mural-nullify-lethargic.ngrok-free.dev/Giro/CrearGiro"
+                },
+
+
+                // "auto_return" controla el regreso automático
+                // desde Mercado Pago hacia nuestra aplicación.
+                //
+                // El valor "approved" indica que, cuando el pago sea aprobado,
+                // Mercado Pago debe redirigir automáticamente al cliente
+                // hacia la URL indicada en "success".
+                auto_return = "approved"
             };
 
             string jsonPreferencia =

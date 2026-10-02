@@ -14,10 +14,13 @@ namespace WebMatias_MVC.Controllers
         public readonly CotizacionApiService _cotizacionApiService;
         public readonly EmailService _emailService;
 
-        public GiroController(CotizacionApiService cotizacionApiService,EmailService emailService)
+        public readonly MercadoPagoApiService _mercadoPagoApiService;
+
+        public GiroController(CotizacionApiService cotizacionApiService,EmailService emailService,MercadoPagoApiService mercadoPagoApiService)
         {
             _cotizacionApiService = cotizacionApiService;
             _emailService = emailService;
+            _mercadoPagoApiService = mercadoPagoApiService;
         }
 
 
@@ -183,6 +186,8 @@ namespace WebMatias_MVC.Controllers
                 giro.ComisionSistema;
 
 
+            
+
             // =========================================================
             // 6. PREPARAR LOS OBJETOS QUE VAMOS A UTILIZAR
             // =========================================================
@@ -259,6 +264,10 @@ namespace WebMatias_MVC.Controllers
             try
             {
                 giroDao.GuardarGiro(giro);
+                MercadoPagoResponse mercadoPagoResponse;
+
+              mercadoPagoResponse =  await _mercadoPagoApiService.ReferenciaMercadoPago(giro.GiroId, giro.MontoTotal);
+
 
                 // GuardarGiro recupera el ID generado por SQL
                 // y lo deja dentro de giro.GiroId.
@@ -269,6 +278,7 @@ namespace WebMatias_MVC.Controllers
              "El giro puede demorar hasta 40 minutos. " +
              "Si pasado ese tiempo no se acredita, comunicate por teléfono o por email a mati.gorrriti1@gmail.com. " +
              "Si no encontrás el correo, revisá Spam o Promociones en Gmail, y Correo no deseado en Outlook/Hotmail.";
+                return Redirect(mercadoPagoResponse.InitPoint);
             }
             catch (Exception)
             {
@@ -339,6 +349,8 @@ namespace WebMatias_MVC.Controllers
 
             return RedirectToAction("CrearGiro");
         }
+
+ 
 
         // GET: GiroController/Details/5
         public ActionResult Details(int id)

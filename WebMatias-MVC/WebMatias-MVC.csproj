@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>WebMatias_MVC</RootNamespace>
+    <UserSecretsId>96960086-65a0-4943-b759-b8d7e0afa5ba</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

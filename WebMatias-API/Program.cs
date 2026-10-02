@@ -14,6 +14,7 @@ builder.Services.AddOpenApi();
 //“Me pediste crear un CotizacionService, pero su constructor exige un IConfiguration. ¿Dónde está?”
 //lo normal es que la inyección de dependencias se encargue de eso.
 builder.Services.AddScoped<CotizacionService>();
+builder.Services.AddScoped<MercadoPagoService>();
 
 
 var app = builder.Build();
