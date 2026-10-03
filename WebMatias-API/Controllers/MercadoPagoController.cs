@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebMatias_API.Dao.GiroDao;
 using WebMatias_API.Models;
 using WebMatias_API.Service;
+
 
 namespace WebMatias_API.Controllers
 {
@@ -19,12 +21,17 @@ namespace WebMatias_API.Controllers
 
         [HttpPost]
 
-        public async Task<MercadoPagoResponse> post (int id,decimal monto)
+        public async Task<MercadoPagoResponse> post (int id)
         {
+            GiroDao girodao = new GiroDao();
+            Giro giro = girodao.BuscarGiro(id);
 
-            MercadoPagoResponse mercadoPagoResponse = await _mercadoPagoService.CrearPreferencia(id, monto);
+            decimal momtototal = giro.MontoTotal;
 
-            return mercadoPagoResponse;
+            // 3. Recién acá hablamos con Mercado Pago
+            return await _mercadoPagoService.CrearPreferencia(
+                giro.GiroId,
+                giro.MontoTotal);
 
         }
 

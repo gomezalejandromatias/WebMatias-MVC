@@ -14,7 +14,7 @@ namespace WebMatias_MVC.Service
                 
         }
 
-        public async Task<MercadoPagoResponse> ReferenciaMercadoPago(int id , decimal monto)
+        public async Task<MercadoPagoResponse> ReferenciaMercadoPago(int giroId)
         {
 
 
@@ -29,7 +29,7 @@ namespace WebMatias_MVC.Service
             // El null significa que en este caso no estamos enviando contenido en el BODY.
             HttpResponseMessage response =
                 await _httpClient.PostAsync(
-                    $"api/MercadoPago?id={id}&monto={monto}",
+                    $"api/MercadoPago?id={giroId}",
                     null
                 );
 

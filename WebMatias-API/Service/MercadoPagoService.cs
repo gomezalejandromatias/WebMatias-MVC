@@ -58,15 +58,18 @@ namespace WebMatias_API.Service
             // del método CrearPreferencia().
             unit_price = montoTotal
         }
+        
     },
+                external_reference = giroId.ToString(),
+                notification_url = "https://TU-NGROK/api/Webhook",
 
 
-                // "back_urls" indica a Mercado Pago a qué URL de nuestro sistema
-                // debe regresar el cliente después de realizar el pago.
-                //
-                // Tenemos una URL diferente dependiendo del resultado
-                // que haya tenido el pago.
-                back_urls = new
+            // "back_urls" indica a Mercado Pago a qué URL de nuestro sistema
+            // debe regresar el cliente después de realizar el pago.
+            //
+            // Tenemos una URL diferente dependiendo del resultado
+            // que haya tenido el pago.
+            back_urls = new
                 {
                     // Si el pago fue aprobado, vuelve a la pantalla CrearGiro
                     success = "https://mural-nullify-lethargic.ngrok-free.dev/Giro/CrearGiro",
@@ -129,6 +132,45 @@ namespace WebMatias_API.Service
 
 
         }
+
+        public async Task<MercadoPagoPago>ObtenerPago(string pagoId)
+        {
+            // Creo el cliente HTTP
+            HttpClient cliente = new HttpClient();
+
+            // Armo la URL con el ID del pago que llegó en el webhook
+            string url = $"https://api.mercadopago.com/v1/payments/{pagoId}";
+
+            // Me autentico en Mercado Pago
+            cliente.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue(
+                    "Bearer",
+                    _accestoken
+                );
+
+            // Hago el GET a Mercado Pago
+            HttpResponseMessage respuesta =
+                await cliente.GetAsync(url);
+
+            // Si Mercado Pago respondió con error, lanza excepción
+            respuesta.EnsureSuccessStatusCode();
+
+            // Leo el JSON que devolvió Mercado Pago
+            string json =
+                await respuesta.Content.ReadAsStringAsync();
+
+            // Convierto el JSON a nuestro objeto C#
+            MercadoPagoPago pago =
+                JsonConvert.DeserializeObject<MercadoPagoPago>(json);
+
+            // Devuelvo el pago al Controller
+            return pago;
+
+
+          
+        }
+
+
 
 
 

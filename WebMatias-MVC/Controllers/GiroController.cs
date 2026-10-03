@@ -266,7 +266,7 @@ namespace WebMatias_MVC.Controllers
                 giroDao.GuardarGiro(giro);
                 MercadoPagoResponse mercadoPagoResponse;
 
-              mercadoPagoResponse =  await _mercadoPagoApiService.ReferenciaMercadoPago(giro.GiroId, giro.MontoTotal);
+              mercadoPagoResponse =  await _mercadoPagoApiService.ReferenciaMercadoPago(giro.GiroId);
 
 
                 // GuardarGiro recupera el ID generado por SQL
