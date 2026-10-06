@@ -1,6 +1,9 @@
 ﻿using Newtonsoft.Json;
+using System.Security.Cryptography;
 using System.Text;
 using WebMatias_API.Models;
+
+using System.Text;
 
 namespace WebMatias_API.Service
 {
@@ -8,24 +11,28 @@ namespace WebMatias_API.Service
     {
         public string? _accestoken;
 
+        public string? _webhookSecret;
+
         public MercadoPagoService(IConfiguration configuration)
         {
-                
-            _accestoken = configuration ["MercadoPago:AccessToken"];
+
+            _accestoken = configuration["MercadoPago:AccessToken"];
+
+            _webhookSecret = configuration["MercadoPago:WebhookSecret"];
 
 
         }
 
-        public async Task<MercadoPagoResponse> CrearPreferencia(int giroId,decimal montoTotal)
+        public async Task<MercadoPagoResponse> CrearPreferencia(int giroId, decimal montoTotal)
         {
 
             HttpClient cliente = new HttpClient();
 
             string url = "https://api.mercadopago.com/checkout/preferences";
 
-         
 
-            cliente.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer",_accestoken);
+
+            cliente.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _accestoken);
 
 
             // Creamos un objeto anónimo llamado "preferencia".
@@ -58,18 +65,18 @@ namespace WebMatias_API.Service
             // del método CrearPreferencia().
             unit_price = montoTotal
         }
-        
+
     },
                 external_reference = giroId.ToString(),
                 notification_url = "https://TU-NGROK/api/Webhook",
 
 
-            // "back_urls" indica a Mercado Pago a qué URL de nuestro sistema
-            // debe regresar el cliente después de realizar el pago.
-            //
-            // Tenemos una URL diferente dependiendo del resultado
-            // que haya tenido el pago.
-            back_urls = new
+                // "back_urls" indica a Mercado Pago a qué URL de nuestro sistema
+                // debe regresar el cliente después de realizar el pago.
+                //
+                // Tenemos una URL diferente dependiendo del resultado
+                // que haya tenido el pago.
+                back_urls = new
                 {
                     // Si el pago fue aprobado, vuelve a la pantalla CrearGiro
                     success = "https://mural-nullify-lethargic.ngrok-free.dev/Giro/CrearGiro",
@@ -113,7 +120,7 @@ namespace WebMatias_API.Service
 
 
 
-            HttpResponseMessage respuesta = await cliente.PostAsync(url,contenido);
+            HttpResponseMessage respuesta = await cliente.PostAsync(url, contenido);
 
             // Verifica que la API haya respondido correctamente
             respuesta.EnsureSuccessStatusCode();
@@ -133,7 +140,7 @@ namespace WebMatias_API.Service
 
         }
 
-        public async Task<MercadoPagoPago>ObtenerPago(string pagoId)
+        public async Task<MercadoPagoPago> ObtenerPago(string pagoId)
         {
             // Creo el cliente HTTP
             HttpClient cliente = new HttpClient();
@@ -167,12 +174,106 @@ namespace WebMatias_API.Service
             return pago;
 
 
-          
+
         }
 
+        public bool ValidarFirmaWebhook(
+    string dataId,
+    string xRequestId,
+    string xSignature)
+        {
+            try
+            {
+                // Variables donde voy a guardar:
+                // ts = timestamp que manda Mercado Pago
+                // v1 = firma que calculó Mercado Pago
+                string ts = "";
+                string v1 = "";
+
+                // xSignature llega, por ejemplo:
+                // "ts=123456,v1=abcdef"
+                // Lo separo por la coma:
+                // partes[0] = "ts=123456"
+                // partes[1] = "v1=abcdef"
+                string[] partes = xSignature.Split(',');
+
+                // Recorro cada parte de xSignature
+                foreach (string parte in partes)
+                {
+                    // Separo cada parte por el signo =
+                    // Ejemplo:
+                    // "ts=123456"
+                    // claveValor[0] = "ts"
+                    // claveValor[1] = "123456"
+                    string[] claveValor = parte.Split('=');
+
+                    // Compruebo que realmente tenga una clave y un valor
+                    if (claveValor.Length == 2)
+                    {
+                        // Si la clave es "ts", guardo su valor
+                        if (claveValor[0] == "ts")
+                        {
+                            ts = claveValor[1];
+                        }
+
+                        // Si la clave es "v1", guardo la firma
+                        // que vino desde Mercado Pago
+                        if (claveValor[0] == "v1")
+                        {
+                            v1 = claveValor[1];
+                        }
+                    }
+                }
+
+                // Si no pude obtener ts o v1,
+                // no puedo validar la firma
+                if (string.IsNullOrEmpty(ts) || string.IsNullOrEmpty(v1))
+                {
+                    return false;
+                }
+
+                // Armo el manifest con el formato que requiere Mercado Pago.
+                // dataId viene del body del webhook.
+                // xRequestId viene del header x-request-id.
+                // ts lo obtuve arriba desde x-signature.
+                string manifest =
+                    $"id:{dataId};request-id:{xRequestId};ts:{ts};";
+
+                // Creo HMAC-SHA256 usando mi Webhook Secret como clave.
+                // El Secret se convierte de string a bytes porque HMAC trabaja con bytes.
+                using var hmac = new HMACSHA256(
+                    Encoding.UTF8.GetBytes(_webhookSecret));
+
+                // Calculo MI firma usando el manifest.
+                // Primero convierto el manifest a bytes.
+                byte[] hash = hmac.ComputeHash(
+                    Encoding.UTF8.GetBytes(manifest));
+
+                // El resultado de HMAC está en bytes.
+                // Lo convierto a texto hexadecimal para poder compararlo
+                // con v1, que es la firma que mandó Mercado Pago.
+                string firmaCalculada =
+                    Convert.ToHexString(hash).ToLower();
+
+                // Comparo:
+                // firmaCalculada = firma calculada por mi API
+                // v1             = firma enviada por Mercado Pago
+                //
+                // Si son iguales devuelve true.
+                // Si son diferentes devuelve false.
+                return firmaCalculada == v1;
+            }
+            catch
+            {
+                // Si ocurre cualquier error durante la validación,
+                // considero la firma como NO válida.
+                return false;
+            }
 
 
 
 
+
+        }
     }
 }

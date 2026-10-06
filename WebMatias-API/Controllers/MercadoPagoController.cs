@@ -26,7 +26,7 @@ namespace WebMatias_API.Controllers
             GiroDao girodao = new GiroDao();
             Giro giro = girodao.BuscarGiro(id);
 
-            decimal momtototal = giro.MontoTotal;
+        
 
             // 3. Recién acá hablamos con Mercado Pago
             return await _mercadoPagoService.CrearPreferencia(

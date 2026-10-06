@@ -1,3 +1,4 @@
+using WebMatias_API.Dao.GiroDao;
 using WebMatias_API.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,9 @@ builder.Services.AddOpenApi();
 //lo normal es que la inyección de dependencias se encargue de eso.
 builder.Services.AddScoped<CotizacionService>();
 builder.Services.AddScoped<MercadoPagoService>();
+
+// DAO
+builder.Services.AddScoped<GiroDao>();
 
 
 var app = builder.Build();

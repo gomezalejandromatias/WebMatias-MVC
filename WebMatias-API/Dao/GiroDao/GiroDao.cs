@@ -44,13 +44,7 @@ namespace WebMatias_API.Dao.GiroDao
             }
         }
 
-
-
-
-
-    }
-
-    public void MarcarComoPagado(int giroId)
+        public void MarcarComoPagado(int giroId)
         {
             Conexion conexion = new Conexion();
 
@@ -70,4 +64,12 @@ namespace WebMatias_API.Dao.GiroDao
                 conexion.CerrarConexion();
             }
         }
+
+
+
+
+
     }
+
+
+}

@@ -26,6 +26,24 @@ namespace WebMatias_API.Controllers
 
         public async Task<IActionResult> RecibirWebhook(MercadoPagoWebhook mercadoPagoWebhook)
         {
+            string xRequestId = Request.Headers["x-request-id"];
+            string xSignature = Request.Headers["x-signature"];
+
+            bool firmaValida =
+                _mercadoPagoservice.ValidarFirmaWebhook(
+                    mercadoPagoWebhook.Data.Id,
+                    xRequestId,
+                    xSignature);
+
+            // Si la firma NO es válida, corto acá
+            if (!firmaValida)
+            {
+                return Unauthorized();
+            }
+
+
+
+
             // Verifico que la notificación sea de un pago
             if (mercadoPagoWebhook.Type == "payment")
             {
