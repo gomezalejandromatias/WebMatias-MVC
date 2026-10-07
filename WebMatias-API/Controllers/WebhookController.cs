@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebMatias_API.Dao.GiroDao;
+using WebMatias_API.Dao.PagoMercadoPagoDao;
 using WebMatias_API.Models;
 using WebMatias_API.Service;
 
@@ -41,6 +42,7 @@ namespace WebMatias_API.Controllers
                 return Unauthorized();
             }
 
+            PagoMercadoPagoDao pagoMercadoPagoDao = new PagoMercadoPagoDao();
 
 
 
@@ -49,6 +51,11 @@ namespace WebMatias_API.Controllers
             {
                 // Obtengo el ID que generó Mercado Pago
                 string pagoId = mercadoPagoWebhook.Data.Id;
+
+                if (pagoMercadoPagoDao.PagoYaProcesado(pagoId))
+                {
+                    return Ok();
+                }
 
                 // Consulto a Mercado Pago los datos reales de ese pago
                 MercadoPagoPago pago =
@@ -62,7 +69,10 @@ namespace WebMatias_API.Controllers
 
                     // Cambio el estado en nuestra base de datos
                     _giroDao.MarcarComoPagado(giroId);
+
+                pagoMercadoPagoDao.GuardarPago(pagoId,giroId,pago.Status);
                 }
+
             }
 
             // Le confirmamos a Mercado Pago que recibimos la notificación

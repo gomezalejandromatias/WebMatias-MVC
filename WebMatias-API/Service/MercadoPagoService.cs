@@ -177,10 +177,7 @@ namespace WebMatias_API.Service
 
         }
 
-        public bool ValidarFirmaWebhook(
-    string dataId,
-    string xRequestId,
-    string xSignature)
+        public bool ValidarFirmaWebhook(string dataId, string xRequestId,string xSignature)
         {
             try
             {
