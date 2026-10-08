@@ -260,25 +260,16 @@ namespace WebMatias_MVC.Controllers
 
             // Solamente llegamos a esta parte si el email
             // se pudo enviar correctamente.
+            // ========================================
+            // 1. GUARDAR EL GIRO EN SQL SERVER
+            // ========================================
 
             try
             {
                 giroDao.GuardarGiro(giro);
-                MercadoPagoResponse mercadoPagoResponse;
-
-              mercadoPagoResponse =  await _mercadoPagoApiService.ReferenciaMercadoPago(giro.GiroId);
-
 
                 // GuardarGiro recupera el ID generado por SQL
                 // y lo deja dentro de giro.GiroId.
-
-                TempData["Mensaje"] =
-             "El giro se registró correctamente. " +
-             "Para actualizar la página, hacé clic en 'Tipos de Cambios (Dinero)' en el menú superior. " +
-             "El giro puede demorar hasta 40 minutos. " +
-             "Si pasado ese tiempo no se acredita, comunicate por teléfono o por email a mati.gorrriti1@gmail.com. " +
-             "Si no encontrás el correo, revisá Spam o Promociones en Gmail, y Correo no deseado en Outlook/Hotmail.";
-                return Redirect(mercadoPagoResponse.InitPoint);
             }
             catch (Exception)
             {
@@ -292,6 +283,54 @@ namespace WebMatias_MVC.Controllers
                 return RedirectToAction("CrearGiro");
             }
 
+
+            // ========================================
+            // 2. CREAR PREFERENCIA EN MERCADO PAGO
+            // ========================================
+
+            try
+            {
+                // Nos comunicamos con nuestra Web API
+                // para crear la preferencia de Mercado Pago.
+
+                MercadoPagoResponse mercadoPagoResponse =
+                    await _mercadoPagoApiService.ReferenciaMercadoPago(giro.GiroId);
+
+                // Si todo salió correctamente,
+                // guardamos el mensaje original.
+
+                TempData["Mensaje"] =
+                    "El giro se registró correctamente. " +
+                    "Para actualizar la página, hacé clic en 'Tipos de Cambios (Dinero)' en el menú superior. " +
+                    "El giro puede demorar hasta 40 minutos. " +
+                    "Si pasado ese tiempo no se acredita, comunicate por teléfono o por email a mati.gorrriti1@gmail.com. " +
+                    "Si no encontrás el correo, revisá Spam o Promociones en Gmail, y Correo no deseado en Outlook/Hotmail.";
+
+                // Redirigimos al cliente a Mercado Pago.
+                return Redirect(mercadoPagoResponse.InitPoint);
+            }
+            catch (HttpRequestException)
+            {
+                // IMPORTANTE:
+                // El giro ya fue guardado en SQL,
+                // pero ocurrió un error de comunicación HTTP
+                // al intentar crear la preferencia de Mercado Pago.
+
+                TempData["Error"] =
+                    "No pudimos iniciar el pago con Mercado Pago. Intentá nuevamente más tarde.";
+
+                return RedirectToAction("CrearGiro");
+            }
+            catch (TaskCanceledException)
+            {
+                // La solicitud fue cancelada o superó
+                // el tiempo de espera configurado.
+
+                TempData["Error"] =
+                    "La conexión tardó demasiado. No pudimos confirmar el inicio del pago.";
+
+                return RedirectToAction("CrearGiro");
+            }
 
             // =========================================================
             // 10. REGISTRAR EL EMAIL EN LA BASE DE DATOS
