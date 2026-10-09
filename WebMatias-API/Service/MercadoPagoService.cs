@@ -78,16 +78,15 @@ namespace WebMatias_API.Service
                 // que haya tenido el pago.
                 back_urls = new
                 {
-                    // Si el pago fue aprobado, vuelve a la pantalla CrearGiro
-                    success = "https://mural-nullify-lethargic.ngrok-free.dev/Giro/CrearGiro",
+                    // Si el pago fue aprobado
+                    success = $"https://mural-nullify-lethargic.ngrok-free.dev/Giro/Details/{giroId}",
 
-                    // Por ahora también podemos volver a CrearGiro
-                    failure = "https://mural-nullify-lethargic.ngrok-free.dev/Giro/CrearGiro",
+                    // Si el pago fue rechazado
+                    failure = $"https://mural-nullify-lethargic.ngrok-free.dev/Giro/Details/{giroId}",
 
-                    // Si queda pendiente, también vuelve a CrearGiro
-                    pending = "https://mural-nullify-lethargic.ngrok-free.dev/Giro/CrearGiro"
+                    // Si el pago quedó pendiente
+                    pending = $"https://mural-nullify-lethargic.ngrok-free.dev/Giro/Details/{giroId}"
                 },
-
 
                 // "auto_return" controla el regreso automático
                 // desde Mercado Pago hacia nuestra aplicación.

@@ -392,9 +392,14 @@ namespace WebMatias_MVC.Controllers
  
 
         // GET: GiroController/Details/5
-        public ActionResult Details(int id)
+        public async Task< ActionResult> Details(int id)
         {
-            return View();
+
+          string estado = await _mercadoPagoApiService.BuscarEstadoPago(id);
+
+
+
+            return View("Details",estado);
         }
 
         // GET: GiroController/Create
