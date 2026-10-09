@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using WebMatias_API.Dao.GiroDao;
+using WebMatias_API.Dao.PagoMercadoPagoDao;
 using WebMatias_API.Models;
 using WebMatias_API.Service;
 
@@ -97,11 +98,29 @@ namespace WebMatias_API.Controllers
             return View();
         }
 
-        // GET: MercadoPagoController/Details/5
-        public ActionResult Details(int id)
+
+        [HttpGet("Details/{id}")]
+        public IActionResult Details(int id)
         {
-            return View();
+            try
+            {
+                PagoMercadoPagoDao pagoMercadoPagoDao = new PagoMercadoPagoDao();
+
+                string respuesta = pagoMercadoPagoDao.BuscarEstadoPago(id);
+
+                if (respuesta == "SinRegistro")
+                {
+                    return NotFound("No se encontró el pago.");
+                }
+
+                return Ok(respuesta);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error interno al consultar el estado del pago.");
+            }
         }
+
 
         // GET: MercadoPagoController/Create
         public ActionResult Create()

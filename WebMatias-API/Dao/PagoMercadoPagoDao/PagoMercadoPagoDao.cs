@@ -67,7 +67,39 @@
                     conexion.CerrarConexion();
                 }
             }
+
+        public string BuscarEstadoPago(int giroId)
+        {
+            Conexion conexion = new Conexion();
+
+            try
+            {
+                conexion.SetearConsulta(
+                    "SELECT Estado FROM PagosMercadoPago WHERE GiroId = @GiroId"
+                );
+
+                conexion.SetearParametro("@GiroId", giroId);
+
+                conexion.EjecutarLectura();
+
+                if (conexion.Lector().Read())
+                {
+                    return conexion.Lector()["Estado"].ToString();
+                }
+
+                return "SinRegistro";
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                conexion.CerrarConexion();
+            }
+            
         }
+    }
 
     
 }

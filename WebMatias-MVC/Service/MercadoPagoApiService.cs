@@ -62,6 +62,20 @@ namespace WebMatias_MVC.Service
 
         }
 
+        public async Task<string> BuscarEstadoPago(int giroId)
+        {
+            HttpResponseMessage response =
+                await _httpClient.GetAsync(
+                    $"api/MercadoPago/Details/{giroId}"
+                );
+
+            response.EnsureSuccessStatusCode();
+
+            string estado = await response.Content.ReadAsStringAsync();
+
+            return estado;
+        }
+
 
 
     }
