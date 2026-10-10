@@ -68,7 +68,7 @@ namespace WebMatias_API.Service
 
     },
                 external_reference = giroId.ToString(),
-                notification_url = "https://TU-NGROK/api/Webhook",
+                notification_url = "https://mural-nullify-lethargic.ngrok-free.dev/api/Webhook",
 
 
                 // "back_urls" indica a Mercado Pago a qué URL de nuestro sistema
@@ -259,11 +259,14 @@ namespace WebMatias_API.Service
                 // Si son diferentes devuelve false.
                 return firmaCalculada == v1;
             }
-            catch
+            catch (Exception ex)
             {
                 // Si ocurre cualquier error durante la validación,
                 // considero la firma como NO válida.
+
+                string error = ex.Message; // Poné breakpoint acá
                 return false;
+                
             }
 
 

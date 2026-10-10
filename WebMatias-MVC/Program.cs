@@ -21,6 +21,12 @@ builder.Services.AddHttpClient<MercadoPagoApiService>(client =>
     client.BaseAddress = new Uri("https://localhost:44316/");
 });
 
+builder.Services.AddHttpClient("WebhookApi", client =>
+{
+    client.BaseAddress =
+        new Uri("https://localhost:44316/");
+});
+
 
 
 builder.Services.AddScoped<EmailService>();

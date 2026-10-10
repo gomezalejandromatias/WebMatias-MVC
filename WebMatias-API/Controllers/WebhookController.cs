@@ -14,11 +14,15 @@ namespace WebMatias_API.Controllers
         private readonly MercadoPagoService _mercadoPagoservice;
 
         private readonly GiroDao _giroDao;
+      
+
+   
         public WebhookController(MercadoPagoService mercadoPagoService,GiroDao giroDao)
         {
             _mercadoPagoservice = mercadoPagoService;
             _giroDao = giroDao;
-
+          
+           
             
         }
 
@@ -29,6 +33,8 @@ namespace WebMatias_API.Controllers
         {
             string xRequestId = Request.Headers["x-request-id"];
             string xSignature = Request.Headers["x-signature"];
+
+            string dataIdQuery = Request.Query["data.id"].ToString();
 
             bool firmaValida =
                 _mercadoPagoservice.ValidarFirmaWebhook(
@@ -81,6 +87,8 @@ namespace WebMatias_API.Controllers
 
 
         }
+
+
 
         // GET: WebhookController
         public ActionResult Index()

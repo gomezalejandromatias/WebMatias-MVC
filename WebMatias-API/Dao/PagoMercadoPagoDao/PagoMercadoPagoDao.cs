@@ -1,72 +1,68 @@
 ﻿namespace WebMatias_API.Dao.PagoMercadoPagoDao
 {
-   
-    
 
-        public class PagoMercadoPagoDao
+
+
+    public class PagoMercadoPagoDao
+    {
+        public bool PagoYaProcesado(string pagoId)
         {
-            public bool PagoYaProcesado(string pagoId)
+            Conexion conexion = new Conexion();
+
+            try
             {
-                Conexion conexion = new Conexion();
+                conexion.SetearConsulta(
+                    "SELECT COUNT(*) FROM PagosMercadoPago WHERE IdPagoProveedor = @PagoId"
+                );
 
-                try
+                conexion.SetearParametro("@PagoId", pagoId);
+
+                conexion.EjecutarLectura();
+
+                if (conexion.Lector().Read())
                 {
-                    conexion.SetearConsulta(
-                        "SELECT COUNT(*) FROM PagosMercadoPago WHERE IdPagoProveedor = @PagoId"
-                    );
+                    int cantidad = Convert.ToInt32(conexion.Lector()[0]);
 
-                    conexion.SetearParametro("@PagoId", pagoId);
-
-                    conexion.EjecutarLectura();
-
-                    if (conexion.Lector().Read())
-                    {
-                        int cantidad = Convert.ToInt32(conexion.Lector()[0]);
-
-                        return cantidad > 0;
-                    }
-
-                    return false;
+                    return cantidad > 0;
                 }
-                catch (Exception)
-                {
-                    throw;
-                }
-                finally
-                {
-                    conexion.CerrarConexion();
-                }
+
+                return false;
             }
-
-
-            public void GuardarPago(string pagoId, int giroId, string estado)
+            catch (Exception)
             {
-                Conexion conexion = new Conexion();
-
-                try
-                {
-                    conexion.SetearConsulta(
-                        @"INSERT INTO PagosMercadoPago
-                  (IdPagoProveedor, GiroId, Estado)
-                  VALUES
-                  (@PagoId, @GiroId, @Estado)"
-                    );
-
-                    conexion.SetearParametro("@PagoId", pagoId);
-                    conexion.SetearParametro("@GiroId", giroId);
-                    conexion.SetearParametro("@Estado", estado);
-
-                    conexion.EjecutarAccion();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-                finally
-                {
-                    conexion.CerrarConexion();
-                }
+                throw;
             }
+            finally
+            {
+                conexion.CerrarConexion();
+            }
+        }
+
+
+        public void GuardarPago(string pagoId, int giroId, string estado)
+        {
+            Conexion conexion = new Conexion();
+
+            try
+            {
+                conexion.SetearConsulta(
+                    @"INSERT INTO PagosMercadoPago
+              (PaymentId, GiroId, Estado)
+              VALUES
+              (@PagoId, @GiroId, @Estado)"
+                );
+
+                conexion.SetearParametro("@PaymentId",pagoId);
+                conexion.SetearParametro("@GiroId", giroId);
+                conexion.SetearParametro("@Estado", estado);
+
+                conexion.EjecutarAccion();
+            }
+            finally
+            {
+                conexion.CerrarConexion();
+            }
+        }
 
         public string BuscarEstadoPago(int giroId)
         {
@@ -97,9 +93,9 @@
             {
                 conexion.CerrarConexion();
             }
-            
+
         }
     }
 
-    
+
 }
