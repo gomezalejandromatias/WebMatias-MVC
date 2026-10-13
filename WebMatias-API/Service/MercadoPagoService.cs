@@ -67,8 +67,8 @@ namespace WebMatias_API.Service
         }
 
     },
-                external_reference = giroId.ToString(),
-                notification_url = "https://mural-nullify-lethargic.ngrok-free.dev/api/Webhook",
+                notification_url =
+    "https://mural-nullify-lethargic.ngrok-free.dev/api/Webhook",
 
 
                 // "back_urls" indica a Mercado Pago a qué URL de nuestro sistema
@@ -79,13 +79,9 @@ namespace WebMatias_API.Service
                 back_urls = new
                 {
                     // Si el pago fue aprobado
-                    success = $"https://mural-nullify-lethargic.ngrok-free.dev/Giro/Details/{giroId}",
-
-                    // Si el pago fue rechazado
-                    failure = $"https://mural-nullify-lethargic.ngrok-free.dev/Giro/Details/{giroId}",
-
-                    // Si el pago quedó pendiente
-                    pending = $"https://mural-nullify-lethargic.ngrok-free.dev/Giro/Details/{giroId}"
+                    success = $"https://webmatias-mvc.ngrok.app/Giro/Details/{giroId}",
+                    failure = $"https://webmatias-mvc.ngrok.app/Giro/Details/{giroId}",
+                    pending = $"https://webmatias-mvc.ngrok.app/Giro/Details/{giroId}"
                 },
 
                 // "auto_return" controla el regreso automático
@@ -176,7 +172,7 @@ namespace WebMatias_API.Service
 
         }
 
-        public bool ValidarFirmaWebhook(string dataId, string xRequestId,string xSignature)
+        public bool ValidarFirmaWebhook(string dataId, string xRequestId, string xSignature)
         {
             try
             {
@@ -266,7 +262,7 @@ namespace WebMatias_API.Service
 
                 string error = ex.Message; // Poné breakpoint acá
                 return false;
-                
+
             }
 
 

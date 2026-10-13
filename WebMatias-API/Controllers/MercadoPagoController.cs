@@ -115,6 +115,8 @@ namespace WebMatias_API.Controllers
 
                 return Ok(respuesta);
             }
+        
+
             catch (Exception ex)
             {
                 return StatusCode(500, "Error interno al consultar el estado del pago.");

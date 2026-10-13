@@ -34,11 +34,13 @@ namespace WebMatias_API.Controllers
             string xRequestId = Request.Headers["x-request-id"];
             string xSignature = Request.Headers["x-signature"];
 
+            // Obtengo el ID desde la URL de Mercado Pago
             string dataIdQuery = Request.Query["data.id"].ToString();
 
+            // Valido la firma usando el ID de la URL en minúsculas
             bool firmaValida =
                 _mercadoPagoservice.ValidarFirmaWebhook(
-                    mercadoPagoWebhook.Data.Id,
+                    dataIdQuery.ToLowerInvariant(),
                     xRequestId,
                     xSignature);
 

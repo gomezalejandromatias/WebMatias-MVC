@@ -25,6 +25,10 @@ CREATE TABLE Viajes
 GO
 
 
+select *from Giros
+
+ALTER TABLE Giros
+ALTER COLUMN AliasRecibe VARCHAR(100) NULL;
 
 
 

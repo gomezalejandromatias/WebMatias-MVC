@@ -22,7 +22,7 @@ namespace WebMatias_MVC.Dao.ViajesDao
                 Descripcion,
                 Requisitos,
                 DuracionAproximada,
-                UrlImagen as ImagenUrl,
+                ImagenUrl,
                 FechaActualizacion,
                 Activo,
                 HorarioSalida,

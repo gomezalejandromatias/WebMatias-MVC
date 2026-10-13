@@ -25,14 +25,14 @@ namespace WebMatias_MVC.Dao.GiroDao
                 MontoEnvio,
                 MontoMonedaExtranjera,
                 MontoTotal,
-                TipoGiro,
+                TipoGiroId,
                 CambioExtranjero,
                 ComisionAgencia,
                 ComisionSistema,
                 DniRemitente,
                 EmailRemitente,
                 CedulaRecibe,
-                Alias
+                AliasRecibe
             )
                   
                      OUTPUT INSERTED.GiroId
@@ -46,14 +46,14 @@ namespace WebMatias_MVC.Dao.GiroDao
                 @MontoEnvio,
                 @MontoMonedaExtranjera,
                 @MontoTotal,
-                @TipoGiro,
+                @TipoGiroId,
                 @CambioExtranjero,
                 @ComisionAgencia,
                 @ComisionSistema,
                 @DniRemitente,
                 @EmailRemitente,
                 @CedulaRecibe,
-                @Alias
+                @AliasRecibe
             )"
      );
 
@@ -68,7 +68,7 @@ namespace WebMatias_MVC.Dao.GiroDao
                     giro.MontoMonedaExtranjera
                 );
                 conexion.SetearParametro("@MontoTotal", giro.MontoTotal);
-                conexion.SetearParametro("@TipoGiro", giro.TipoGiroId);
+                conexion.SetearParametro("@TipoGiroId", giro.TipoGiroId);
                 conexion.SetearParametro("@CambioExtranjero", giro.CambioExtranjero);
                 
                 conexion.SetearParametro("@ComisionAgencia", giro.ComisionAgencia);
@@ -78,7 +78,7 @@ namespace WebMatias_MVC.Dao.GiroDao
                 conexion.SetearParametro("@CedulaRecibe", giro.CedulaRecibe);
                 // Si no hay alias, enviamos NULL a SQL.
                 conexion.SetearParametro(
-                    "@Alias",
+                    "@AliasRecibe",
                     (object?)giro.AliasRecibe ?? DBNull.Value);
 
 
