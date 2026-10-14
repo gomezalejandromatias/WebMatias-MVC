@@ -67,8 +67,8 @@ namespace WebMatias_API.Service
         }
 
     },
-                notification_url =
-    "https://mural-nullify-lethargic.ngrok-free.dev/api/Webhook",
+                external_reference = giroId.ToString(),
+                notification_url ="https://mural-nullify-lethargic.ngrok-free.dev/api/Webhook",
 
 
                 // "back_urls" indica a Mercado Pago a qué URL de nuestro sistema
@@ -153,6 +153,8 @@ namespace WebMatias_API.Service
             // Hago el GET a Mercado Pago
             HttpResponseMessage respuesta =
                 await cliente.GetAsync(url);
+
+            string contenido = await respuesta.Content.ReadAsStringAsync();
 
             // Si Mercado Pago respondió con error, lanza excepción
             respuesta.EnsureSuccessStatusCode();

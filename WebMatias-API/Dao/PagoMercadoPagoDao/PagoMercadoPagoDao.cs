@@ -12,7 +12,7 @@
             try
             {
                 conexion.SetearConsulta(
-                    "SELECT COUNT(*) FROM PagosMercadoPago WHERE IdPagoProveedor = @PagoId"
+                    "SELECT COUNT(*) FROM PagosMercadoPago WHERE PaymentId  = @PagoId"
                 );
 
                 conexion.SetearParametro("@PagoId", pagoId);
@@ -52,7 +52,7 @@
               (@PagoId, @GiroId, @Estado)"
                 );
 
-                conexion.SetearParametro("@PaymentId",pagoId);
+                conexion.SetearParametro("@PagoId", pagoId);
                 conexion.SetearParametro("@GiroId", giroId);
                 conexion.SetearParametro("@Estado", estado);
 

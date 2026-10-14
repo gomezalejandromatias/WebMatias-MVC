@@ -5,7 +5,7 @@ namespace WebMatias_API.Models
     public class WebhookData
     {
         [JsonProperty("id")]
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
 
 

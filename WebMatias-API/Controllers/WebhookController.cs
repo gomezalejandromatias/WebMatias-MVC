@@ -4,25 +4,31 @@ using WebMatias_API.Dao.GiroDao;
 using WebMatias_API.Dao.PagoMercadoPagoDao;
 using WebMatias_API.Models;
 using WebMatias_API.Service;
+using MercadoPago.Error;
+using MercadoPago.Webhook;
 
 namespace WebMatias_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class WebhookController : Controller
+    public class WebhookController : ControllerBase
     {
         private readonly MercadoPagoService _mercadoPagoservice;
 
         private readonly GiroDao _giroDao;
-      
 
-   
-        public WebhookController(MercadoPagoService mercadoPagoService,GiroDao giroDao)
+       
+
+        public WebhookController(
+        MercadoPagoService mercadoPagoService,
+        GiroDao giroDao,
+       
+        IConfiguration configuration)
         {
             _mercadoPagoservice = mercadoPagoService;
             _giroDao = giroDao;
-          
-           
+         
+
             
         }
 
@@ -31,59 +37,110 @@ namespace WebMatias_API.Controllers
 
         public async Task<IActionResult> RecibirWebhook(MercadoPagoWebhook mercadoPagoWebhook)
         {
-            string xRequestId = Request.Headers["x-request-id"];
-            string xSignature = Request.Headers["x-signature"];
+            string xRequestId = Request.Headers["x-request-id"].ToString();
+            string xSignature = Request.Headers["x-signature"].ToString();
 
-            // Obtengo el ID desde la URL de Mercado Pago
-            string dataIdQuery = Request.Query["data.id"].ToString();
+            // Identifico el tipo de notificación
+            string? tipo = mercadoPagoWebhook.Type
+                           ?? mercadoPagoWebhook.Topic;
 
-            // Valido la firma usando el ID de la URL en minúsculas
+            // No proceso merchant_order
+            if (tipo != "payment")
+            {
+                return Ok();
+            }
+
+            // Obtengo el ID de la URL
+            string dataIdUrl = Request.Query["data.id"].ToString();
+
+            // Si falta, busco el ID del body
+            string? idBody = mercadoPagoWebhook.Data?.Id;
+
+            // Para validar la firma necesito el ID de la URL
+            if (string.IsNullOrWhiteSpace(dataIdUrl))
+            {
+                return BadRequest("Falta data.id para validar la firma.");
+            }
+
+            // Verifico los encabezados
+            if (string.IsNullOrWhiteSpace(xRequestId) ||
+                string.IsNullOrWhiteSpace(xSignature))
+            {
+                return Unauthorized("Faltan encabezados de firma.");
+            }
+
+            // Llamo a mi método de validación
             bool firmaValida =
                 _mercadoPagoservice.ValidarFirmaWebhook(
-                    dataIdQuery.ToLowerInvariant(),
+                    dataIdUrl.ToLowerInvariant(),
                     xRequestId,
-                    xSignature);
+                    xSignature
+                );
 
-            // Si la firma NO es válida, corto acá
             if (!firmaValida)
             {
-                return Unauthorized();
+                return Unauthorized("Firma inválida.");
             }
 
             PagoMercadoPagoDao pagoMercadoPagoDao = new PagoMercadoPagoDao();
 
+          /*  // Identifico el tipo de notificación que manda Mercado Pago
+            string? tipo = mercadoPagoWebhook.Type
+                           ?? mercadoPagoWebhook.Topic;*/
 
+            // Obtengo el ID del pago desde Data
+            string? pagoId = mercadoPagoWebhook.Data?.Id;
 
-            // Verifico que la notificación sea de un pago
-            if (mercadoPagoWebhook.Type == "payment")
+            // Si no viene en Data, lo obtengo desde Resource
+            if (string.IsNullOrWhiteSpace(pagoId))
             {
-                // Obtengo el ID que generó Mercado Pago
-                string pagoId = mercadoPagoWebhook.Data.Id;
+                pagoId = mercadoPagoWebhook.Resource;
+            }
 
+            // Verifico que sea una notificación de pago
+            if (tipo == "payment" && !string.IsNullOrWhiteSpace(pagoId))
+            {
+                // Si Resource es una URL, extraigo el último segmento
+                if (Uri.TryCreate(pagoId, UriKind.Absolute, out Uri? uri))
+                {
+                    pagoId = uri.AbsolutePath.TrimEnd('/').Split('/').Last();
+                }
+
+                // Verifico que el ID sea numérico
+                if (!long.TryParse(pagoId, out _))
+                {
+                    return BadRequest("ID de pago inválido.");
+                }
+
+                // Verifico si el pago ya fue procesado
                 if (pagoMercadoPagoDao.PagoYaProcesado(pagoId))
                 {
                     return Ok();
                 }
 
-                // Consulto a Mercado Pago los datos reales de ese pago
+                // Consulto el pago directamente a Mercado Pago
                 MercadoPagoPago pago =
                     await _mercadoPagoservice.ObtenerPago(pagoId);
 
-                // Verifico que Mercado Pago realmente lo tenga aprobado
+                // Verifico si Mercado Pago aprobó el pago
                 if (pago.Status == "approved")
                 {
-                    // external_reference contiene nuestro GiroId
+                    // Obtengo el ID del giro
                     int giroId = Convert.ToInt32(pago.ExternalReference);
 
-                    // Cambio el estado en nuestra base de datos
+                    // Marco el giro como pagado
                     _giroDao.MarcarComoPagado(giroId);
 
-                pagoMercadoPagoDao.GuardarPago(pagoId,giroId,pago.Status);
+                    // Guardo el pago en SQL
+                    pagoMercadoPagoDao.GuardarPago(
+                        pagoId,
+                        giroId,
+                        pago.Status
+                    );
                 }
-
             }
 
-            // Le confirmamos a Mercado Pago que recibimos la notificación
+            // Confirmo que recibí la notificación
             return Ok();
 
 
@@ -92,79 +149,6 @@ namespace WebMatias_API.Controllers
 
 
 
-        // GET: WebhookController
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        // GET: WebhookController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: WebhookController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: WebhookController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: WebhookController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: WebhookController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: WebhookController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: WebhookController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+ 
     }
 }
