@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MercadoPago.Error;
+using MercadoPago.Webhook;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using WebMatias_API.Dao.GiroDao;
 using WebMatias_API.Dao.PagoMercadoPagoDao;
 using WebMatias_API.Models;
 using WebMatias_API.Service;
-using MercadoPago.Error;
-using MercadoPago.Webhook;
 
 namespace WebMatias_API.Controllers
 {
@@ -37,7 +38,7 @@ namespace WebMatias_API.Controllers
 
         public async Task<IActionResult> RecibirWebhook(MercadoPagoWebhook mercadoPagoWebhook)
         {
-            string xRequestId = Request.Headers["x-request-id"].ToString();
+           /* string xRequestId = Request.Headers["x-request-id"].ToString();
             string xSignature = Request.Headers["x-signature"].ToString();
 
             // Identifico el tipo de notificación
@@ -80,13 +81,13 @@ namespace WebMatias_API.Controllers
             if (!firmaValida)
             {
                 return Unauthorized("Firma inválida.");
-            }
+            }*/
 
             PagoMercadoPagoDao pagoMercadoPagoDao = new PagoMercadoPagoDao();
 
-          /*  // Identifico el tipo de notificación que manda Mercado Pago
+            // Identifico el tipo de notificación que manda Mercado Pago
             string? tipo = mercadoPagoWebhook.Type
-                           ?? mercadoPagoWebhook.Topic;*/
+                           ?? mercadoPagoWebhook.Topic;
 
             // Obtengo el ID del pago desde Data
             string? pagoId = mercadoPagoWebhook.Data?.Id;
@@ -125,23 +126,35 @@ namespace WebMatias_API.Controllers
                 // Verifico si Mercado Pago aprobó el pago
                 if (pago.Status == "approved")
                 {
-                    // Obtengo el ID del giro
                     int giroId = Convert.ToInt32(pago.ExternalReference);
 
-                    // Marco el giro como pagado
-                    _giroDao.MarcarComoPagado(giroId);
+                    try
+                    {
+                        // Guardo el pago
+                        pagoMercadoPagoDao.GuardarPago(
+                            pagoId,
+                            giroId,
+                            pago.Status
+                        );
 
-                    // Guardo el pago en SQL
-                    pagoMercadoPagoDao.GuardarPago(
-                        pagoId,
-                        giroId,
-                        pago.Status
-                    );
+                        // Marco el giro como pagado
+                        _giroDao.MarcarComoPagado(giroId);
+                    }
+                    catch (SqlException ex) when (ex.Number == 2627 || ex.Number == 2601)
+                    {
+                        // Compruebo que el pago ya esté guardado
+                        if (pagoMercadoPagoDao.PagoYaProcesado(pagoId))
+                        {
+                            _giroDao.MarcarComoPagado(giroId);
+                            return Ok();
+                        }
+
+                        throw;
+                    }
                 }
-            }
 
-            // Confirmo que recibí la notificación
-            return Ok();
+                // Confirmo que recibí la notificación
+                return Ok();
 
 
 

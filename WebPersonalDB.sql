@@ -241,3 +241,5 @@ CREATE TABLE EmailsEnviados
 ALTER TABLE Giros
 ADD EstadoPago VARCHAR(30) NOT NULL
     CONSTRAINT DF_Giros_EstadoPago DEFAULT 'Pendiente';
+
+    select *from PagosMercadoPago
