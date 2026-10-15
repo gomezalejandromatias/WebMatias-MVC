@@ -13,12 +13,12 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient<CotizacionApiService>(client =>
 {
-    client.BaseAddress = new Uri("https://localhost:44316/");
+    client.BaseAddress = new Uri("https://localhost:7251/");
 });
 
 builder.Services.AddHttpClient<MercadoPagoApiService>(client =>
 {
-    client.BaseAddress = new Uri("https://localhost:44316/");
+    client.BaseAddress = new Uri("https://localhost:7251/");
 });
 
 

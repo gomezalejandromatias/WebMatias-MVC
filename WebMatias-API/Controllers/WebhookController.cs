@@ -38,7 +38,11 @@ namespace WebMatias_API.Controllers
 
         public async Task<IActionResult> RecibirWebhook(MercadoPagoWebhook mercadoPagoWebhook)
         {
+
            /* string xRequestId = Request.Headers["x-request-id"].ToString();
+
+           string xRequestId = Request.Headers["x-request-id"].ToString();
+ 
             string xSignature = Request.Headers["x-signature"].ToString();
 
             // Identifico el tipo de notificación
@@ -81,13 +85,14 @@ namespace WebMatias_API.Controllers
             if (!firmaValida)
             {
                 return Unauthorized("Firma inválida.");
+
             }*/
 
             PagoMercadoPagoDao pagoMercadoPagoDao = new PagoMercadoPagoDao();
 
             // Identifico el tipo de notificación que manda Mercado Pago
-            string? tipo = mercadoPagoWebhook.Type
-                           ?? mercadoPagoWebhook.Topic;
+            string? tipo = mercadoPagoWebhook.Type?? mercadoPagoWebhook.Topic;
+
 
             // Obtengo el ID del pago desde Data
             string? pagoId = mercadoPagoWebhook.Data?.Id;
@@ -155,8 +160,9 @@ namespace WebMatias_API.Controllers
 
                 // Confirmo que recibí la notificación
                 return Ok();
+            }
 
-
+            return Ok();
 
         }
 
