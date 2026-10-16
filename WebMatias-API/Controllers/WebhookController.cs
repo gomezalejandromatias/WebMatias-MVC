@@ -2,6 +2,7 @@
 using MercadoPago.Webhook;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Data.SqlClient;
 using WebMatias_API.Dao.GiroDao;
 using WebMatias_API.Dao.PagoMercadoPagoDao;
@@ -34,59 +35,14 @@ namespace WebMatias_API.Controllers
         }
 
         [HttpPost]
-        
 
+        [EnableRateLimiting("LimiteGeneral")]
         public async Task<IActionResult> RecibirWebhook(MercadoPagoWebhook mercadoPagoWebhook)
         {
+          
 
-           /* string xRequestId = Request.Headers["x-request-id"].ToString();
 
-           string xRequestId = Request.Headers["x-request-id"].ToString();
- 
-            string xSignature = Request.Headers["x-signature"].ToString();
 
-            // Identifico el tipo de notificación
-            string? tipo = mercadoPagoWebhook.Type
-                           ?? mercadoPagoWebhook.Topic;
-
-            // No proceso merchant_order
-            if (tipo != "payment")
-            {
-                return Ok();
-            }
-
-            // Obtengo el ID de la URL
-            string dataIdUrl = Request.Query["data.id"].ToString();
-
-            // Si falta, busco el ID del body
-            string? idBody = mercadoPagoWebhook.Data?.Id;
-
-            // Para validar la firma necesito el ID de la URL
-            if (string.IsNullOrWhiteSpace(dataIdUrl))
-            {
-                return BadRequest("Falta data.id para validar la firma.");
-            }
-
-            // Verifico los encabezados
-            if (string.IsNullOrWhiteSpace(xRequestId) ||
-                string.IsNullOrWhiteSpace(xSignature))
-            {
-                return Unauthorized("Faltan encabezados de firma.");
-            }
-
-            // Llamo a mi método de validación
-            bool firmaValida =
-                _mercadoPagoservice.ValidarFirmaWebhook(
-                    dataIdUrl.ToLowerInvariant(),
-                    xRequestId,
-                    xSignature
-                );
-
-            if (!firmaValida)
-            {
-                return Unauthorized("Firma inválida.");
-
-            }*/
 
             PagoMercadoPagoDao pagoMercadoPagoDao = new PagoMercadoPagoDao();
 

@@ -2,6 +2,9 @@ using WebMatias_API.Dao.GiroDao;
 using WebMatias_API.Service;
 using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.RateLimiting;
+using Microsoft.AspNetCore.HttpOverrides;
+using System.Net;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,30 +16,116 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 
-// Registro y configuración del servicio Rate Limiting
-builder.Services.AddRateLimiter(options =>
+// Configuro la lectura de las cabeceras que envía ngrok
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
-    // Creo una política llamada "LimiteGeneral"
-    // Utilizo el algoritmo Fixed Window (ventana fija)
-    options.AddFixedWindowLimiter("LimiteGeneral", config =>
-    {
-        // Cantidad máxima de peticiones permitidas por ventana
-        config.PermitLimit = 10;
+    // Permito obtener la IP original mediante X-Forwarded-For
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor;
 
-        // Cada ventana dura 1 minuto
-        // Al comenzar una nueva ventana se renueva el cupo
-        config.Window = TimeSpan.FromMinutes(1);
+    // Confío solamente en el intermediario local
+    // porque ngrok se conecta a mi API desde 127.0.0.1
+    options.KnownProxies.Add(IPAddress.Parse("127.0.0.1"));
 
-        // No permite que las peticiones excedentes queden en espera
-        // Si se alcanza el límite, las rechaza
-        config.QueueLimit = 0;
-    });
-
-    // Código HTTP que devuelve cuando se supera el límite
-    // 429 = Too Many Requests
-    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+    // Leo como máximo un intermediario de la cadena
+    options.ForwardLimit = 1;
 });
 
+
+
+
+// REGISTRO Y CONFIGURACIÓN DE RATE LIMITING
+// Protege mi Web API de peticiones excesivas.
+// Cada política tiene sus propios límites y contadores.
+
+builder.Services.AddRateLimiter(options =>
+{
+    // ==========================================
+    // POLÍTICA GENERAL: 10 PETICIONES POR MINUTO
+    // ==========================================
+
+    options.AddPolicy("LimiteGeneral", context =>
+    {
+        // Obtengo la IP del cliente que realiza la petición.
+        // UseForwardedHeaders permite identificar la IP original
+        // cuando proviene de un intermediario confiable.
+        string ip = context.Connection.RemoteIpAddress?.ToString()
+                    ?? "desconocida";
+
+        // Creo una partición independiente para cada IP.
+        // Cada IP tiene su propio contador.
+        return RateLimitPartition.GetFixedWindowLimiter(
+
+            // Utilizo la IP como identificador del contador.
+            partitionKey: ip,
+
+            // Configuro el algoritmo Fixed Window (ventana fija).
+            factory: _ => new FixedWindowRateLimiterOptions
+            {
+                // Máximo de 10 peticiones por IP.
+                PermitLimit = 10,
+
+                // Cada ventana dura 1 minuto.
+                Window = TimeSpan.FromMinutes(1),
+
+                // No dejo peticiones esperando.
+                // Las excedentes se rechazan.
+                QueueLimit = 0,
+
+                // Renuevo automáticamente el cupo
+                // cuando comienza una nueva ventana.
+                AutoReplenishment = true
+            });
+    });
+
+
+    // ==========================================
+    // COTIZACIÓN: 20 PETICIONES POR MINUTO
+    // ==========================================
+
+    // Protege mi API de consultas excesivas
+    // y reduce las solicitudes al proveedor externo de giros.
+
+    options.AddPolicy("LimiteCotizacion", context =>
+    {
+        // Obtengo la IP del cliente.
+        string ip = context.Connection.RemoteIpAddress?.ToString()
+                    ?? "desconocida";
+
+        // Creo un contador independiente para cada IP.
+        return RateLimitPartition.GetFixedWindowLimiter(
+
+            // La IP identifica al cliente.
+            partitionKey: ip,
+
+            // Configuro las restricciones de cotización.
+            factory: _ => new FixedWindowRateLimiterOptions
+            {
+                // Máximo de 20 peticiones por IP.
+                PermitLimit = 20,
+
+                // Cada ventana dura 1 minuto.
+                Window = TimeSpan.FromMinutes(1),
+
+                // Rechazo las peticiones excedentes
+                // sin dejarlas en espera.
+                QueueLimit = 0,
+
+                // Renuevo automáticamente el cupo
+                // cuando comienza una nueva ventana.
+                AutoReplenishment = true
+            });
+    });
+
+
+    // ==========================================
+    // RESPUESTA CUANDO SE SUPERA EL LÍMITE
+    // ==========================================
+
+    // Devuelvo HTTP 429 (Too Many Requests)
+    // cuando una IP supera el límite de su política.
+    options.RejectionStatusCode =
+        StatusCodes.Status429TooManyRequests;
+});
 
 
 //“Me pediste crear un CotizacionService, pero su constructor exige un IConfiguration. ¿Dónde está?”
@@ -60,13 +149,18 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+
+
+// Primero interpreto la IP original enviada por ngrok
+app.UseForwardedHeaders();
+
+// Redirecciono a HTTPS cuando corresponde
 app.UseHttpsRedirection();
 
+// Aplico las reglas de autorización
 app.UseAuthorization();
 
-
-// Activa el middleware de Rate Limiting.
-// Controla las peticiones según las políticas aplicadas.
+// Aplico el Rate Limiting utilizando la IP identificada
 app.UseRateLimiter();
 
 

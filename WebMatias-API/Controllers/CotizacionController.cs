@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using System.Diagnostics.CodeAnalysis;
 using WebMatias_API.Models;
 using WebMatias_API.Service;
@@ -22,6 +23,7 @@ namespace WebMatias_API.Controllers
         }
 
         [HttpGet]
+        [EnableRateLimiting("LimiteCotizacion")]
         public async Task<decimal> Get()
         {
 
