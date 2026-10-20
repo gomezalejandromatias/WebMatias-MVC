@@ -1,17 +1,20 @@
 ﻿using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
-using WebMatias_API.Models;
-
 using System.Text;
+using System.Text.Json;
+using WebMatias_API.Models;
 
 namespace WebMatias_API.Service
 {
     public class MercadoPagoService
     {
-        public string? _accestoken;
+        private readonly string? _accestoken;
 
-        public string? _webhookSecret;
+        private readonly string? _webhookSecret;
+
+        private readonly string? _WebhookToken;
 
         public MercadoPagoService(IConfiguration configuration)
         {
@@ -19,6 +22,8 @@ namespace WebMatias_API.Service
             _accestoken = configuration["MercadoPago:AccessToken"];
 
             _webhookSecret = configuration["MercadoPago:WebhookSecret"];
+
+            _WebhookToken = configuration["MercadoPago:WebhookToken"];
 
 
         }
@@ -68,7 +73,8 @@ namespace WebMatias_API.Service
 
     },
                 external_reference = giroId.ToString(),
-                notification_url ="https://mural-nullify-lethargic.ngrok-free.dev/api/Webhook",
+                notification_url =
+    $"https://mural-lethargic.ngrok-free.dev/api/Webhook?token={Uri.EscapeDataString(_WebhookToken)}",
 
 
                 // "back_urls" indica a Mercado Pago a qué URL de nuestro sistema
@@ -154,7 +160,6 @@ namespace WebMatias_API.Service
             HttpResponseMessage respuesta =
                 await cliente.GetAsync(url);
 
-            string contenido = await respuesta.Content.ReadAsStringAsync();
 
             // Si Mercado Pago respondió con error, lanza excepción
             respuesta.EnsureSuccessStatusCode();
@@ -272,5 +277,33 @@ namespace WebMatias_API.Service
 
 
         }
+
+        // Obtengo el ID de mi cuenta de Mercado Pago (CollectorId).
+        public async Task<long> ObtenerMiCollectorId()
+        {
+            // Creo el cliente HTTP para comunicarme con Mercado Pago.
+            using HttpClient cliente = new HttpClient();
+
+            // Envío mi Access Token para autenticar la petición.
+            cliente.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", _accestoken);
+
+            // Realizo una petición GET para obtener los datos de mi cuenta.
+            HttpResponseMessage respuesta =
+                await cliente.GetAsync("https://api.mercadopago.com/users/me");
+
+            // Si Mercado Pago devuelve un error HTTP, lanza una excepción.
+            respuesta.EnsureSuccessStatusCode();
+
+            // Obtengo la respuesta de Mercado Pago en formato JSON.
+            string json = await respuesta.Content.ReadAsStringAsync();
+
+            // Interpreto el JSON para poder acceder a sus propiedades.
+            using JsonDocument documento = JsonDocument.Parse(json);
+
+            // Busco la propiedad "id", la convierto a long y la devuelvo.
+            return documento.RootElement.GetProperty("id").GetInt64();
+        }
+
     }
 }

@@ -16,6 +16,10 @@ namespace WebMatias_API.Models
         [JsonProperty("transaction_amount")]
         public decimal TransactionAmount { get; set; }
 
+        [JsonProperty("collector_id")]
+
+        public long collector_id { get; set; }    
+
 
     }
 }

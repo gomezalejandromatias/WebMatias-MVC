@@ -1,0 +1,44 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+
+@model string
+
+@{
+    ViewData["Title"] = "Resultado del pago";
+}
+
+<div class="container text-center mt-5">
+
+    <h2>Resultado del pago</h2>
+
+    @if (Model == "approved" || Model == "Pagado")
+    {
+        <div class="alert alert-success mt-4">
+            Tu pago fue aprobado correctamente.
+        </div>
+    }
+    else if (Model == "rejected")
+    {
+        <div class="alert alert-danger mt-4">
+            Tu pago fue rechazado.
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning mt-4">
+            Estamos verificando tu pago.
+        </div>
+    }
+
+    <a asp-controller="Giro"
+       asp-action="CrearGiro"
+       class="btn btn-primary mt-3">
+        Volver a Giros
+    </a>
+
+</div>

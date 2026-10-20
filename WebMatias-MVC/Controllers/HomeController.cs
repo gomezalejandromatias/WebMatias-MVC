@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using System.Diagnostics;
 using WebMatias_MVC.Models;
 
 namespace WebMatias_MVC.Controllers
 {
+    [EnableRateLimiting("LimiteHome")]
     public class HomeController : Controller
     {
         public IActionResult Index()

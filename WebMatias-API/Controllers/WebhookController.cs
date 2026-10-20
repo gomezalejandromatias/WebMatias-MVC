@@ -19,27 +19,38 @@ namespace WebMatias_API.Controllers
 
         private readonly GiroDao _giroDao;
 
-       
+        private readonly string _webhookToken;
+
 
         public WebhookController(
         MercadoPagoService mercadoPagoService,
         GiroDao giroDao,
-       
+
         IConfiguration configuration)
         {
             _mercadoPagoservice = mercadoPagoService;
             _giroDao = giroDao;
-         
 
-            
+            _webhookToken = configuration["MercadoPago:WebhookToken"]
+    ?? throw new InvalidOperationException("WebhookToken no configurado");
+
         }
 
         [HttpPost]
 
-        [EnableRateLimiting("LimiteGeneral")]
+        [EnableRateLimiting("LimiteWebhook")]
         public async Task<IActionResult> RecibirWebhook(MercadoPagoWebhook mercadoPagoWebhook)
         {
-          
+            // Obtengo el token que llegó en la URL del webhook.
+            string tokenRecibido = Request.Query["token"].ToString();
+
+            // Comparo el token recibido con el guardado en User Secrets.
+            if (tokenRecibido != _webhookToken)
+            {
+                return Unauthorized();
+            }
+
+
 
 
 
@@ -47,7 +58,7 @@ namespace WebMatias_API.Controllers
             PagoMercadoPagoDao pagoMercadoPagoDao = new PagoMercadoPagoDao();
 
             // Identifico el tipo de notificación que manda Mercado Pago
-            string? tipo = mercadoPagoWebhook.Type?? mercadoPagoWebhook.Topic;
+            string? tipo = mercadoPagoWebhook.Type ?? mercadoPagoWebhook.Topic;
 
 
             // Obtengo el ID del pago desde Data
@@ -84,10 +95,35 @@ namespace WebMatias_API.Controllers
                 MercadoPagoPago pago =
                     await _mercadoPagoservice.ObtenerPago(pagoId);
 
+                
+               
+
+
+                if (pago.collector_id != await _mercadoPagoservice.ObtenerMiCollectorId()) 
+                {
+                    return Unauthorized();
+
+                }
+
                 // Verifico si Mercado Pago aprobó el pago
                 if (pago.Status == "approved")
                 {
                     int giroId = Convert.ToInt32(pago.ExternalReference);
+
+                    Giro giro = _giroDao.BuscarGiro(giroId);
+
+                    if (giro == null)
+                    {
+                        return BadRequest("El giro no existe");
+                    }
+
+                    if (pago.TransactionAmount != giro.MontoTotal)
+                    {
+                        return BadRequest("El monto pagado no coincide con el giro");
+                    }
+
+
+
 
                     try
                     {
@@ -124,6 +160,6 @@ namespace WebMatias_API.Controllers
 
 
 
- 
+
     }
 }

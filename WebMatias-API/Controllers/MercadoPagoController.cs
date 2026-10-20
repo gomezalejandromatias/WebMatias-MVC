@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using System.Net;
 using WebMatias_API.Dao.GiroDao;
 using WebMatias_API.Dao.PagoMercadoPagoDao;
@@ -22,6 +23,8 @@ namespace WebMatias_API.Controllers
 
 
         [HttpPost]
+
+        [EnableRateLimiting("LimiteMercadoPago")]
 
         public async Task<IActionResult> Post(int id)
         {
@@ -98,8 +101,8 @@ namespace WebMatias_API.Controllers
             return View();
         }
 
-
         [HttpGet("Details/{id}")]
+        [EnableRateLimiting("LimiteMercadoPago")]
         public IActionResult Details(int id)
         {
             try

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using WebMatias_MVC.Dao.EmailEnviadoDao;
 using WebMatias_MVC.Dao.GiroDao;
 using WebMatias_MVC.Dao.TipoGiroDao;
@@ -60,6 +61,7 @@ namespace WebMatias_MVC.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [EnableRateLimiting("LimiteCrearGiro")]
         public async Task<IActionResult> CrearGiro(Giro giro, decimal cotizacionMostrada)
         {
             // =========================================================
@@ -392,6 +394,8 @@ namespace WebMatias_MVC.Controllers
  
 
         // GET: GiroController/Details/5
+
+        [EnableRateLimiting("LimiteDetails")]
         public async Task< ActionResult> Details(int id)
         {
 
@@ -399,7 +403,7 @@ namespace WebMatias_MVC.Controllers
 
 
 
-            return View("Details",estado);
+            return View("ResultadoPago",estado);
         }
 
         // GET: GiroController/Create

@@ -34,9 +34,9 @@ namespace WebMatias_API.Dao.GiroDao
 
                 return giro;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
             finally
             {
@@ -51,7 +51,7 @@ namespace WebMatias_API.Dao.GiroDao
             try
             {
                 conexion.SetearConsulta(
-                    "UPDATE Giros SET Estado = @estado WHERE GiroId = @id"
+                    "UPDATE Giros SET EstadoPago = @estado WHERE GiroId = @id"
                 );
 
                 conexion.SetearParametro("@estado", "Pagado");

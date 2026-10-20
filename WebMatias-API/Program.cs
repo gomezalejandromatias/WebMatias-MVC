@@ -85,35 +85,108 @@ builder.Services.AddRateLimiter(options =>
     // Protege mi API de consultas excesivas
     // y reduce las solicitudes al proveedor externo de giros.
 
+    // RATE LIMITING PARA COTIZACIÓN
     options.AddPolicy("LimiteCotizacion", context =>
     {
-        // Obtengo la IP del cliente.
+        // Obtengo la IP que recibe mi API.
         string ip = context.Connection.RemoteIpAddress?.ToString()
                     ?? "desconocida";
 
-        // Creo un contador independiente para cada IP.
-        return RateLimitPartition.GetFixedWindowLimiter(
+        // Combino dos límites para cada IP.
+        return RateLimitPartition.Get(ip, _ =>
+            RateLimiter.CreateChained(
 
-            // La IP identifica al cliente.
-            partitionKey: ip,
+                // Máximo 20 peticiones por minuto.
+                new FixedWindowRateLimiter(
+                    new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 20,
+                        Window = TimeSpan.FromMinutes(1),
+                        QueueLimit = 0,
+                        AutoReplenishment = true
+                    }),
 
-            // Configuro las restricciones de cotización.
-            factory: _ => new FixedWindowRateLimiterOptions
-            {
-                // Máximo de 20 peticiones por IP.
-                PermitLimit = 20,
+                // Máximo 200 peticiones por hora.
+                new FixedWindowRateLimiter(
+                    new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 200,
+                        Window = TimeSpan.FromHours(1),
+                        QueueLimit = 0,
+                        AutoReplenishment = true
+                    })
+            )
+        );
+    });
 
-                // Cada ventana dura 1 minuto.
-                Window = TimeSpan.FromMinutes(1),
+    // RATE LIMITING PARA WEBHOOK DE MERCADO PAGO
+    // RATE LIMITING PARA WEBHOOK DE MERCADO PAGO
+    options.AddPolicy("LimiteWebhook", context =>
+    {
+        // Obtengo la IP que recibe mi API.
+        string ip = context.Connection.RemoteIpAddress?.ToString()
+                    ?? "desconocida";
 
-                // Rechazo las peticiones excedentes
-                // sin dejarlas en espera.
-                QueueLimit = 0,
+        // Combino dos límites por IP.
+        return RateLimitPartition.Get(ip, _ =>
+            RateLimiter.CreateChained(
 
-                // Renuevo automáticamente el cupo
-                // cuando comienza una nueva ventana.
-                AutoReplenishment = true
-            });
+                // Máximo 120 peticiones por minuto.
+                new FixedWindowRateLimiter(
+                    new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 120,
+                        Window = TimeSpan.FromMinutes(1),
+                        QueueLimit = 0,
+                        AutoReplenishment = true
+                    }),
+
+                // Máximo 1000 peticiones por hora.
+                new FixedWindowRateLimiter(
+                    new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 1000,
+                        Window = TimeSpan.FromHours(1),
+                        QueueLimit = 0,
+                        AutoReplenishment = true
+                    })
+            )
+        );
+    });
+
+    // RATE LIMITING PARA CREAR PREFERENCIAS DE MERCADO PAGO
+    // RATE LIMITING PARA CREAR PREFERENCIAS DE MERCADO PAGO
+    options.AddPolicy("LimiteMercadoPago", context =>
+    {
+        // Obtengo la IP que recibe mi API.
+        string ip = context.Connection.RemoteIpAddress?.ToString()
+                    ?? "desconocida";
+
+        // Combino dos límites independientes por IP.
+        return RateLimitPartition.Get(ip, _ =>
+            RateLimiter.CreateChained(
+
+                // Máximo 20 peticiones por minuto.
+                new FixedWindowRateLimiter(
+                    new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 20,
+                        Window = TimeSpan.FromMinutes(1),
+                        QueueLimit = 0,
+                        AutoReplenishment = true
+                    }),
+
+                // Máximo 100 peticiones por hora.
+                new FixedWindowRateLimiter(
+                    new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 100,
+                        Window = TimeSpan.FromHours(1),
+                        QueueLimit = 0,
+                        AutoReplenishment = true
+                    })
+            )
+        );
     });
 
 
@@ -151,17 +224,20 @@ if (app.Environment.IsDevelopment())
 
 
 
-// Primero interpreto la IP original enviada por ngrok
+// Identifico la IP original enviada por ngrok.
 app.UseForwardedHeaders();
 
-// Redirecciono a HTTPS cuando corresponde
+// Redirecciono a HTTPS cuando corresponde.
 app.UseHttpsRedirection();
 
-// Aplico las reglas de autorización
-app.UseAuthorization();
+// Identifico qué endpoint se está solicitando.
+app.UseRouting();
 
-// Aplico el Rate Limiting utilizando la IP identificada
+// Aplico Rate Limiting antes de ejecutar el controlador.
 app.UseRateLimiter();
+
+// Aplico autorización.
+app.UseAuthorization();
 
 
 

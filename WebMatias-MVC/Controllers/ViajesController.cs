@@ -1,5 +1,6 @@
 ﻿using AspNetCoreGeneratedDocument;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using WebMatias_MVC.Dao.ViajesDao;
 using WebMatias_MVC.Models;
 
@@ -20,7 +21,7 @@ namespace WebMatias_MVC.Controllers
             return View();
         }
 
-
+        [EnableRateLimiting("LimitarViajes")]
         public IActionResult MostrarVistaViajes() 
         {
 
@@ -28,6 +29,7 @@ namespace WebMatias_MVC.Controllers
          
         }
 
+        [EnableRateLimiting("LimitarViajes")]
         public IActionResult MostrarVistaDiciembre()
         {
 
@@ -35,7 +37,7 @@ namespace WebMatias_MVC.Controllers
 
         }
 
-
+       [ EnableRateLimiting("LimitarViajes")]
         public IActionResult Viajes(string Origen,string Destino)
         {
 
