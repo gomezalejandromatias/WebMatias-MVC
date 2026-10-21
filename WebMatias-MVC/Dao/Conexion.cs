@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using Microsoft.Data.SqlClient;
 namespace WebMatias_MVC.Dao
 {
@@ -10,27 +10,21 @@ namespace WebMatias_MVC.Dao
 
         SqlDataReader lector;
         
-
-
         public SqlDataReader Lector()
         {
 
             return lector;
-
-
         }
 
 
         public Conexion ()
         {
 
-
             string cadenaConexion = "Server=localhost;Database=WebPersonalDB;Trusted_Connection=True;TrustServerCertificate=True;";
 
             conexion = new SqlConnection (cadenaConexion);
 
             comando = new SqlCommand();
-
 
         }
 
@@ -42,7 +36,6 @@ namespace WebMatias_MVC.Dao
             conexion.Open();
             lector = comando.ExecuteReader();
 
-
         }
 
         public void SetearConsulta(string  consulta)
@@ -50,9 +43,6 @@ namespace WebMatias_MVC.Dao
 
             comando.CommandType = CommandType.Text;
             comando.CommandText = consulta;
-
-
-
         }
 
         public void CerrarConexion()
@@ -66,9 +56,6 @@ namespace WebMatias_MVC.Dao
             {
                 conexion.Close();
             }
-
-
-
         }
 
         public void EjecutarAccion()
@@ -82,15 +69,5 @@ namespace WebMatias_MVC.Dao
         {
             comando.Parameters.AddWithValue(nombre, valor);
         }
-
-       
-
-
-
-
-
-
-
-
     }
 }
