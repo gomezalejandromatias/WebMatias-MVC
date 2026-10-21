@@ -47,27 +47,9 @@ namespace WebMatias_MVC.Controllers
                 return View(new List<Viajes>());
             }
 
-            var viaje = _viajedao.ListaViaje();
-
-
-
-            if (!string.IsNullOrEmpty(Origen))
-            {
-                viaje = viaje.FindAll(v =>
-                    v.Origen.ToLower().Contains(Origen.ToLower()));
-            }
-
-            if (!string.IsNullOrEmpty(Destino))
-            {
-                viaje = viaje.FindAll(v =>
-                    v.Destino.ToLower().Contains(Destino.ToLower()));
-            }
-
-
+            var viaje = _viajedao.ListaViaje(Origen, Destino);
 
             return View(viaje);
-
-
 
         }
     }
