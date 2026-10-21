@@ -466,7 +466,7 @@ h1 {
 /* ===== SECCIÓN REQUISITOS ===== */
 
 .requisitos-fondo {
-    background-image: url('/Imagenes/ImagenesRequisitos/Requistos.png');
+    background-image: url('/Imagenes/ImagenesRequisitos/Requistos.webp');
     background-size: cover;
     background-position: center;
     padding: 150px;
@@ -650,7 +650,7 @@ h1 {
 
 .navidad-hero {
     min-height: 600px;
-    background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.55) ), url('/imagenes/ImagenNavidad.png');
+    background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.55) ), url('/imagenes/ImagenNavidad.webp');
     background-size: cover;
     background-position: center;
     display: flex;
