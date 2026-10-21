@@ -1,11 +1,11 @@
-﻿using WebMatias_MVC.Models;
+using WebMatias_MVC.Models;
 
 namespace WebMatias_MVC.Dao.ViajesDao
 {
     public class ViajeDao
     {
 
-        public List<Viajes>ListaViaje()
+        public List<Viajes>ListaViaje(string Origen, string Destino)
             
         {
             List<Viajes>listaviaje = new List<Viajes> ();
@@ -28,8 +28,11 @@ namespace WebMatias_MVC.Dao.ViajesDao
                 HorarioSalida,
                 Servicio,
                 Precio
-            FROM Viajes");
+            FROM Viajes
+            WHERE Origen LIKE '%' + @Origen + '%' AND Destino LIKE '%' + @Destino + '%'");
 
+                conexion.SetearParametro("@Origen", Origen);
+                conexion.SetearParametro("@Destino", Destino);
                 conexion.EjecutarLectura();
 
                 while (conexion.Lector().Read())
@@ -114,6 +117,17 @@ namespace WebMatias_MVC.Dao.ViajesDao
 
 
         }
+            
+
+            
+
+
+
+
+
+
+    }
+}
             
 
             
