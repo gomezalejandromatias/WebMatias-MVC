@@ -710,5 +710,124 @@ h1 {
         background-color: #157347;
     }
 
+    /*Prueba para arreglar la vista horizontal de imagenes*/
+@media (max-width: 950px) and (orientation: landscape) {
+    .contenedor-imagenes {
+        gap: 20px;
+        padding: 10px;
+    }
+}
+
+    /* ===== Página de resultado del pago ===== */
+
+.estado-pago-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 65vh;
+    padding: 50px 20px;
+    box-sizing: border-box;
+    }
+
+.estado-pago-card {
+    width: 100%;
+    max-width: 520px;
+    padding: 40px 35px;
+    text-align: center;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.10);
+}
+
+.estado-pago-card h2 {
+    margin-bottom: 15px;
+    color: #1e293b;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.estado-pago-icono {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 85px;
+    height: 85px;
+    margin: 0 auto 25px;
+    border-radius: 50%;
+    font-size: 46px;
+    font-weight: 700;
+}
+
+.pago-aprobado-icono {
+    color: #16a34a;
+    background-color: #dcfce7;
+    border: 2px solid #86efac;
+}
+
+.pago-rechazado-icono {
+    color: #dc2626;
+    background-color: #fee2e2;
+    border: 2px solid #fca5a5;
+}
+
+.pago-pendiente-icono {
+    color: #ca8a04;
+    background-color: #fef9c3;
+    border: 2px solid #fde047;
+}
+
+.estado-pago-mensaje {
+    margin-bottom: 10px;
+    color: #475569;
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+.estado-pago-card .alert {
+    border-radius: 12px;
+    font-size: 15px;
+}
+
+.estado-pago-separador {
+    height: 1px;
+    margin: 28px 0 24px;
+    background-color: #e2e8f0;
+}
+
+.btn-volver-giros {
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn-volver-giros {
+    transform: translateY(-2px);
+}
+
+/* Adaptación a pantallas pequeñas */
+
+    @media (max-width: 576px) {
+.estado-pago-container {
+    padding: 30px 15px;
+}
+
+.estado-pago-card {
+    padding: 30px 20px;
+}
+
+.estado-pago-card h2 {
+    font-size: 26px;
+}
+
+.estado-pago-icono {
+    width: 72px;
+    height: 72px;
+    font-size: 40px;
+    }
+
+}
+
 
 
