@@ -1,44 +1,68 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-
-
-
-@model string
+﻿@model string
 
 @{
     ViewData["Title"] = "Resultado del pago";
 }
 
-<div class="container text-center mt-5">
+<div class="estado-pago-container">
+    <div class="estado-pago-card">
 
-    <h2>Resultado del pago</h2>
+        @if (Model == "approved" || Model == "Pagado")
+        {
+            <div class="estado-pago-icono pago-aprobado-icono">
+                ✓
+            </div>
 
-    @if (Model == "approved" || Model == "Pagado")
-    {
-        <div class="alert alert-success mt-4">
-            Tu pago fue aprobado correctamente.
-        </div>
-    }
-    else if (Model == "rejected")
-    {
-        <div class="alert alert-danger mt-4">
-            Tu pago fue rechazado.
-        </div>
-    }
-    else
-    {
-        <div class="alert alert-warning mt-4">
-            Estamos verificando tu pago.
-        </div>
-    }
+            <h2>¡Pago aprobado!</h2>
 
-    <a asp-controller="Giro"
-       asp-action="CrearGiro"
-       class="btn btn-primary mt-3">
-        Volver a Giros
-    </a>
+            <p class="estado-pago-mensaje">
+                Tu pago se realizó correctamente.
+            </p>
 
+            <div class="alert alert-success mt-4">
+                La operación fue procesada con éxito.
+            </div>
+        }
+        else if (Model == "rejected")
+        {
+            <div class="estado-pago-icono pago-rechazado-icono">
+                ×
+            </div>
+
+            <h2>Pago rechazado</h2>
+
+            <p class="estado-pago-mensaje">
+                No pudimos completar tu pago.
+            </p>
+
+            <div class="alert alert-danger mt-4">
+                Podés volver a intentarlo.
+            </div>
+        }
+        else
+        {
+            <div class="estado-pago-icono pago-pendiente-icono">
+                …
+            </div>
+
+            <h2>Pago en proceso</h2>
+
+            <p class="estado-pago-mensaje">
+                Estamos verificando tu pago.
+            </p>
+
+            <div class="alert alert-warning mt-4">
+                El resultado todavía no está confirmado.
+            </div>
+        }
+
+        <div class="estado-pago-separador"></div>
+
+        <a asp-controller="Giro"
+           asp-action="CrearGiro"
+           class="btn btn-primary btn-volver-giros">
+            Volver a Giros
+        </a>
+
+    </div>
 </div>
