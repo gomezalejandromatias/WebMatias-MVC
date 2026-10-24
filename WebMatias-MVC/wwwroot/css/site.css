@@ -121,17 +121,20 @@ body {
 }
 
 .viaje-card {
-    display: flex;
+    display: grid;
+    grid-template-columns: 100px minmax(0, 1fr) 28px minmax(0, 1fr) minmax(0, 0.8fr) minmax(0, 0.9fr) minmax(0, 0.8fr);
+    grid-template-areas: "logo origen flecha destino horario servicio precio";
     align-items: center;
-    justify-content: space-between;
-    gap: 25px;
+    gap: 18px;
+    width: 100%;
+    box-sizing: border-box;
     background-color: #181818;
     border: 1px solid #292929;
     border-left: 4px solid #dc3545;
     padding: 25px;
-    margin-bottom: 18px;
-    border-radius: 10px;
-    transition: 0.2s;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    transition: transform 0.2s, border-color 0.2s;
 }
 
     .viaje-card:hover {
@@ -140,12 +143,28 @@ body {
         border-left-color: #dc3545;
     }
 
-.viaje-dato,
-.viaje-horario {
-    display: flex;
-    flex-direction: column;
+  .viaje-dato,
+  .viaje-horario {
+      display: flex;
+      flex-direction: column;
+}
+  .viaje-horario {
+    grid-area: horario;
+}
+.origen {
+    grid-area: origen;
 }
 
+.destino {
+    grid-area: destino;
+}
+.bloque-servicio {
+    grid-area: servicio;
+}
+
+.bloque-precio {
+    grid-area: precio;
+}
 .viaje-label {
     color: #888888;
     font-size: 12px;
@@ -161,6 +180,7 @@ body {
 }
 
 .flecha {
+    grid-area: flecha;
     color: #dc3545;
     font-size: 30px;
     font-weight: bold;
@@ -313,18 +333,14 @@ h1 {
         color: #A9B2BE;
     }
 
-
-
-
-
-
     .viaje-empresa {
-        width: 110px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-shrink: 0;
-    }
+      grid-area: logo;
+      width: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+  }
 
     .logo-empresa {
         width: 100px;
