@@ -21,15 +21,18 @@ namespace WebMatias_API.Controllers
 
         private readonly string _webhookToken;
 
+        private readonly EmailService _emailService;
+
 
         public WebhookController(
         MercadoPagoService mercadoPagoService,
-        GiroDao giroDao,
+        GiroDao giroDao, EmailService emailService,
 
         IConfiguration configuration)
         {
             _mercadoPagoservice = mercadoPagoService;
             _giroDao = giroDao;
+            _emailService = emailService;
 
             _webhookToken = configuration["MercadoPago:WebhookToken"]
     ?? throw new InvalidOperationException("WebhookToken no configurado");
@@ -136,6 +139,21 @@ namespace WebMatias_API.Controllers
 
                         // Marco el giro como pagado
                         _giroDao.MarcarComoPagado(giroId);
+
+                        // Intento enviar el correo por separado
+                        try
+                        {
+                            _emailService.ArmarCorreo(giro.EmailRemitente, giro);
+                            _emailService.GuardaEmail();
+                        }
+                        catch (Exception ex)
+                        {
+                            // Si falla Gmail, el giro sigue pagado.
+                            // Registramos el error para revisarlo.
+                            Console.WriteLine("Error al enviar email: " + ex.Message);
+                        }
+
+
                     }
                     catch (SqlException ex) when (ex.Number == 2627 || ex.Number == 2601)
                     {

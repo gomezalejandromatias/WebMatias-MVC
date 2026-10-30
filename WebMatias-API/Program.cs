@@ -206,6 +206,8 @@ builder.Services.AddRateLimiter(options =>
 builder.Services.AddScoped<CotizacionService>();
 builder.Services.AddScoped<MercadoPagoService>();
 
+builder.Services.AddScoped<EmailService>();
+
 // DAO
 builder.Services.AddScoped<GiroDao>();
 

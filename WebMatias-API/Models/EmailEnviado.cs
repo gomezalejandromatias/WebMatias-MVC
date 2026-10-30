@@ -1,4 +1,4 @@
-﻿namespace WebMatias_MVC.Models
+﻿namespace WebMatias_API.Models
 {
     public class EmailEnviado
     {
@@ -20,9 +20,6 @@
         public int CantidadIntentos { get; set; }
 
         public string? IdMensajeProveedor { get; set; }
-
-        public Giro? Giro { get; set; }
-
 
 
 

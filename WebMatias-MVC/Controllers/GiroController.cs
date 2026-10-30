@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
-using WebMatias_MVC.Dao.EmailEnviadoDao;
+
 using WebMatias_MVC.Dao.GiroDao;
 using WebMatias_MVC.Dao.TipoGiroDao;
 using WebMatias_MVC.Models;
@@ -13,14 +13,14 @@ namespace WebMatias_MVC.Controllers
     {
 
         public readonly CotizacionApiService _cotizacionApiService;
-        public readonly EmailService _emailService;
+      
 
         public readonly MercadoPagoApiService _mercadoPagoApiService;
 
-        public GiroController(CotizacionApiService cotizacionApiService,EmailService emailService,MercadoPagoApiService mercadoPagoApiService)
+        public GiroController(CotizacionApiService cotizacionApiService,MercadoPagoApiService mercadoPagoApiService)
         {
             _cotizacionApiService = cotizacionApiService;
-            _emailService = emailService;
+           
             _mercadoPagoApiService = mercadoPagoApiService;
         }
 
@@ -39,23 +39,29 @@ namespace WebMatias_MVC.Controllers
         public async Task<IActionResult> CrearGiro() 
         {
 
+            try
+            {
+                TipoGiroDao tipoGiroDao = new TipoGiroDao();
+
+                ViewBag.TipoGiro = tipoGiroDao.listaTipoGiro();
+
+                decimal valor =
+                    await _cotizacionApiService.ObtenerCotizacion();
+
+                ViewBag.Cotizacion = valor;
+
+                return View("Giro");
+            }
+            catch (HttpRequestException)
+            {
+                TempData["Error"] =
+                    "No se pudo obtener la cotización en este momento. Intentá nuevamente más tarde.";
+
+                return RedirectToAction("Index", "Home");
+            }
 
 
-            TipoGiroDao tipoGiroDao = new TipoGiroDao();
 
-            ViewBag.TipoGiro = tipoGiroDao.listaTipoGiro();
-
-           
-
-
-            decimal valor = await _cotizacionApiService.ObtenerCotizacion();
-
-            ViewBag.Cotizacion = valor; 
-
-            return View("Giro");
-        
-        
-        
         }
 
         
@@ -225,35 +231,7 @@ namespace WebMatias_MVC.Controllers
             }
 
 
-            // =========================================================
-            // 8. INTENTAR ENVIAR EL EMAIL
-            // =========================================================
 
-            try
-            {
-                // Primero armamos el correo con los datos del giro.
-                _emailService.ArmarCorreo(email, giro);
-
-                // Intentamos enviarlo.
-                _emailService.GuardaEmail();
-
-
-                // Si el programa llegó hasta esta línea,
-                // significa que el envío NO lanzó ninguna excepción.
-            }
-            catch (Exception)
-            {
-                // Si el correo falla, NO guardamos el giro.
-                //
-                // Esto responde a nuestra regla de negocio:
-                // si el operador no recibe el aviso,
-                // el giro no debe quedar registrado como realizado.
-
-                TempData["Error"] =
-                    "No se pudo enviar la solicitud del giro. El giro no fue registrado. Intentá nuevamente.";
-
-                return RedirectToAction("CrearGiro");
-            }
 
 
             // =========================================================
@@ -272,6 +250,17 @@ namespace WebMatias_MVC.Controllers
 
                 // GuardarGiro recupera el ID generado por SQL
                 // y lo deja dentro de giro.GiroId.
+
+                // Si todo salió correctamente,
+                // guardamos el mensaje original.
+
+                TempData["Mensaje"] =
+                    "El giro se registró correctamente. " +
+                    "Para actualizar la página, hacé clic en 'Tipos de Cambios (Dinero)' en el menú superior. " +
+                    "El giro puede demorar hasta 40 minutos. " +
+                    "Si pasado ese tiempo no se acredita, comunicate por teléfono o por email a mati.gorrriti1@gmail.com. " +
+                    "Si no encontrás el correo, revisá Spam o Promociones en Gmail, y Correo no deseado en Outlook/Hotmail.";
+
             }
             catch (Exception)
             {
@@ -301,12 +290,7 @@ namespace WebMatias_MVC.Controllers
                 // Si todo salió correctamente,
                 // guardamos el mensaje original.
 
-                TempData["Mensaje"] =
-                    "El giro se registró correctamente. " +
-                    "Para actualizar la página, hacé clic en 'Tipos de Cambios (Dinero)' en el menú superior. " +
-                    "El giro puede demorar hasta 40 minutos. " +
-                    "Si pasado ese tiempo no se acredita, comunicate por teléfono o por email a mati.gorrriti1@gmail.com. " +
-                    "Si no encontrás el correo, revisá Spam o Promociones en Gmail, y Correo no deseado en Outlook/Hotmail.";
+          
 
                 // Redirigimos al cliente a Mercado Pago.
                 return Redirect(mercadoPagoResponse.InitPoint);
@@ -334,61 +318,7 @@ namespace WebMatias_MVC.Controllers
                 return RedirectToAction("CrearGiro");
             }
 
-            // =========================================================
-            // 10. REGISTRAR EL EMAIL EN LA BASE DE DATOS
-            // =========================================================
 
-            // Como el correo ya fue enviado correctamente
-            // y el giro ya existe en SQL,
-            // ahora podemos relacionar ambos mediante GiroId.
-
-            try
-            {
-                EmailEnviado emailEnviado = new EmailEnviado();
-
-                emailEnviado.GiroId = giro.GiroId;
-                emailEnviado.EmailDestino = giro.EmailRemitente;
-
-                emailEnviado.FechaIntento = DateTime.Now;
-
-                // Como ya sabemos que el correo se envió,
-                // la fecha de entrega también es ahora.
-                emailEnviado.FechaEntrega = DateTime.Now;
-
-                // Ya no necesitamos comenzar en PENDIENTE,
-                // porque el envío ocurrió antes de crear este registro.
-                emailEnviado.Estado = "ENVIADO";
-
-                emailEnviado.DetalleError = null;
-                emailEnviado.CantidadIntentos = 1;
-                emailEnviado.IdMensajeProveedor = null;
-
-
-                EmailEnviadoDao emailEnviadoDao =
-                    new EmailEnviadoDao();
-
-                emailEnviadoDao.EmailEstado(emailEnviado);
-            }
-            catch (Exception)
-            {
-                // El giro ya fue guardado y el email ya fue enviado.
-                // Si solamente falla el registro histórico del email,
-                // no anulamos toda la operación.
-
-                TempData["Error"] =
-                    "El giro se realizó correctamente, pero no se pudo registrar el historial del correo.";
-            }
-
-
-            // =========================================================
-            // 11. REDIRECCIONAR
-            // =========================================================
-
-            // Aplicamos POST -> Redirect -> GET.
-            // Evita que al actualizar la página el usuario
-            // vuelva a enviar accidentalmente el mismo formulario.
-
-            return RedirectToAction("CrearGiro");
         }
 
  

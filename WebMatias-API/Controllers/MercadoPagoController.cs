@@ -41,6 +41,11 @@ namespace WebMatias_API.Controllers
                     return NotFound("No se encontró el giro.");
                 }
 
+                if (giro.Estado == "Pagado")
+                {
+                    return Conflict("Este giro ya fue pagado.");
+                }
+
                 // Nos comunicamos con Mercado Pago
                 // para crear la preferencia de pago.
                 MercadoPagoResponse respuesta =

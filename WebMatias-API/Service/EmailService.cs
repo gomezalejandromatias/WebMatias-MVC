@@ -1,11 +1,12 @@
 ﻿using System.Net;
 using System.Net.Mail;
-using WebMatias_MVC.Models;
+using WebMatias_API.Models;
 
-namespace WebMatias_MVC.Service
+namespace WebMatias_API.Service
 {
     public class EmailService
     {
+
         private MailMessage Email;
 
         private SmtpClient Server;
@@ -23,6 +24,8 @@ namespace WebMatias_MVC.Service
         public void ArmarCorreo(string emailDestino, Giro giro)
         {
             Email = new MailMessage();
+
+            
 
             Email.From = new MailAddress("mati.gorriti1@gmail.com");
             Email.To.Add(emailDestino);
@@ -159,4 +162,8 @@ namespace WebMatias_MVC.Service
 
 
     }
+
+
+
 }
+

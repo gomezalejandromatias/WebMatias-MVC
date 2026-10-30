@@ -22,7 +22,7 @@ namespace WebMatias_MVC.Dao.ViajesDao
                 Descripcion,
                 Requisitos,
                 DuracionAproximada,
-                ImagenUrl,
+                UrlImagen,
                 FechaActualizacion,
                 Activo,
                 HorarioSalida,
@@ -55,10 +55,10 @@ namespace WebMatias_MVC.Dao.ViajesDao
                             conexion.Lector()["DuracionAproximada"].ToString();
                     }
 
-                    if (conexion.Lector()["ImagenUrl"] != DBNull.Value)
+                    if (conexion.Lector()["UrlImagen"] != DBNull.Value)
                     {
                         aux.UrlImagen =
-                            conexion.Lector()["ImagenUrl"].ToString();
+                            conexion.Lector()["UrlImagen"].ToString();
                     }
                     else
                     {
@@ -137,5 +137,4 @@ namespace WebMatias_MVC.Dao.ViajesDao
 
 
 
-    }
-}
+

@@ -7,7 +7,20 @@ using WebMatias_MVC.Service;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.ModelBindingMessageProvider
+        .SetValueMustNotBeNullAccessor(
+            campo => "Este campo es obligatorio.");
+
+    options.ModelBindingMessageProvider
+        .SetAttemptedValueIsInvalidAccessor(
+            (valor, campo) => "El valor ingresado no es válido.");
+
+    options.ModelBindingMessageProvider
+        .SetNonPropertyAttemptedValueIsInvalidAccessor(
+            valor => "El valor ingresado no es válido.");
+});
 
 
 
@@ -192,7 +205,7 @@ builder.Services.AddRateLimiter(options =>
 
 
 
-builder.Services.AddScoped<EmailService>();
+
 
 builder.Services.AddScoped<ViajeDao>();
 
