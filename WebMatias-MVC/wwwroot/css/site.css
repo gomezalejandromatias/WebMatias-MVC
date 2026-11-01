@@ -329,28 +329,9 @@ h1 {
     font-size: 18px;
 }
 
-    .subtitulo-inicio span {
-        color: #A9B2BE;
-    }
-
-    .viaje-empresa {
-      grid-area: logo;
-      width: 100px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-shrink: 0;
-  }
-
-    .logo-empresa {
-        width: 100px;
-        height: 65px;
-        object-fit: contain;
-        border-radius: 6px;
-    }
-
-
-
+.subtitulo-inicio span {
+    color: #A9B2BE;
+}
 
 .viaje-precio {
     display: flex;
@@ -534,68 +515,66 @@ h1 {
    ===================================================== */
 @media (max-width: 700px) {
 
-    /* Tarjeta completa */
+    /* La tarjeta pasa a ser un bloque vertical prolijo */
     .viaje-card {
-        display: grid;
-        /* 4 columnas:
-           logo | información | flecha | información */
-        grid-template-columns: 110px 1fr 35px 1fr;
-        /* Distribución de cada elemento */
-        grid-template-areas:
-            "logo origen flecha destino"
-            "logo horario servicio precio";
-        gap: 18px 12px;
-        padding: 20px;
-        align-items: center;
-        /* Evita que algo salga del rectángulo */
-        overflow: hidden;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 16px !important;
+        padding: 20px !important;
     }
 
 
-    /* =========================
-       LOGO DE LA EMPRESA
-       ========================= */
+    /* Centramos el logo de la empresa arriba de todo */
     .viaje-empresa {
-        grid-area: logo;
-        justify-self: start;
+        display: flex !important;
+        justify-content: center !important;
+        width: 100% !important;
+        margin-bottom: 5px !important;
     }
 
     .logo-empresa {
-        width: 100px;
-        max-width: 100%;
-        height: auto;
-        object-fit: contain;
+        width: 120px !important;
+        height: auto !important;
     }
-
-
-    /* =========================
-       ORIGEN
-       ========================= */
-    .origen {
-        grid-area: origen;
-        min-width: 0;
-    }
-
 
     /* =========================
        FLECHA
        ========================= */
+    /* Ocultamos la flecha roja porque en vertical ya no tiene sentido */
     .flecha {
-        grid-area: flecha;
-        transform: none;
-        justify-self: center;
-        font-size: 24px;
+        display: none !important;
     }
 
-
-    /* =========================
-       DESTINO
-       ========================= */
-    .destino {
-        grid-area: destino;
-        min-width: 0;
+    /* Forzamos a que todos los bloques internos se ordenen verticalmente (Etiqueta arriba, Valor abajo) */
+    .origen, .destino, .viaje-horario, .viaje-servicio, .viaje-precio {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important; /* Centra los textos para que luzcan mejor en celular */
+        text-align: center !important;
+        width: 100% !important;
+        margin: 0 !important;
     }
 
+    /* Achicamos un poquito las letras para que quepan holgadamente */
+    .viaje-label {
+        font-size: 11px !important;
+        margin-bottom: 3px !important;
+        color: #888888 !important;
+    }
+
+    .viaje-valor, .horario, .servicio, .precio {
+        font-size: 18px !important;
+        white-space: normal !important; /* Si el texto es largo, salta de renglón en vez de pisar a otro */
+    }
+
+    /* Destacamos el precio abajo con una sutil línea separadora */
+    .viaje-precio {
+        border-top: 1px solid #292929 !important;
+        padding-top: 12px !important;
+        margin-top: 5px !important;
+    }
+}
 
     /* =========================
        HORARIO
@@ -845,5 +824,44 @@ h1 {
 
 }
 
+/* =====================================================
+   VISTA HORIZONTAL (CELULAR GIRADO Y PANTALLAS MEDIANAS)
+   ===================================================== */
+@media (min-width: 701px) and (max-width: 1000px) {
 
+    /* Cambiamos la grilla fija por una mucho más flexible */
+    .viaje-card {
+        display: grid !important;
+        grid-template-columns: 100px repeat(5, 1fr) !important;
+        grid-template-areas: "logo origen destino horario servicio precio" !important;
+        gap: 12px !important;
+        padding: 15px !important;
+    }
 
+    /* Ocultamos la flecha intermedia para ganar espacio de ancho */
+    .flecha {
+        display: none !important;
+    }
+
+    /* Forzamos a que las etiquetas y textos vuelvan a alinearse bien */
+    .origen, .destino, .viaje-horario, .viaje-servicio, .viaje-precio, .bloque-servicio, .bloque-precio {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        text-align: left !important;
+        width: auto !important;
+        border-top: none !important;
+        padding-top: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Ajustamos los tamaños de las fuentes para que no se pisen */
+    .viaje-label {
+        font-size: 10px !important;
+    }
+
+    .viaje-valor, .horario, .servicio, .precio {
+        font-size: 14px !important;
+        white-space: nowrap !important; /* Evita que las palabras se corten feo */
+    }
+}
