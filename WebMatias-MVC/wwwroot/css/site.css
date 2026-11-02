@@ -1,33 +1,33 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+    color: var(--bs-secondary-color);
+    text-align: end;
 }
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+    text-align: start;
 }
 
 body {
@@ -120,21 +120,19 @@ body {
     font-size: 26px;
 }
 
+/* VISTA DE PC ORIGINAL (FLEXBOX HORIZONTAL) */
 .viaje-card {
-    display: grid;
-    grid-template-columns: 100px minmax(0, 1fr) 28px minmax(0, 1fr) minmax(0, 0.8fr) minmax(0, 0.9fr) minmax(0, 0.8fr);
-    grid-template-areas: "logo origen flecha destino horario servicio precio";
+    display: flex;
     align-items: center;
-    gap: 18px;
-    width: 100%;
-    box-sizing: border-box;
+    justify-content: space-between;
+    gap: 25px;
     background-color: #181818;
     border: 1px solid #292929;
     border-left: 4px solid #dc3545;
     padding: 25px;
-    margin-bottom: 20px;
-    border-radius: 12px;
-    transition: transform 0.2s, border-color 0.2s;
+    margin-bottom: 18px;
+    border-radius: 10px;
+    transition: 0.2s;
 }
 
     .viaje-card:hover {
@@ -143,28 +141,12 @@ body {
         border-left-color: #dc3545;
     }
 
-  .viaje-dato,
-  .viaje-horario {
-      display: flex;
-      flex-direction: column;
-}
-  .viaje-horario {
-    grid-area: horario;
-}
-.origen {
-    grid-area: origen;
+.viaje-dato,
+.viaje-horario {
+    display: flex;
+    flex-direction: column;
 }
 
-.destino {
-    grid-area: destino;
-}
-.bloque-servicio {
-    grid-area: servicio;
-}
-
-.bloque-precio {
-    grid-area: precio;
-}
 .viaje-label {
     color: #888888;
     font-size: 12px;
@@ -180,7 +162,6 @@ body {
 }
 
 .flecha {
-    grid-area: flecha;
     color: #dc3545;
     font-size: 30px;
     font-weight: bold;
@@ -192,50 +173,38 @@ body {
     font-weight: 700;
 }
 
+.navbar {
+    background-color: #111827 !important;
+    border-bottom: 1px solid #1f2937;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.35);
+    padding: 14px 20px;
+}
 
+.navbar-brand {
+    color: #60a5fa !important;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
 
+.navbar-nav .nav-link {
+    color: #e5e7eb !important;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 6px;
+    padding: 10px 14px !important;
+    border-radius: 8px;
+    transition: 0.25s;
+}
 
-
-
-
-    .navbar {
-        background-color: #111827 !important;
-        border-bottom: 1px solid #1f2937;
-        box-shadow: 0 3px 12px rgba(0,0,0,0.35);
-        padding: 14px 20px;
+    .navbar-nav .nav-link:hover {
+        background-color: #1e3a5f;
+        color: #ffffff !important;
     }
 
-    .navbar-brand {
-        color: #60a5fa !important;
-        font-size: 24px;
-        font-weight: 700;
-        letter-spacing: 0.3px;
+    .navbar-nav .nav-link:focus {
+        color: #ffffff !important;
     }
-
-    .navbar-nav .nav-link {
-        color: #e5e7eb !important;
-        font-size: 16px;
-        font-weight: 500;
-        margin: 0 6px;
-        padding: 10px 14px !important;
-        border-radius: 8px;
-        transition: 0.25s;
-    }
-
-        .navbar-nav .nav-link:hover {
-            background-color: #1e3a5f;
-            color: #ffffff !important;
-        }
-
-        .navbar-nav .nav-link:focus {
-            color: #ffffff !important;
-        }
-
-
-
-
-
-
 
 .contenedor-imagenes {
     display: flex;
@@ -285,7 +254,6 @@ body {
     object-fit: cover;
 }
 
-
 .titulo-sobremi {
     color: #F2F2F2;
     font-size: 40px;
@@ -301,9 +269,6 @@ body {
     font-weight: 400;
 }
 
-
-
-
 h1 {
     color: #f5f5f5;
 }
@@ -316,8 +281,6 @@ h1 {
     color: #e63946;
 }
 
-
-
 .titulo-inicio {
     color: #F2F2F2;
     font-size: 56px;
@@ -329,8 +292,23 @@ h1 {
     font-size: 18px;
 }
 
-.subtitulo-inicio span {
-    color: #A9B2BE;
+    .subtitulo-inicio span {
+        color: #A9B2BE;
+    }
+
+.viaje-empresa {
+    width: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.logo-empresa {
+    width: 100px;
+    height: 65px;
+    object-fit: contain;
+    border-radius: 6px;
 }
 
 .viaje-precio {
@@ -355,7 +333,6 @@ h1 {
     font-weight: 600;
 }
 
-
 .contenedor-oficinas {
     display: flex;
     flex-direction: row;
@@ -373,34 +350,94 @@ h1 {
     }
 
 
-/* ==========================
-   CELULARES
-   ========================== */
-@media (max-width: 768px) {
+/* =====================================================
+   DISPOSITIVOS MÓVILES (VISTA HORIZONTAL Y TABLETS)
+   ===================================================== */
+@media (max-width: 991px) {
 
-    .contenedor-imagenes {
-        width: 100%;
+    .viajes-container {
         padding: 10px;
-        gap: 20px;
-    }
-
-    .carousel-matias {
-        width: 100%;
         max-width: 100%;
     }
 
-        .carousel-matias .imagen {
-            width: 100%;
-            height: auto;
-            object-fit: contain;
-        }
-}
+    .viaje-card {
+        display: grid !important;
+        grid-template-columns: 95px 1fr 30px 1fr !important;
+        grid-template-areas:
+            "logo origen flecha destino"
+            "logo horario servicio precio" !important;
+        gap: 14px 10px !important;
+        padding: 15px !important;
+        align-items: center;
+        overflow: hidden;
+    }
 
-/* =========================
-   SOBRE MI - CELULAR
-   ========================= */
-@media (max-width: 768px) {
+    .viaje-empresa {
+        grid-area: logo !important;
+        justify-self: start;
+        width: auto;
+    }
 
+    .origen {
+        grid-area: origen !important;
+    }
+
+    .flecha {
+        grid-area: flecha !important;
+        justify-self: center;
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .destino {
+        grid-area: destino !important;
+    }
+
+    .viaje-horario {
+        grid-area: horario !important;
+    }
+
+    .bloque-servicio {
+        grid-area: servicio !important;
+        justify-self: start;
+    }
+
+    .bloque-precio {
+        grid-area: precio !important;
+        justify-self: end;
+        margin-left: 0;
+    }
+
+    .logo-empresa {
+        width: 85px;
+        height: auto;
+        max-width: 100%;
+    }
+
+    .viaje-label {
+        font-size: 10px;
+    }
+
+    .viaje-valor {
+        font-size: 14px;
+    }
+
+    .horario {
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    .servicio {
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    .precio {
+        font-size: 15px;
+        white-space: nowrap;
+    }
+
+    /* Componentes comunes */
     .contenedor-oficinas {
         display: flex;
         flex-direction: column;
@@ -430,12 +467,6 @@ h1 {
         padding: 0 10px;
         box-sizing: border-box;
     }
-}
-
-/* =========================
-   MENU - CELULAR Y TABLET
-   ========================= */
-@media (max-width: 991.98px) {
 
     .navbar-collapse {
         width: 100%;
@@ -458,28 +489,6 @@ h1 {
             padding: 10px 0 !important;
             text-align: left;
         }
-}
-
-/* ===== SECCIÓN REQUISITOS ===== */
-
-.requisitos-fondo {
-    background-image: url('/Imagenes/ImagenesRequisitos/Requistos.webp');
-    background-size: cover;
-    background-position: center;
-    padding: 150px;
-    color: white;
-    text-align: center;
-}
-
-.requisitos-contenido {
-    background: rgba(0, 0, 0, 0.5);
-    padding: 20px;
-}
-
-
-/* ===== CELULAR VERTICAL ===== */
-
-@media (max-width: 768px) {
 
     .requisitos-fondo {
         padding: 60px 20px;
@@ -491,11 +500,148 @@ h1 {
     }
 }
 
+/* =====================================================
+   CELULAR VERTICAL (EVITA QUE SE SOBREPONGAN LOS TEXTOS)
+   ===================================================== */
+@media (max-width: 480px) {
+    .viaje-card {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr 1fr !important; /* 3 columnas iguales */
+        grid-template-areas:
+            "logo . ."
+            "origen flecha destino"
+            "horario servicio precio" !important;
+        gap: 16px 8px !important;
+        padding: 16px !important;
+    }
 
-/* ===== CELULAR HORIZONTAL ===== */
+    .viaje-empresa {
+        grid-area: logo !important;
+        justify-self: start;
+    }
+
+    .origen {
+        grid-area: origen !important;
+        justify-self: start;
+    }
+
+    .flecha {
+        grid-area: flecha !important;
+        justify-self: center;
+        align-self: center;
+        font-size: 22px;
+    }
+
+    .destino {
+        grid-area: destino !important;
+        justify-self: end;
+        text-align: right;
+    }
+
+    .viaje-horario {
+        grid-area: horario !important;
+        justify-self: start;
+    }
+
+    .bloque-servicio {
+        grid-area: servicio !important;
+        justify-self: center;
+        text-align: center;
+    }
+
+    .bloque-precio {
+        grid-area: precio !important;
+        justify-self: end;
+        text-align: right;
+    }
+
+    /* Ajustes finos de textos para que respiren */
+    .logo-empresa {
+        width: 75px;
+    }
+
+    .viaje-valor {
+        font-size: 15px;
+    }
+
+    .horario {
+        font-size: 15px;
+    }
+
+    .servicio {
+        font-size: 14px;
+    }
+
+    .precio {
+        font-size: 16px;
+    }
+}
+
+
+    /* Estilos extras de componentes comunes en celular */
+    .contenedor-oficinas {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 15px;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+
+    .imagen-oficina {
+        width: 100%;
+        max-width: 420px;
+        height: auto;
+        object-fit: contain;
+    }
+
+    .titulo-sobremi {
+        font-size: 28px;
+        line-height: 1.2;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+
+    .texto-sobremi {
+        font-size: 16px;
+        line-height: 1.6;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+
+    .navbar-collapse {
+        width: 100%;
+    }
+
+    .navbar-nav {
+        width: 100%;
+        align-items: flex-start;
+        margin-left: 0 !important;
+        padding-left: 0;
+    }
+
+        .navbar-nav .nav-item {
+            width: 100%;
+        }
+
+        .navbar-nav .nav-link {
+            width: 100%;
+            margin: 0;
+            padding: 10px 0 !important;
+            text-align: left;
+        }
+
+    .requisitos-fondo {
+        padding: 60px 20px;
+    }
+
+    .requisitos-contenido {
+        width: 90%;
+        margin: 0 auto;
+    }
+}
 
 @media (max-width: 950px) and (orientation: landscape) {
-
     .requisitos-fondo {
         padding: 50px 80px;
         background-size: contain;
@@ -507,142 +653,14 @@ h1 {
         max-width: 600px;
         margin: 0 auto;
     }
-}
 
-/* =====================================================
-   CELULAR
-   Organiza la tarjeta para pantallas chicas
-   ===================================================== */
-@media (max-width: 700px) {
-
-    /* La tarjeta pasa a ser un bloque vertical prolijo */
-    .viaje-card {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: stretch !important;
-        gap: 16px !important;
-        padding: 20px !important;
-    }
-
-
-    /* Centramos el logo de la empresa arriba de todo */
-    .viaje-empresa {
-        display: flex !important;
-        justify-content: center !important;
-        width: 100% !important;
-        margin-bottom: 5px !important;
-    }
-
-    .logo-empresa {
-        width: 120px !important;
-        height: auto !important;
-    }
-
-    /* =========================
-       FLECHA
-       ========================= */
-    /* Ocultamos la flecha roja porque en vertical ya no tiene sentido */
-    .flecha {
-        display: none !important;
-    }
-
-    /* Forzamos a que todos los bloques internos se ordenen verticalmente (Etiqueta arriba, Valor abajo) */
-    .origen, .destino, .viaje-horario, .viaje-servicio, .viaje-precio {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important; /* Centra los textos para que luzcan mejor en celular */
-        text-align: center !important;
-        width: 100% !important;
-        margin: 0 !important;
-    }
-
-    /* Achicamos un poquito las letras para que quepan holgadamente */
-    .viaje-label {
-        font-size: 11px !important;
-        margin-bottom: 3px !important;
-        color: #888888 !important;
-    }
-
-    .viaje-valor, .horario, .servicio, .precio {
-        font-size: 18px !important;
-        white-space: normal !important; /* Si el texto es largo, salta de renglón en vez de pisar a otro */
-    }
-
-    /* Destacamos el precio abajo con una sutil línea separadora */
-    .viaje-precio {
-        border-top: 1px solid #292929 !important;
-        padding-top: 12px !important;
-        margin-top: 5px !important;
+    .contenedor-imagenes {
+        gap: 20px;
+        padding: 10px;
     }
 }
-
-    /* =========================
-       HORARIO
-       ========================= */
-    .viaje-horario {
-        grid-area: horario;
-        min-width: 0;
-    }
-
-
-    /* =====================================================
-   SERVICIO
-   ===================================================== */
-    .bloque-servicio {
-        grid-area: servicio;
-        min-width: 0;
-        justify-self: start;
-    }
-
-
-    /* =====================================================
-   PRECIO
-   ===================================================== */
-    .bloque-precio {
-        grid-area: precio;
-        min-width: 0;
-        justify-self: end;
-        /* Separa el precio del nombre del servicio */
-        margin-left: 20px;
-    }
-
-
-    /* Títulos: ORIGEN, DESTINO, etc. */
-    .viaje-label {
-        font-size: 10px;
-    }
-
-
-    /* El Talar, Puerto Rico, etc. */
-    .viaje-valor {
-        font-size: 16px;
-    }
-
-
-    /* Horario */
-    .horario {
-        font-size: 17px;
-        white-space: nowrap;
-    }
-
-
-    /* Semicama / Cama */
-    .servicio {
-        font-size: 15px;
-        white-space: nowrap;
-    }
-
-
-    /* Precio */
-    .precio {
-        font-size: 16px;
-        white-space: nowrap;
-    }
-}
-
 
 /*CSS PARA VISTA DICIEMBRE*/
-
 .navidad-hero {
     min-height: 600px;
     background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.55) ), url('/imagenes/ImagenNavidad.webp');
@@ -656,7 +674,6 @@ h1 {
     padding: 40px;
 }
 
-
 .navidad-contenido {
     text-align: center;
     color: white;
@@ -666,25 +683,21 @@ h1 {
     max-width: 750px;
 }
 
-
     .navidad-contenido h1 {
         font-size: 45px;
         font-weight: bold;
         margin-bottom: 20px;
     }
 
-
     .navidad-contenido h2 {
         font-size: 28px;
         margin-bottom: 20px;
     }
 
-
     .navidad-contenido p {
         font-size: 20px;
         margin-bottom: 30px;
     }
-
 
 .btn-telefono {
     display: inline-block;
@@ -698,23 +711,12 @@ h1 {
     transition: 0.3s;
 }
 
-
     .btn-telefono:hover {
         transform: scale(1.07);
         color: white;
         background-color: #157347;
     }
-
-    /*Prueba para arreglar la vista horizontal de imagenes*/
-@media (max-width: 950px) and (orientation: landscape) {
-    .contenedor-imagenes {
-        gap: 20px;
-        padding: 10px;
-    }
-}
-
-    /* ===== Página de resultado del pago ===== */
-
+/* ===== Página de resultado del pago ===== */
 .estado-pago-container {
     display: flex;
     justify-content: center;
@@ -722,7 +724,7 @@ h1 {
     min-height: 65vh;
     padding: 50px 20px;
     box-sizing: border-box;
-    }
+}
 
 .estado-pago-card {
     width: 100%;
@@ -735,12 +737,12 @@ h1 {
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.10);
 }
 
-.estado-pago-card h2 {
-    margin-bottom: 15px;
-    color: #1e293b;
-    font-size: 30px;
-    font-weight: 700;
-}
+    .estado-pago-card h2 {
+        margin-bottom: 15px;
+        color: #1e293b;
+        font-size: 30px;
+        font-weight: 700;
+    }
 
 .estado-pago-icono {
     display: flex;
@@ -801,67 +803,22 @@ h1 {
     transform: translateY(-2px);
 }
 
-/* Adaptación a pantallas pequeñas */
-
-    @media (max-width: 576px) {
-.estado-pago-container {
-    padding: 30px 15px;
-}
-
-.estado-pago-card {
-    padding: 30px 20px;
-}
-
-.estado-pago-card h2 {
-    font-size: 26px;
-}
-
-.estado-pago-icono {
-    width: 72px;
-    height: 72px;
-    font-size: 40px;
+@media (max-width: 576px) {
+    .estado-pago-container {
+        padding: 30px 15px;
     }
 
-}
-
-/* =====================================================
-   VISTA HORIZONTAL (CELULAR GIRADO Y PANTALLAS MEDIANAS)
-   ===================================================== */
-@media (min-width: 701px) and (max-width: 1000px) {
-
-    /* Cambiamos la grilla fija por una mucho más flexible */
-    .viaje-card {
-        display: grid !important;
-        grid-template-columns: 100px repeat(5, 1fr) !important;
-        grid-template-areas: "logo origen destino horario servicio precio" !important;
-        gap: 12px !important;
-        padding: 15px !important;
+    .estado-pago-card {
+        padding: 30px 20px;
     }
 
-    /* Ocultamos la flecha intermedia para ganar espacio de ancho */
-    .flecha {
-        display: none !important;
-    }
+        .estado-pago-card h2 {
+            font-size: 26px;
+        }
 
-    /* Forzamos a que las etiquetas y textos vuelvan a alinearse bien */
-    .origen, .destino, .viaje-horario, .viaje-servicio, .viaje-precio, .bloque-servicio, .bloque-precio {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        text-align: left !important;
-        width: auto !important;
-        border-top: none !important;
-        padding-top: 0 !important;
-        margin: 0 !important;
-    }
-
-    /* Ajustamos los tamaños de las fuentes para que no se pisen */
-    .viaje-label {
-        font-size: 10px !important;
-    }
-
-    .viaje-valor, .horario, .servicio, .precio {
-        font-size: 14px !important;
-        white-space: nowrap !important; /* Evita que las palabras se corten feo */
+    .estado-pago-icono {
+        width: 72px;
+        height: 72px;
+        font-size: 40px;
     }
 }
