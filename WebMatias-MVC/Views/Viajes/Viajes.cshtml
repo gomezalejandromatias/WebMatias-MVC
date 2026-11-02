@@ -1,19 +1,7 @@
 ﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+    For more information on enabling MVC for empty projects, visit https://microsoft.com
 *@
-@{
-}
-
 @model List<Viajes>
-
-
-
-    
-
-@{
-    //aca  se puede escribir el comentario
-}
-
 
 <div class="viajes-container">
 
@@ -41,7 +29,6 @@
             </div>
 
             <datalist id="listaOrigen">
-
                 @if (Model != null)
                 {
                     foreach (var item in Model.Select(o => o.Origen).Distinct())
@@ -49,14 +36,6 @@
                         <option value="@item"></option>
                     }
                 }
-
-                      
-
-
-
-                
-
-
             </datalist>
 
             <div class="campo-viaje">
@@ -70,21 +49,13 @@
             </div>
 
             <datalist id="listaDestino">
-
                 @if (Model != null)
                 {
                     @foreach (var item in Model.Select(d => d.Destino).Distinct())
                     {
                         <option value="@item"></option>
                     }
-
-
-
                 }
-
-
-
-
             </datalist>
 
             <button type="submit" class="btn-buscar">
@@ -98,25 +69,16 @@
     @if (Model != null && Model.Count == 0)
     {
         <label>No se encontraron viajes</label>
-
-
     }
 
-             
     @if (Model != null && Model.Count > 0)
     {
-
-         
         <div id="resultados" class="resultados-viajes">
 
             <h2>Viajes disponibles</h2>
 
-         
-
-
             @foreach (var item in Model)
             {
-
                 <div class="viaje-card">
 
                     <div class="viaje-empresa">
@@ -151,42 +113,24 @@
                         <span class="servicio">@item.Servicio</span>
                     </div>
 
-                    <div class="viaje-servicio bloque-precio">
+                    <div class="viaje-precio bloque-precio">
                         <span class="viaje-label">Precio</span>
                         <span class="precio">@item.Precio</span>
                     </div>
 
                 </div>
-
             }
 
             <br />
             <br />
 
-              
-
-
-                 
-
         </div>
-
-              
-               
-
     }
 
     <button type="button" class="btn btn-primary" onclick="limpiar()">
-
         Limpiar
-
     </button>
 </div>
-
-
-
-    
-
-  
 
 <br />
 <br />
@@ -195,22 +139,17 @@
     ¿Querés conocer nuestras promociones o comprar un pasaje?
     Comunicate con nosotros por WhatsApp para recibir atención personalizada:
 
-    <a href="https://wa.me/5491133153864?text=Hola%2C%20quiero%20consultar%20por%20promociones%20o%20compra%20de%20pasajes"
+    <a href="https://wa.me"
        class="text-light"
        target="_blank">
         11 3315-3864
     </a>
 </p>
 
-
-
 <script>
     function limpiar() {
         document.getElementById("resultados").innerHTML = "";
-
         document.getElementById("origen").value = "";
         document.getElementById("destino").value = "";
     }
 </script>
-
-
