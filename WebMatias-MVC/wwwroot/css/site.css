@@ -822,3 +822,210 @@ h1 {
         font-size: 40px;
     }
 }
+
+/* =====================================================
+   ESTILOS NUEVOS PARA LA PÁGINA DE REQUISITOS ADAPTABLE
+   ===================================================== */
+.requisitos-seccion-principal {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+/* Imagen de fondo de los colectivos reparada */
+.requisitos-fondo {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 60px 30px;
+    border-radius: 12px;
+    border: 1px solid #292929;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    margin-bottom: 30px;
+}
+
+.requisitos-contenido {
+    background: rgba(0, 0, 0, 0.65);
+    padding: 25px;
+    border-radius: 10px;
+    max-width: 100%;
+}
+
+/* Sistema de alineación paralela para pantallas grandes */
+.seccion-paralelo-contenedor {
+    display: flex;
+    flex-direction: row; /* Uno al lado del otro en PC */
+    gap: 40px;
+    align-items: flex-start;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.bloque-informacion-texto {
+    flex: 1; /* El texto toma todo el espacio flexible de la izquierda */
+    min-width: 0;
+}
+
+.bloque-imagenes-lateral {
+    display: flex;
+    flex-direction: column; /* Apila imágenes una debajo de la otra */
+    gap: 25px;
+    width: 360px; /* Tamaño estético para la columna lateral */
+    flex-shrink: 0;
+}
+
+/* Corrección estricta para evitar que la foto de celular se estire, desborde o pixele */
+.imagen-fluida-limpia {
+    width: 100%;
+    height: 280px; /* Altura controlada fija en PC */
+    object-fit: cover; /* Recorta la foto proporcionalmente sin aplastarla */
+    border-radius: 10px;
+    border: 1px solid #292929;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* ===== CONTROL ADAPTABLE PARA DISPOSITIVOS MÓVILES ===== */
+@media (max-width: 768px) {
+    .seccion-paralelo-contenedor {
+        flex-direction: column; /* En teléfonos móviles cambia a cascada (uno abajo del otro) */
+        gap: 30px;
+    }
+
+    .bloque-imagenes-lateral {
+        width: 100%; /* Las fotos ocupan todo el ancho en el móvil vertical */
+    }
+
+    .imagen-fluida-limpia {
+        height: auto; /* Permite una proporción natural y limpia en vertical */
+        max-height: 250px;
+    }
+
+    .requisitos-fondo {
+        padding: 30px 15px;
+    }
+}
+
+/* =====================================================
+   ESTILOS ESPECÍFICOS PARA LA PÁGINA SOBRE MÍ (PC)
+   ===================================================== */
+.sobremi-seccion-principal {
+    max-width: 1140px;
+    margin: 40px auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* Comportamiento base fluido para móviles */
+.sobremi-flex-container {
+    display: flex;
+    flex-direction: column; /* Cascada vertical por defecto en celular */
+    gap: 30px;
+    width: 100%;
+}
+
+.sobremi-imagenes-columna {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.imagen-oficina-adaptable {
+    width: 100%;
+    max-width: 420px; /* Evita que en celular gigante se desborde */
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+    margin: 0 auto;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+.sobremi-texto-columna {
+    width: 100%;
+}
+
+/* REGLAS EXCLUSIVAS PARA COMPUTADORAS (ESCRITORIO) */
+@media (min-width: 992px) {
+    .sobremi-flex-container {
+        flex-direction: row-reverse; /* Imágenes a la derecha, texto a la izquierda */
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 50px;
+    }
+
+    .sobremi-texto-columna {
+        flex: 1; /* El texto ocupa el espacio principal de forma limpia */
+    }
+
+    .sobremi-imagenes-columna {
+        width: 380px; /* Ancho fijo y compacto para la columna lateral de fotos */
+        flex-shrink: 0;
+    }
+
+    .imagen-oficina-adaptable {
+        width: 100%;
+        height: 290px; /* Altura fija estética para PC */
+        object-fit: cover; /* Mantiene la proporción ideal sin estirar a la familia */
+        border-radius: 12px;
+        border: 1px solid #232323;
+    }
+}
+
+/* =====================================================
+   ESTILOS COMPONENTES PÁGINA DE INICIO (PC Y MÓVIL)
+   ===================================================== */
+.home-galeria-seccion {
+    display: flex;
+    flex-direction: row; /* En PC se muestran uno al lado del otro */
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.carousel-personalizado {
+    width: 100%;
+    max-width: 550px; /* Tamaño elegante para cada carrusel en PC */
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    border: 1px solid #222;
+}
+
+.imagen-banner {
+    width: 100%;
+    height: 380px; /* Proporción horizontal ideal para pantallas de escritorio */
+    object-fit: cover; /* Evita deformaciones recortando excedentes de forma limpia */
+    display: block;
+}
+
+/* ===== CORRECCIÓN EXCLUSIVA PARA DISPOSITIVOS MÓVILES ===== */
+@media (max-width: 768px) {
+    .home-galeria-seccion {
+        flex-direction: column; /* Forzar orden en cascada vertical (uno abajo del otro) */
+        gap: 25px;
+        padding: 0 15px;
+    }
+
+    .carousel-personalizado {
+        max-width: 100%; /* Permite expandirse al ancho de pantalla del móvil */
+    }
+
+    .imagen-banner {
+        height: auto; /* Desactiva la altura estirada fija */
+        aspect-ratio: 4 / 3; /* Fuerza una proporción fotográfica perfecta en vertical */
+        max-height: 280px; /* Límite superior para que no ocupe toda la pantalla */
+    }
+
+    .titulo-inicio {
+        font-size: 34px !important; /* Reduce los títulos para que entren cómodos */
+    }
+
+    .subtitulo-inicio {
+        font-size: 16px !important;
+    }
+}
