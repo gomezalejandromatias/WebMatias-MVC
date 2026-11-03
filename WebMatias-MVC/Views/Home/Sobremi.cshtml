@@ -1,48 +1,49 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+@*
+    For more information on enabling MVC for empty projects, visit https://microsoft.com
 *@
 @{
-
     ViewData["Title"] = "Sobre mí";
 }
 
+<div class="sobremi-seccion-principal">
 
-<br />  
-<br />  
-<br />  
-<div class="contenedor-imagenes contenedor-oficinas">
+    <!-- CONTENEDOR PRINCIPAL PARALELO (PC) / APILADO (MÓVIL) -->
+    <div class="sobremi-flex-container">
 
-    <img src="~/imagenes/ImagenesSobremi/Oficina (1).webp"
-         alt="Oficina"
-         class="imagen-oficina" />
+        <!-- Columna de Imágenes (A la derecha en PC, arriba en Móvil) -->
+        <div class="sobremi-imagenes-columna">
+            <img src="~/imagenes/ImagenesSobremi/Oficina (1).webp" alt="Oficina" class="imagen-oficina-adaptable" />
+            <img src="~/imagenes/ImagenesSobremi/Oficina (2).webp" alt="Oficina" class="imagen-oficina-adaptable" />
+            <img src="~/imagenes/ImagenesSobremi/Oficina (3).webp" alt="Oficina" class="imagen-oficina-adaptable" />
+        </div>
 
-    <img src="~/imagenes/ImagenesSobremi/Oficina (2).webp"
-         alt="Oficina"
-         class="imagen-oficina" />
+        <!-- Columna de Contenido Escrito (A la izquierda en PC) -->
+        <div class="sobremi-texto-columna">
+            <h1 class="titulo-sobremi">
+                Mi camino: experiencia, tecnología y nuevos desafíos
+            </h1>
 
-    <img src="~/imagenes/ImagenesSobremi/Oficina (3).webp"
-         alt="Oficina"
-         class="imagen-oficina" />
+            <div style="color: white; line-height: 1.7;">
+                <p class="texto-sobremi">
+                    Soy Matías Gómez, Técnico Universitario en Programación, profesor de Historia y trabajador del sector de viajes de larga distancia desde hace más de diez años.
+                </p>
+                <p class="texto-sobremi">
+                    Mi experiencia laboral me permitió trabajar diariamente con personas, administrar operaciones, resolver imprevistos y entender algo fundamental: muchas veces una buena solución comienza simplemente haciendo que un proceso sea más claro, rápido y sencillo.
+                </p>
+                <p class="texto-sobremi">
+                    Esa experiencia fue una de las razones que me llevó a interesarme por la programación. Actualmente desarrollo aplicaciones utilizando C#, .NET, ASP.NET Core MVC, SQL Server, APIs REST, Java y Android, buscando aplicar lo aprendido en proyectos que tengan una utilidad concreta.
+                </p>
+                <p class="texto-sobremi">
+                    Esta web nació con ese objetivo. Fue pensada como un punto de encuentro entre mi experiencia y la tecnología: un espacio donde puedo mostrar quién soy y lo que desarrollo, pero que al mismo tiempo funciona como una herramienta para quien necesita resolver una consulta.
+                </p>
+                <p class="texto-sobremi">
+                    Si una persona necesita viajar, puede encontrar información sobre destinos, horarios, servicios y precios. Si necesita realizar un giro, puede gestionar gran parte del proceso directamente desde la plataforma. Cada sección busca conducir al usuario hacia lo que necesita sin complicaciones innecesarias.
+                </p>
+                <p class="texto-sobremi">
+                    Por eso, más que una página personal, considero este proyecto una demostración de cómo quiero trabajar como desarrollador: entender una necesidad, pensar una solución y utilizar la tecnología para convertirla en una herramienta útil y sencilla.
+                </p>
+            </div>
+        </div>
 
+    </div>
 </div>
-<br />
-<br />
-
-<h1 class="titulo-sobremi">
-    Mi camino: experiencia, tecnología y nuevos desafíos
-</h1>
-
-
-    <br />
-<p class="texto-sobremi">
-Soy Matías Gómez, Técnico Universitario en Programación, profesor de Historia y trabajador del sector de viajes de larga distancia desde hace más de diez años.
-
-Mi experiencia laboral me permitió trabajar diariamente con personas, administrar operaciones, resolver imprevistos y entender algo fundamental: muchas veces una buena solución comienza simplemente haciendo que un proceso sea más claro, rápido y sencillo.
-
-Esa experiencia fue una de las razones que me llevó a interesarme por la programación. Actualmente desarrollo aplicaciones utilizando C#, .NET, ASP.NET Core MVC, SQL Server, APIs REST, Java y Android, buscando aplicar lo aprendido en proyectos que tengan una utilidad concreta.
-
-Esta web nació con ese objetivo. Fue pensada como un punto de encuentro entre mi experiencia y la tecnología: un espacio donde puedo mostrar quién soy y lo que desarrollo, pero que al mismo tiempo funciona como una herramienta para quien necesita resolver una consulta.
-
-Si una persona necesita viajar, puede encontrar información sobre destinos, horarios, servicios y precios. Si necesita realizar un giro, puede gestionar gran parte del proceso directamente desde la plataforma. Cada sección busca conducir al usuario hacia lo que necesita sin complicaciones innecesarias.
-
-Por eso, más que una página personal, considero este proyecto una demostración de cómo quiero trabajar como desarrollador: entender una necesidad, pensar una solución y utilizar la tecnología para convertirla en una herramienta útil y sencilla.</p>
