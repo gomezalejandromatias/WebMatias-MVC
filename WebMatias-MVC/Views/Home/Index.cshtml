@@ -1,129 +1,72 @@
-﻿@{
+@*
+    For more information on enabling MVC for empty projects, visit https://microsoft.com
+*@
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="titulo-inicio">Bienvenido a mi espacio</h1>
-
     <p class="subtitulo-inicio">
         Tecnología, <span>proyectos</span>, experiencias y <span>viajes</span> en un solo lugar.
     </p>
     <br />
     <p class="frase-viajes">
-        Otro planeta en este planeta,Donde el tiempo para,para estirar un poco las piernas.
+        Otro planeta en este planeta, Donde el tiempo se detiene, para estirar un poco las piernas.
     </p>
 </div>
 
-
-
-    <br />
-    <br />
-    <br />
-    <br />
-
-  
-<div class="contenedor-imagenes">
+<!-- Contenedor adaptado de imágenes -->
+<div class="home-galeria-seccion">
 
     <!-- CAROUSEL VIAJES / TERMINAL -->
-    <div id="carouselViajes"
-         class="carousel slide carousel-matias"
-         data-bs-ride="carousel"
-         data-bs-interval="4000">
-
+    <div id="carouselViajes" class="carousel slide carousel-personalizado" data-bs-ride="carousel" data-bs-interval="4000">
         <div class="carousel-inner">
-
-            <!-- CHICA VIAJANDO -->
             <div class="carousel-item active">
-                <img src="~/Imagenes/ChicaViajando.webp"
-                     class="imagen"
-                     alt="Chica viajando" />
+                <img src="~/Imagenes/ChicaViajando.webp" class="imagen-banner" alt="Chica viajando" />
             </div>
-
-            <!-- TERMINAL IA -->
             <div class="carousel-item">
-                <img src="~/Imagenes/TerminalIA.webp"
-                     class="imagen"
-                     alt="Terminal de ómnibus El Talar" />
+                <img src="~/Imagenes/TerminalIA.webp" class="imagen-banner" alt="Terminal de ómnibus El Talar" />
             </div>
-
-            <!-- TERMINAL IA 1 -->
             <div class="carousel-item">
-                <img src="~/Imagenes/TerminalIA1.webp"
-                     class="imagen"
-                     alt="Micros en Terminal de El Talar" />
+                <img src="~/Imagenes/TerminalIA1.webp" class="imagen-banner" alt="Micros en Terminal de El Talar" />
             </div>
-
         </div>
-
-        <button class="carousel-control-prev"
-                type="button"
-                data-bs-target="#carouselViajes"
-                data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselViajes" data-bs-slide="prev">
             <span class="carousel-control-prev-icon"></span>
         </button>
-
-        <button class="carousel-control-next"
-                type="button"
-                data-bs-target="#carouselViajes"
-                data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselViajes" data-bs-slide="next">
             <span class="carousel-control-next-icon"></span>
         </button>
-
     </div>
 
-
     <!-- CAROUSEL MATIAS -->
-    <div id="carouselMatias"
-         class="carousel slide carousel-matias"
-         data-bs-ride="carousel"
-         data-bs-interval="4000">
-
+    <div id="carouselMatias" class="carousel slide carousel-personalizado" data-bs-ride="carousel" data-bs-interval="4000">
         <div class="carousel-inner">
-
             <div class="carousel-item active">
-                <img src="~/Imagenes/MatiasCpu.webp"
-                     class="imagen"
-                     alt="Matías trabajando" />
+                <img src="~/Imagenes/MatiasCpu.webp" class="imagen-banner" alt="Matías trabajando" />
             </div>
-
             <div class="carousel-item">
-                <img src="~/Imagenes/Matias.webp"
-                     class="imagen"
-                     alt="Matías" />
+                <img src="~/Imagenes/Matias.webp" class="imagen-banner" alt="Matías" />
             </div>
-
             <div class="carousel-item">
-                <img src="~/Imagenes/Matias1.webp"
-                     class="imagen"
-                     alt="Matías" />
+                <img src="~/Imagenes/Matias1.webp" class="imagen-banner" alt="Matías" />
             </div>
-
             <div class="carousel-item">
-                <img src="~/Imagenes/Matias2.webp"
-                     class="imagen"
-                     alt="Matías" />
+                <img src="~/Imagenes/Matias2.webp" class="imagen-banner" alt="Matías" />
             </div>
-
         </div>
-
-        <button class="carousel-control-prev"
-                type="button"
-                data-bs-target="#carouselMatias"
-                data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselMatias" data-bs-slide="prev">
             <span class="carousel-control-prev-icon"></span>
         </button>
-
-        <button class="carousel-control-next"
-                type="button"
-                data-bs-target="#carouselMatias"
-                data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselMatias" data-bs-slide="next">
             <span class="carousel-control-next-icon"></span>
         </button>
-
     </div>
 
 </div>
 
+<!-- FOOTER DE CIERRE RESTAURADO -->
 <footer style="
     margin-top: 80px;
     padding: 30px;
@@ -147,5 +90,4 @@
     <small style="color: #777F89;">
         © 2026 Matías Gómez - Todos los derechos reservados.
     </small>
-
 </footer>
