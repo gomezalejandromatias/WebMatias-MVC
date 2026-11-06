@@ -24,11 +24,16 @@ namespace WebMatias_API.Dao
         public Conexion()
         {
 
+            var configuracion = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: true)
+                .AddEnvironmentVariables()
+                .Build();
 
-            string cadenaConexion = "Server=localhost;Database=WebPersonalDB;Trusted_Connection=True;TrustServerCertificate=True;";
+            string cadenaConexion = configuracion
+                .GetConnectionString("WebPersonalDB")
+                ?? throw new Exception("No se encontró la cadena de conexión.");
 
             conexion = new SqlConnection(cadenaConexion);
-
             comando = new SqlCommand();
 
 

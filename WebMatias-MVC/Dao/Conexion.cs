@@ -20,8 +20,8 @@ namespace WebMatias_MVC.Dao
         public Conexion ()
         {
 
-            string cadenaConexion = @"Server=(localdb)\MSSQLLocalDB;Database=WebPersonalDB;Trusted_Connection=True;TrustServerCertificate=True;";
-
+            //  string cadenaConexion = @"Server=(localdb)\MSSQLLocalDB;Database=WebPersonalDB;Trusted_Connection=True;TrustServerCertificate=True;";
+            string cadenaConexion = @"Server=localhost\SQLEXPRESS02;Database=WebPersonalDB;Trusted_Connection=True;TrustServerCertificate=True;";
 
             conexion = new SqlConnection (cadenaConexion);
 
