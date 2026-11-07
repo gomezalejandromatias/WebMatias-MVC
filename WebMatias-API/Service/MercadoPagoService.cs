@@ -14,7 +14,7 @@ namespace WebMatias_API.Service
 
         private readonly string? _webhookSecret;
 
-        private readonly string? _WebhookToken;
+       private readonly string? _WebhookToken;
 
         public MercadoPagoService(IConfiguration configuration)
         {
@@ -23,7 +23,7 @@ namespace WebMatias_API.Service
 
             _webhookSecret = configuration["MercadoPago:WebhookSecret"];
 
-            _WebhookToken = configuration["MercadoPago:WebhookToken"];
+           _WebhookToken = configuration["MercadoPago:WebhookToken"];
 
 
         }

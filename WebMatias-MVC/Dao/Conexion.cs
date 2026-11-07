@@ -20,13 +20,19 @@ namespace WebMatias_MVC.Dao
         public Conexion ()
         {
 
-            //  string cadenaConexion = @"Server=(localdb)\MSSQLLocalDB;Database=WebPersonalDB;Trusted_Connection=True;TrustServerCertificate=True;";
-            string cadenaConexion = @"Server=localhost\SQLEXPRESS02;Database=WebPersonalDB;Trusted_Connection=True;TrustServerCertificate=True;";
+            var configuracion = new ConfigurationBuilder()
+        .AddJsonFile("appsettings.json", optional: true)
+        .AddUserSecrets<Program>()
+        .AddEnvironmentVariables()
+        .Build();
 
-            conexion = new SqlConnection (cadenaConexion);
+            string cadenaConexion = configuracion
+          .GetConnectionString("WebPersonalDB")
+          ?? throw new Exception("No se encontró la cadena de conexión.");
 
+            conexion = new SqlConnection(cadenaConexion);
             comando = new SqlCommand();
-
+            
         }
 
         public void EjecutarLectura()
