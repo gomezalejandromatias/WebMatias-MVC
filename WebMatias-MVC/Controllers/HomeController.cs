@@ -22,7 +22,11 @@ namespace WebMatias_MVC.Controllers
         {
             return View("Sobremi");
 
+        }
 
+        public IActionResult Ayuda()
+        {
+            return View();
         }
 
         public IActionResult MostrarRequisitos()
