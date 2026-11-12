@@ -18,6 +18,11 @@ namespace WebMatias_MVC.Controllers
             return View();
         }
 
+        public IActionResult Ayuda()
+        {
+            return View();
+        }
+
         public IActionResult MostrarVistaSobremi()
         {
             return View("Sobremi");

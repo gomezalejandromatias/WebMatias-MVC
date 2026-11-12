@@ -1,0 +1,111 @@
+@*
+    For more information on enabling MVC for empty projects, visit https://microsoft.com
+*@
+@{
+    ViewData["Title"] = "Ayuda";
+}
+
+<div class="container my-5" style="max-width: 1000px;">
+
+    <div class="text-center mb-5">
+        <h1 class="titulo-sobremi mb-2">Centro de Ayuda</h1>
+        <p class="subtitulo-inicio">
+            Seleccioná el video según tu consulta para ver el paso a paso.
+        </p>
+    </div>
+
+    <!-- CUADRÍCULA DE 2 COLUMNAS (COMO EL ESQUEMA DE 4 CUADROS) -->
+    <div class="row g-4">
+
+        <!-- CUADRO 1 -->
+        <div class="col-md-6">
+            <div class="ayuda-cuadro">
+                <h4 class="ayuda-pregunta">❓ ¿Cómo realizo un giro de dinero?</h4>
+                <div class="ayuda-video-box">
+                    <video controls playsinline preload="metadata">
+                        <source src="@Url.Content("~/Videos/Tutorial1.mp4")" type="video/mp4" />
+                        Tu navegador no soporta la reproducción de videos.
+                    </video>
+                </div>
+            </div>
+        </div>
+
+        <!-- CUADRO 2 -->
+        <div class="col-md-6">
+            <div class="ayuda-cuadro">
+                <h4 class="ayuda-pregunta">❓ ¿Qué documentación necesito para viajar?</h4>
+                <div class="ayuda-video-box">
+                    <video controls playsinline preload="metadata">
+                        <source src="@Url.Content("~/Videos/Tutorial2.mp4")" type="video/mp4" />
+                        Tu navegador no soporta la reproducción de videos.
+                    </video>
+                </div>
+            </div>
+        </div>
+
+        <!-- CUADRO 3 -->
+        <div class="col-md-6">
+            <div class="ayuda-cuadro">
+                <h4 class="ayuda-pregunta">❓ ¿Cómo busco mi viaje?</h4>
+                <div class="ayuda-video-box">
+                    <video controls playsinline preload="metadata">
+                        <source src="@Url.Content("~/Videos/Tutorial3.mp4")" type="video/mp4" />
+                        Tu navegador no soporta la reproducción de videos.
+                    </video>
+                </div>
+            </div>
+        </div>
+
+    <!-- BOTÓN DE CONTACTO INFERIOR -->
+    <div class="text-center mt-5 pt-4 border-top border-secondary">
+        <p class="texto-sobremi mb-3">
+            ¿Tenés otra consulta? Escribinos directamente y te ayudamos:
+        </p>
+        <a href="https://wa.me."
+           target="_blank"
+           class="btn btn-success rounded-pill px-4 py-2 fs-5">
+            📱 Consultar por WhatsApp
+        </a>
+    </div>
+
+</div>
+
+<style>
+    .ayuda-cuadro {
+        background-color: #181818;
+        border: 1px solid #2d2d2d;
+        border-top: 4px solid #dc3545;
+        border-radius: 12px;
+        padding: 18px;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .ayuda-pregunta {
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 14px;
+        text-align: left;
+    }
+
+    .ayuda-video-box {
+        width: 100%;
+        height: 230px; /* Ventana compacta y controlada */
+        background-color: #000000;
+        border-radius: 8px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .ayuda-video-box video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Encuadra todo el video y muestra el ícono de pantalla completa */
+            display: block;
+        }
+</style>
