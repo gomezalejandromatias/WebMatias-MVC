@@ -29,11 +29,6 @@ namespace WebMatias_MVC.Controllers
 
         }
 
-        public IActionResult Ayuda()
-        {
-            return View();
-        }
-
         public IActionResult MostrarRequisitos()
         {
 
