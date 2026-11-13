@@ -37,12 +37,7 @@
 <br />
 <br />
 
-@if (TempData["Mensaje"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["Mensaje"]
-    </div>
-}
+
 
 @if (TempData["Error"] != null)
 {
@@ -441,7 +436,7 @@
         const monto = parseFloat(montoEnvio.value) || 0;
         const cambio = parseFloat(montoCambio.value) || 0;
 
-        const total = monto * 1.10;
+        const total = monto * 1.18;
         const totalCambio = monto * cambio;
 
         montoTotal.value = total.toFixed(2);

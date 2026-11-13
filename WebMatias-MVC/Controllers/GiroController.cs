@@ -177,7 +177,7 @@ namespace WebMatias_MVC.Controllers
 
             // Comisión de la agencia: 10%.
             giro.ComisionAgencia =
-                giro.MontoEnvio * 0.10m;
+                giro.MontoEnvio * 0.18m;
 
             // Por ahora no existe comisión del sistema.
             giro.ComisionSistema = 0;
@@ -254,12 +254,7 @@ namespace WebMatias_MVC.Controllers
                 // Si todo salió correctamente,
                 // guardamos el mensaje original.
 
-                TempData["Mensaje"] =
-                    "El giro se registró correctamente. " +
-                    "Para actualizar la página, hacé clic en 'Tipos de Cambios (Dinero)' en el menú superior. " +
-                    "El giro puede demorar hasta 40 minutos. " +
-                    "Si pasado ese tiempo no se acredita, comunicate por teléfono o por email a mati.gorrriti1@gmail.com. " +
-                    "Si no encontrás el correo, revisá Spam o Promociones en Gmail, y Correo no deseado en Outlook/Hotmail.";
+    
 
             }
             catch (Exception)
@@ -290,7 +285,9 @@ namespace WebMatias_MVC.Controllers
                 // Si todo salió correctamente,
                 // guardamos el mensaje original.
 
-          
+
+           
+
 
                 // Redirigimos al cliente a Mercado Pago.
                 return Redirect(mercadoPagoResponse.InitPoint);

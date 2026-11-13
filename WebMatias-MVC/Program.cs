@@ -26,15 +26,14 @@ builder.Services.AddControllersWithViews(options =>
 
 //"Cuando alguien necesite un CotizacionApiService,
 //crealo y dale un HttpClient ya configurado para apuntar a mi Web API."
-
 builder.Services.AddHttpClient<CotizacionApiService>(client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7251/");
+    client.BaseAddress = new Uri("https://matiasweb-api-h3fyejh0g6ezhbf8.brazilsouth-01.azurewebsites.net/");
 });
 
 builder.Services.AddHttpClient<MercadoPagoApiService>(client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7251/");
+    client.BaseAddress = new Uri("https://matiasweb-api-h3fyejh0g6ezhbf8.brazilsouth-01.azurewebsites.net/");
 });
 
 
