@@ -26,6 +26,7 @@ builder.Services.AddControllersWithViews(options =>
 
 //"Cuando alguien necesite un CotizacionApiService,
 //crealo y dale un HttpClient ya configurado para apuntar a mi Web API."
+//ESTO LO CONECTA CON LA API QUE ESTA EN EL HOST
 builder.Services.AddHttpClient<CotizacionApiService>(client =>
 {
     client.BaseAddress = new Uri("https://matiasweb-api-h3fyejh0g6ezhbf8.brazilsouth-01.azurewebsites.net/");
